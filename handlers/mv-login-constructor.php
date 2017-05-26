@@ -13,22 +13,53 @@
 		
 		$mvuser = get_userdata( get_current_user_id()); // Логин текущего пользователя
 		//Список переменных
-		$variables = array (	
+		$variables = [
 		'mv_ajax_url' => admin_url('admin-ajax.php'), // передаем значение пути 
-		'mv_curent_user_login' => $mvuser->user_login // можно проверить window.mv_wp_data.mv_curent_user_login   было $mvuser->data->user_login
-		);
-		echo( '<script type="text/javascript">window.mv_wp_data = ' . json_encode($variables) . '; </script>');
+		'mv_current_user_login' => $mvuser->user_login // можно проверить window.mv_wp_data.mv_current_user_login   было $mvuser->data->user_login
+		];
+		echo( '<script type="text/javascript"> window.mv_wp_data = ' . json_encode($variables) . '; </script>');
 		//	}
 	}
 	
 	/* Привязываемся к хуку вывода шапки сайта и объявляем экшн: */
 	add_action('wp_head','mv_js_variables_login'); 
 	
-	/* !!!!!!!!!!!!! / Блок Передачи нужных переменных на фронтэнед !!!!!!!!!!!!!! */		
-	
-	
-	
-	/* !!!!!!!!!!!!!!! Конструктор кнопки LogIn/LogOUT !!!!!!!!!!!!!!!! */	
+	/* !!!!!!!!!!!!! / Блок Передачи нужных переменных на фронтэнед !!!!!!!!!!!!!! */
+
+/* !!!!!!!!!!!!!!! Конструктор блока вывода переменных !!!!!!!!!!!!!!!! */
+
+function mv_var_constructor($attr){
+
+	ob_start();
+	$mvuser = get_userdata( get_current_user_id()); // Логин текущего пользователя
+	// Забираем токен из кукиса
+    ?>
+    <p>Пользователь: <? php echo $mvuser->user_login; ?></p> <!-- значение токена -->
+    <?php
+	if ( isset($_COOKIE['mv_cuc_token'])) { /* токен есть  */
+		?>
+        <p> Токен: <? php echo $_COOKIE['mv_cuc_token']; ?></p> <!-- значение токена -->
+		<?php
+	} else { // токена нет
+		?>
+        <p> Токен не определен</p> <!-- значение токена -->
+		<?php
+	}
+	$html = ob_get_contents();
+	ob_get_clean();
+	return $html;
+}
+/* !!!!!!!!!!!!!!! / Конструктор кнопки LogIn/LogOUT !!!!!!!!!!!!!!!! */
+
+
+
+/*  !!!!!!!!!!  Добавляем шорткод  [mv_variables] !!!!!!!!!! */
+
+add_shortcode('mv_variables', 'mv_var_constructor');
+
+
+
+/* !!!!!!!!!!!!!!! Конструктор кнопки LogIn/LogOUT !!!!!!!!!!!!!!!! */
 	
 	function mv_login_constructor($attr){
 		
@@ -82,7 +113,7 @@
 			/* !!!!!!!!!!! Функция конструктор селектов списка ОРГАНИЗАЦИЙ  !!!!!!!!!!! */
 			
 			function mv_form_construct(result) { // передаем параметр - полученный объект
-				var firmSelObj = document.getElementById('form_param_ref_organization'); //создаем указатель на селект по ID
+				//var firmSelObj = document.getElementById('form_param_ref_organization'); //создаем указатель на селект по ID
 				var lastFirm = "";
 				mv_default_coffee = 0; // Все кофейни по умолчанию
 				mv_default_org = mv_result.ref_default_access_object; // простой случай accessType == "company"
@@ -91,7 +122,7 @@
 				mv_results_data[0] = {"id": "0", "text": "--"};
 				//var selLen = firmSelObj.options.length; // определяем количество строк <option > в первом селекте
 				//alert ('Цикл построения списка!');
-				for(organization in result) if (result.hasOwnProperty(organization)) {
+				for(var organization in result) if (result.hasOwnProperty(organization)) {
 					var t = result[organization]; //выбираем значения с ключем organization
 					var mv_local_arr ={};
 					mv_local_arr.length = 0; //дополнительно обнуляем
@@ -119,10 +150,10 @@
 									break; // остановить перебор
 								}
 							}
-						};
-					};
-				};
-			};
+						}
+					}
+				}
+			}
 			/* !!!!!!!!!!! / Функция конструктор селектов списка ОРГАНИЗАЦИЙ !!!!!!!!!!! */
 			
 			
@@ -134,45 +165,45 @@
 				var currentFirm = firmSelObj.value; // запоминаем, что выбрали в первом селекте
 				if (currentFirm == "0") {
 					form_param_cafe_place.style.display = "none"; //бренд не выбран - прячем второй список и кнопку отправить отчет
-					mv_make_report_button.disabled = 1;//id="saveForm" disabled 
+					mv_make_report_button.disabled = 1;//id="saveForm" disabled
 					} else {
 					var caffeeSelObj = document.getElementById('form_param_cafe'); //создаем указатель на 2й селект по ID
 					mv_results2_data = [];  // создаем массив значений второго списка (кофеен)
 					//очистим список кофеен - всех, кроме первого элемента
 					mv_results2_data[0] = {"id": "0", "text": "Все кофейни"};
 					//console.log ( mv_results2_data);
-					//jQuery("#form_param_cafe").html('<option value=""  selected>Все кофейни</option>'); //чистим старые 
+					//jQuery("#form_param_cafe").html('<option value=""  selected>Все кофейни</option>'); //чистим старые
 					//загрузим список кофеен соответствующей организации
-					for(organization in result) if (result.hasOwnProperty(organization)) { //перебираем массив организаций
+					for(var organization in result) if (result.hasOwnProperty(organization)) { //перебираем массив организаций
 						var t = result[organization];
-						
+
 						if (t.ref == currentFirm) { // находим выбранную компанию (может есть способ без перебора компаний?)
 							//var selLen = caffeeSelObj.options.length; // определяем количество строк <option > во втором селекте
-							for(coffeeshop in t.divisions) if (t.divisions.hasOwnProperty(coffeeshop)) {
+							for(var coffeeshop in t.divisions) if (t.divisions.hasOwnProperty(coffeeshop)) {
 								var c = t.divisions[coffeeshop]; // t.divisions - массив подразделений (кофеен)
 								var mv_local_arr ={};
-								//caffeeSelObj.options[selLen ++] = new Option(c.name, c.ref); // создания новых элементов списка мы //используем конструктор	Option(text, value), где text — это отображаемая метка элемента списка, а value — //её значение. 
+								//caffeeSelObj.options[selLen ++] = new Option(c.name, c.ref); // создания новых элементов списка мы //используем конструктор	Option(text, value), где text — это отображаемая метка элемента списка, а value — //её значение.
 								mv_local_arr['id'] = c['Ref'];
 								mv_local_arr['text'] = c['Name'];
 								mv_results2_data.push( mv_local_arr );
-							};
-						};
-					};
-					
+							}
+						}
+					}
+
 					jQuery( function( $ ){
 						mv_sel_coffee.empty(); //Обнуляем список
 						mv_sel_coffee.select2({data: mv_results2_data }); // заполняем список новыми значениями
-						
+
 						/* Устанавливаем значение по умолчанию */
 						if (mv_result.accessType == "coffeeshop") {
-							$ ("#form_param_cafe").val(mv_result.ref_default_access_object).trigger('change'); 
+							$ ("#form_param_cafe").val(mv_result.ref_default_access_object).trigger('change');
 						};
-						/* / Устанавливаем значение по умолчанию */	
+						/* / Устанавливаем значение по умолчанию */
 						$("span.select2-container--default").css("width", "100%"); // костыль, чтобы изменить кривую вставку width = 1px
 					});
-					
+
 					form_param_cafe_place.style.display = "block"; // Включить отображение списка
-					mv_make_report_button.disabled = 0;//id="saveForm" enabled 
+					mv_make_report_button.disabled = 0;//id="saveForm" enabled
 				};
 			};
 			
