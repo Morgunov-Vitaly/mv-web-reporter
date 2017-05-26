@@ -1,0 +1,133 @@
+/* Специальный класс для изменения вида курсора  */
+.mv-cursor-whait {
+	cursor: wait;
+}
+
+#form_login label.description {
+	
+	display: inline-block;
+}
+
+#mv_login_form_btn {
+	padding: 20px 0 10px 0;
+}
+
+#mv_password {
+	padding-top: 10px;
+}
+
+/* Свойства кнопки входа выхода  вызова модального окна */
+#mv_login_modal_init, #saveForm  {
+	width: 100%;
+}
+#mv_login {
+    margin-top: 20px;
+}
+
+.select_and_label_div {
+	
+	width: 100%;
+	
+}
+
+label.description {
+    border: none;
+    display: block;
+    font-weight: bold;
+    line-height: 150%;
+    padding: 0px 0 1px;
+    margin: 10px 0;
+}
+
+
+/* везде надо поменять бордюр с цвета #5897fb (голубой) на #67bd98 (зеленый) */
+
+/* Стиль сообщения об ошибочной авторизации  */
+#mv_login_error {
+	border-left: 4px solid #dc3232;
+    padding: 12px;
+    margin-left: 0;
+    background-color: #fff;
+	/*    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); 
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); */
+    /* display: block;  включение отображения */
+    font-size: 13px;
+    line-height: 1.4em;
+    width: 100%;
+    margin: 10px 0 -10px 0;
+}
+/* перезаписываю значения стилей для select2 */
+
+.select2-container .select2-selection--single {
+	height: 40px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 40px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px;
+	
+}
+
+/* исправляем цвет бордюра окна выбора мультисписка когда он в фокусе */
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: solid #67bd98 1px; /* было black */
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+	margin-top: 0; /* убираем отступ для мультисписка */
+}
+
+.select2-search .select2-search--inline {
+    margin-bottom: 0;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+	margin-top: 6px;
+}
+.selection li {
+	margin: 0; 
+	list-style-type: none;
+}
+
+.select2-container--default .select2-selection--multiple {
+	
+    height: 40px; /* устанавливаем высоту поля мультиввода */
+}
+
+
+input:focus, textarea:focus, select:focus, .tp-bullets.custom .tp-bullet.selected {
+    box-shadow: none!important; /* убираем черезчур толстую обводку активного окна ввода */
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+     margin-top: 7px;
+ }
+
+.mv_form li{
+	width:100%;
+	list-style-type: none;
+	
+}
+.mv_form ul{
+	width:100%;
+	margin-left:0;
+	margin-right:0;
+}
+form.mv_form {
+		width:100%;
+		padding:0 0 20px;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+    padding-left: 4px;
+}
+.select2 .select2-container .select2-container--default {
+	width:100%!important; /* иначе при обновлении списка убиваются стили  и это не помогло*/
+}
+
+.mv_reports_container { /* Контейнер -область построения отчета */
+	display: none; /* по умолчанию - прячем */
+	
+}
