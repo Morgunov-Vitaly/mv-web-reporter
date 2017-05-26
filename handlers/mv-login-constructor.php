@@ -13,11 +13,11 @@
 		
 		$mvuser = get_userdata( get_current_user_id()); // Логин текущего пользователя
 		//Список переменных
-		$variables = [
+		$mvvariables = [
 		'mv_ajax_url' => admin_url('admin-ajax.php'), // передаем значение пути 
 		'mv_current_user_login' => $mvuser->user_login // можно проверить window.mv_wp_data.mv_current_user_login   было $mvuser->data->user_login
 		];
-		echo( '<script type="text/javascript"> window.mv_wp_data = ' . json_encode($variables) . '; </script>');
+		echo( '<script type="text/javascript"> window.mv_wp_data =' . json_encode($mvvariables) . ';</script>');
 		//	}
 	}
 	
@@ -28,17 +28,17 @@
 
 /* !!!!!!!!!!!!!!! Конструктор блока вывода переменных !!!!!!!!!!!!!!!! */
 
-function mv_var_constructor($attr){
+function mv_var_constructor(){
 
 	ob_start();
 	$mvuser = get_userdata( get_current_user_id()); // Логин текущего пользователя
 	// Забираем токен из кукиса
     ?>
-    <p>Пользователь: <? php echo $mvuser->user_login; ?></p> <!-- значение токена -->
+    <p>Пользователь: <?php echo $mvuser->user_login; ?></p> <!-- значение токена -->
     <?php
 	if ( isset($_COOKIE['mv_cuc_token'])) { /* токен есть  */
 		?>
-        <p> Токен: <? php echo $_COOKIE['mv_cuc_token']; ?></p> <!-- значение токена -->
+        <p> Токен: <?php echo $_COOKIE['mv_cuc_token']; ?></p> <!-- значение токена -->
 		<?php
 	} else { // токена нет
 		?>
@@ -61,13 +61,13 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 
 /* !!!!!!!!!!!!!!! Конструктор кнопки LogIn/LogOUT !!!!!!!!!!!!!!!! */
 	
-	function mv_login_constructor($attr){
+	function mv_login_constructor(){
 		
 		ob_start();
 		// Забираем токен из кукиса и смотрим не равен ли он '', если его нет, то нужно вызвать форму регистрации
 		if ( isset($_COOKIE['mv_cuc_token'])) { /* токен есть надо просто вывести кнопку, сделать запрос по токену и вызвать конструктор формы параметров (выбора отчетов) */
 		?>
-		<p class="align_center"><a id="mv_login_modal_init" class="w-btn style_solid color_primary icon_none" href="/elements/"><span class="w-btn-label">Вход / Выход</span></a></p> <!-- <button id="mv_login_modal_init">Вход / Выход</button> -->
+		<p class="align_center"><a id="mv_login_modal_init" class="w-btn style_solid color_primary icon_none" href="#"><span class="w-btn-label">Вход / Выход</span></a></p> <!-- <button id="mv_login_modal_init">Вход / Выход</button> -->
 		
 		<script type='text/javascript'>
 			mv_flag_token_ask = 0; /* переменная флаг нужно ли делать запрос по токену 0- да более - нет */
@@ -75,7 +75,7 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 		<?php
 			} else { // кнопка сама нажимается и всплывает окно авторизации
 		?>
-		<p class="align_center"><p class="align_center"><a id="mv_login_modal_init" class="w-btn style_solid color_primary icon_none" href="/elements/"><span class="w-btn-label">Вход / Выход</span></a></p>
+		<p class="align_center"><p class="align_center"><a id="mv_login_modal_init" class="w-btn style_solid color_primary icon_none" href="#"><span class="w-btn-label">Вход / Выход</span></a></p>
 		<script type="text/javascript">
 			jQuery(document).ready(function($){
 				PUM.open(6132);
@@ -115,10 +115,10 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 			function mv_form_construct(result) { // передаем параметр - полученный объект
 				//var firmSelObj = document.getElementById('form_param_ref_organization'); //создаем указатель на селект по ID
 				var lastFirm = "";
-				mv_default_coffee = 0; // Все кофейни по умолчанию
-				mv_default_org = mv_result.ref_default_access_object; // простой случай accessType == "company"
+                mv_default_coffee = 0; // Все кофейни по умолчанию
+                mv_default_org = mv_result.ref_default_access_object; // простой случай accessType == "company"
 				//mv_results_data.length = 0;
-				mv_results_data = []; // создаем массив значений первого списка (организаций)
+                var mv_results_data = []; // создаем массив значений первого списка (организаций)
 				mv_results_data[0] = {"id": "0", "text": "--"};
 				//var selLen = firmSelObj.options.length; // определяем количество строк <option > в первом селекте
 				//alert ('Цикл построения списка!');
@@ -142,7 +142,7 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 						//Устанавливаем значение переменной mv_default_cofee - кофейня по умолчанию для данного пользователя
 						if (mv_result.accessType == "coffeeshop") { // сложный случай accessType == "cofeeshop" надо перебирать
 							//console.log(t.ref);
-							for(coffeeshop in t.divisions) if (t.divisions.hasOwnProperty(coffeeshop)) {
+							for(var coffeeshop in t.divisions) if (t.divisions.hasOwnProperty(coffeeshop)) {
 								var c = t.divisions[coffeeshop]; // t.divisions - массив кофеен
 								if (c.Ref == mv_result.ref_default_access_object) {
 									mv_default_org = t.ref; // значение организации по умолчанию
@@ -197,15 +197,15 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 						/* Устанавливаем значение по умолчанию */
 						if (mv_result.accessType == "coffeeshop") {
 							$ ("#form_param_cafe").val(mv_result.ref_default_access_object).trigger('change');
-						};
+						}
 						/* / Устанавливаем значение по умолчанию */
 						$("span.select2-container--default").css("width", "100%"); // костыль, чтобы изменить кривую вставку width = 1px
 					});
 
 					form_param_cafe_place.style.display = "block"; // Включить отображение списка
 					mv_make_report_button.disabled = 0;//id="saveForm" enabled
-				};
-			};
+				}
+			}
 			
 			/* !!!!!!!!!! / Функция конструктор списка КОФЕЕН !!!!!!!!!!!!!!! */				
 			
@@ -255,7 +255,7 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 							mv_login: $('#form_param_user').val(),
 							mv_password: $('#form_param_pass').val()
 						},
-						success : function(result, status, jqxhr) {
+						success : function(result, status) {
 							console.log("Статус запроса токена: " + status ); // Выводим сообщение об ошибках
 							mv_result = JSON.parse(result); // $.parseJSON(result); //функция JQuery
 							$("body").removeClass("mv-cursor-whait"); // убираем курсор ожидание
@@ -337,7 +337,7 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 							mv_token: mv_getCookie( 'mv_cuc_token' ) // передаем токен
 							
 						},
-						success : function(result, status, jqxhr) {
+						success : function(result, status) {
 							console.log("Статус запроса списка по токену: " + status ); // Выводим сообщение об ошибках
 							mv_result = JSON.parse(result); // $.parseJSON(result); //функция JQuery
 							$("body").removeClass("mv-cursor-whait"); // убираем курсор ожидание
@@ -404,7 +404,7 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 							dateFrom: window.dateFrom.value, //по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '')
 							dateTo: window.dateTo.value //по ID поля
 						},
-						success : function( result, status, jqxhr ) {
+						success : function( result, status ) {
 							$("body").removeClass("mv-cursor-whait"); // убираем курсор ожидание
 							//$("#mv_report_place").append( 'Ответ удаленного сервера: ' +  result);
 							//console.log( 'Ответ на запрос 2: ' +  result ); /* выводим результаты в консоли */
@@ -443,7 +443,7 @@ add_shortcode('mv_variables', 'mv_var_constructor');
 								}else {
 								alert ('Ошибка конструктора отчета!');
 								console.log ( mv_report_result.mv_data.mv_error_code );
-							};	
+							}
 						},
 						error : function( result, status, jqxhr ){ // срабатывает только в случае если не сработает AJAX запрос на WP
 							$("body").removeClass("mv-cursor-whait"); // убираем курсор ожидание
