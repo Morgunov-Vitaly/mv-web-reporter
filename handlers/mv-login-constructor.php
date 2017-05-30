@@ -499,7 +499,9 @@ function mv_ask_params_list() {
 	// формируем строку HTML запроса к удаленному серверу
 	$mv_url ="https://cscl.coffeeset.ru/ws/web/security/authorize/" . $mv_token;
 
-	$mv_remote_get = wp_remote_get( $mv_url); // Делаем запрос
+	// Делаем запрос
+	$mv_remote_get = wp_remote_get( $mv_url, array(
+		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек);
 
 	//PC::debug($mv_remote_get );
 	//PC::debug($mv_url);
@@ -549,7 +551,9 @@ function mv_ask_token() {
 	// формируем строку HTML запроса к удаленному серверу https://cscl.coffeeset.ru/ws/web/security/authorize/a.shpakov/12345qwerty
 	$mv_url ="https://cscl.coffeeset.ru/ws/web/security/authorize/" . $mv_login . "/" . $mv_password;
 
-	$mv_remote_get = wp_remote_get( $mv_url); // Делаем запрос
+	// Делаем запрос
+	$mv_remote_get = wp_remote_get( $mv_url, array(
+		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек);
 
 	//PC::debug($mv_remote_get );
 	//PC::debug($mv_url);

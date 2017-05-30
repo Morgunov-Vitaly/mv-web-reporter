@@ -62,8 +62,10 @@
 		
 		global $wpdb;
 		$table  = $wpdb->prefix . $mv_table_name;
-		$delete = $wpdb->query("TRUNCATE TABLE $table"); /* надо дополнить условием отбора по токену */
-		
+		//$delete = $wpdb->query("TRUNCATE TABLE $table"); /* надо дополнить условием отбора по токену */
+		$wpdb->delete( $table, array( 'token' => $token ), array( '%s' ) );
+		//$wpdb->query( "DELETE FROM $table WHERE token='$token'");
+
 	}
 	
 	
@@ -98,8 +100,9 @@
 		
 		$mv_report_result = json_decode( wp_remote_retrieve_body( $mv_remote_get ) ); /* PHP функция Принимает закодированную в JSON строку и преобразует ее в переменную PHP */
 		// Ну и если ответ сервера 200 OK, то можно вывести что-нибудь
-		
-		if( ! is_wp_error( $mv_remote_get ) && wp_remote_retrieve_response_code( $mv_remote_get ) == 200 ) {
+		if ( is_wp_error( $mv_remote_get )) { //timeout
+			}
+		elseif ( wp_remote_retrieve_response_code( $mv_remote_get ) == 200 ) {
 			
 			// Запись в БД в таблицу csc_mv_report_102
 			// Удаляем старые данные и записываем новые
@@ -122,7 +125,7 @@
 			echo json_encode($mv_response); // Это передается во фронтэнед
 			// echo '{"mv_error_code" : "200", "Message" : " Well done!" , "mv_html" : "'. $mv_html .'" }'; // Это передается во фронтэнед
 			
-			} else {
+			}else {
 			
 			/* 
 				произошел сбой:
