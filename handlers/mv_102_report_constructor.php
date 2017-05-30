@@ -100,9 +100,7 @@
 		
 		$mv_report_result = json_decode( wp_remote_retrieve_body( $mv_remote_get ) ); /* PHP функция Принимает закодированную в JSON строку и преобразует ее в переменную PHP */
 		// Ну и если ответ сервера 200 OK, то можно вывести что-нибудь
-		if ( is_wp_error( $mv_remote_get )) { //timeout
-			}
-		elseif ( wp_remote_retrieve_response_code( $mv_remote_get ) == 200 ) {
+		if ( ! is_wp_error( $mv_remote_get )  &&  wp_remote_retrieve_response_code( $mv_remote_get ) == 200 )  {
 			
 			// Запись в БД в таблицу csc_mv_report_102
 			// Удаляем старые данные и записываем новые
@@ -113,9 +111,7 @@
 			foreach ($mv_report_result->ReportList as $mv_rr):
 			tr_ins_ref_table( $mv_rr, $token, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
 			endforeach;
-		
 
-			
 			$mv_html = mv_102_accordion_constructor($mv_report_result); //вызваем конструктор аккордеона
 			//PC::debug( $mv_html );
 			$mv_data = array('mv_error_code' => '200', 'Message' => 'Well done!'); 
@@ -136,8 +132,11 @@
 			*/			
 			//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );	
 			//PC::debug($mv_report_result );
+			if ( is_wp_error( $mv_remote_get )) { //timeout
+				PC::debug( $mv_remote_get );
+			}
 			$mv_html = $mv_url; //запишем в пустующий раздел адресс ссылки-запроса к удаленному серверу
-			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'"', 'Message' => '"'. ((isset($mv_report_result->Message)) ? $mv_report_result->Message : "") . '"');
+			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'"', 'Message' => '"'. ((isset($mv_report_result->Message)) ? $mv_report_result->Message : $mv_remote_get->get_error_code()) . '"');
 			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);			
 			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" :  "' . $mv_report_result->Message . '"}';
 			echo json_encode($mv_response); // Это передается во фронтэнед

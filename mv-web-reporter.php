@@ -38,6 +38,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102_accordion.php' );
 /* !!!!!! Подключаем файл Конструктора 102 отчета и его вспомогательные функции !!!!!!!!!!!!!!!! */
 require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102_report_constructor.php' );
 
+
 /* поменяем настройки плагина WpDataTables изменим меню отображения количества строк таблицы */
 add_filter( 'wpdatatables_filter_table_description', 'wpdt_mv_hook', 10, 2 );
 

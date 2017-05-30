@@ -523,7 +523,7 @@ function mv_ask_params_list() {
 
 		//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );
 		//PC::debug($mv_result );
-		echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '" , ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : "") . '"}';
+		echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '" , ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : $mv_remote_get->get_error_code()) . '"}';
 	};
 
 	// Не забываем завершать PHP
@@ -576,7 +576,7 @@ function mv_ask_token() {
 
 		//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );
 		PC::debug($mv_result );
-		echo '{ "mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : "") . '"}';
+		echo '{ "mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : $mv_remote_get->get_error_code()) . '"}';
 	};
 
 	// Не забываем завершать PHP
