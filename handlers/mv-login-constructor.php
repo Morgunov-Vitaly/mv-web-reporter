@@ -374,7 +374,7 @@ function mv_login_handler() {
                             }
                             else {
 
-                                $("#mv_login_error").slideDown('normal'); //выводим сообщение об ошибке в форме - но если форма закрыта, то ничего не выведет 
+                                $("#mv_login_error").slideDown('normal'); //выводим сообщение об ошибке в форме - но если форма закрыта, то ничего не выведет
                                 //alert ('Ошибка аутентификации!');
                                 console.log ( "<?php _e( 'Код ошибки запроса списка по токену: ', 'mv-web-reporter'); ?>" + mv_result.mv_error_code +" <?php _e( 'Сообщение: ', 'mv-web-reporter'); ?>" + mv_result.Message );
                             }
@@ -451,8 +451,9 @@ function mv_login_handler() {
                                 //console.log(mv_report_result.mv_error_code);
                             }else {
                                 alert ("<?php _e( 'Ошибка конструктора отчета!: ', 'mv-web-reporter'); ?>" + mv_report_result.mv_data.mv_error_code);
-                                console.log ( mv_report_result.mv_data.mv_error_code );
-                                console.log ( mv_report_result.mv_data.Message );
+                                console.log ( 'mv_error_code: ' + mv_report_result.mv_data.mv_error_code );
+                                console.log ( 'Message: ' + mv_report_result.mv_data.Message );
+                                console.log ( 'report URL: ' + mv_report_result.mv_html );
                             }
                         },
                         error : function( result, status, jqxhr ){ // срабатывает только в случае если не сработает AJAX запрос на WP

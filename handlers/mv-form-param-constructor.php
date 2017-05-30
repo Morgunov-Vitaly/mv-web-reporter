@@ -57,7 +57,7 @@
 							var mm = ddc.getMonth() + 1 - vmm;
 							if (mm < 10) mm = '0' + mm;
 							
-							var yy = ddc.getFullYear() - vyy; 
+							var yy = ddc.getFullYear() - vyy;
 							
 							return yy + '-' + mm + '-' + dd;
 						}
