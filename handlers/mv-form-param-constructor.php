@@ -12,18 +12,18 @@
 	
 	/* Конструктор формы ввода предварительных параметров отчетов */
 	
-	function mv_param_form_constructor($attr){
+	function mv_param_form_constructor(){
 		ob_start();
 	?>
 	
 	<!-- Форма ввода предварительных параметров отчетов  -->
-	<div id="form_param_container_inputs" style="display: none"> 
+	<div id="form_param_container_inputs" style="display: none;">
 		
 		<form id="form_param" class="mv_form" >
 			<ul>
 				<li>			
 					<div class="select_and_label_div">
-						<label class="description" for="form_param_ref_organization">Выберите организацию:</label>
+						<label class="description" for="form_param_ref_organization"><?php _e('Выберите организацию: ', 'mv-web-reporter'); ?></label>
 						<div>
 							<select id="form_param_ref_organization" name="ref_organization" required  >
 								<option value = "0" selected>--</option>				
@@ -33,15 +33,15 @@
 				</li>
 				<li id="form_param_cafe_place" style="display: none;">
 					<div class="select_and_label_div">
-						<label class="description" for="form_param_cafe">Выберите кофейню:</label>
+						<label class="description" for="form_param_cafe"><?php _e('Выберите кофейню: ', 'mv-web-reporter'); ?></label>
 						<div>
 							<select id="form_param_cafe" name="cafe_ref"> 
-								<option value="0" selected >Все кофейни</option>										
+								<option value="0" selected ><?php _e('Все кофейни ', 'mv-web-reporter'); ?></option>
 							</select>
 						</div> 
 					</div> 
 				</li>
-				<li><label class="description" for="dateFrom">Дата от: </label>
+				<li><label class="description" for="dateFrom"><?php _e('Дата от: ', 'mv-web-reporter'); ?></label>
 					<script type="text/javascript">
 						
 						var now = new Date(); 
@@ -60,15 +60,15 @@
 							var yy = ddc.getFullYear() - vyy; 
 							
 							return yy + '-' + mm + '-' + dd;
-						};
+						}
 						
 						var mv_datamonth = mv_data_set(now, 1, 0, 0); 
 						
 						document.write('<input id="dateFrom" required type="date" name="dateFrom" value="' + mv_datamonth + '" />');						
 					</script>
-					<p><a id="mv_td" class="mv-datepikcer" href="#" >сегодня</a><a id="mv_dd" class="mv-datepikcer" href="#" >вчера</a><a id="mv_ww" class="mv-datepikcer" href="#" >неделю назад</a><a id="mv_mm" class="mv-datepikcer" href="#" >месяц назад</a><a id="mv_yy" class="mv-datepikcer" href="#" >год назад</a> </p>
+					<p><a id="mv_td" class="mv-datepikcer" href="#" ><?php _e('сегодня', 'mv-web-reporter'); ?></a><a id="mv_dd" class="mv-datepikcer" href="#" ><?php _e('вчера', 'mv-web-reporter'); ?></a><a id="mv_ww" class="mv-datepikcer" href="#" ><?php _e('неделю назад', 'mv-web-reporter'); ?></a><a id="mv_mm" class="mv-datepikcer" href="#" ><?php _e('месяц назад', 'mv-web-reporter'); ?></a><a id="mv_yy" class="mv-datepikcer" href="#" ><?php _e('год назад', 'mv-web-reporter'); ?></a> </p>
 				</li>
-				<li><label class="description" for="dateTo">Дата по: </label>
+				<li><label class="description" for="dateTo"><?php _e('Дата по: ', 'mv-web-reporter'); ?></label>
 					<script type="text/javascript">
 						var now = new Date(); 
 						var mv_datamonth = mv_data_set(now, 0, 0, 0);
@@ -112,7 +112,7 @@
 				</li>
 				<li class="buttons">
 					<input type="hidden" name="form_id" value="form_param" />
-					<input id="saveForm" disabled class="button_text w-btn  color_primary style_solid" type="submit" name="submit" value="Создать отчет" /> 
+					<input id="saveForm" disabled class="button_text w-btn  color_primary style_solid" type="submit" name="submit" value="<?php _e('Создать отчет', 'mv-web-reporter'); ?>" />
 					
 				</li>
 			</ul>
