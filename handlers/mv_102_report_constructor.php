@@ -93,7 +93,8 @@
 		
 		//PC::debug($mv_url );	
 		
-		$mv_remote_get = wp_remote_get( $mv_url);	
+		$mv_remote_get = wp_remote_get( $mv_url, array(
+			'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
 		
 		$mv_report_result = json_decode( wp_remote_retrieve_body( $mv_remote_get ) ); /* PHP функция Принимает закодированную в JSON строку и преобразует ее в переменную PHP */
 		// Ну и если ответ сервера 200 OK, то можно вывести что-нибудь
