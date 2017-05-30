@@ -132,8 +132,8 @@
 			*/			
 			//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );	
 			//PC::debug($mv_report_result );
-			$mv_html = $mv_url; //вызваем конструктор аккордеона
-			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'" ', 'Message' => '"'. $mv_report_result->Message . '"'); 
+			$mv_html = $mv_url; //запишем в пустующий раздел адресс ссылки-запроса к удаленному серверу
+			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'"', 'Message' => '"'. ((isset($mv_report_result->Message)) ? $mv_report_result->Message : "") . '"');
 			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);			
 			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" :  "' . $mv_report_result->Message . '"}';
 			echo json_encode($mv_response); // Это передается во фронтэнед

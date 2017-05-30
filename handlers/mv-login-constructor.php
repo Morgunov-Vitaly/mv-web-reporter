@@ -346,7 +346,6 @@ function mv_login_handler() {
                             action: 'mv_ask_params_list', /* Вызывам обработчик  mv_ask_params_list */
                             mv_nonce: '<?php echo wp_create_nonce( "mv_ask_params_list" ); ?>',
                             mv_token: mv_getCookie( 'mv_cuc_token' ) // передаем токен
-
                         },
                         success : function(result, status) {
                             console.log("<?php _e( 'Статус запроса списка по токену: ', 'mv-web-reporter'); ?>" + status ); // Выводим сообщение об ошибках
@@ -354,8 +353,8 @@ function mv_login_handler() {
                             $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
 
                             if ((typeof mv_result.mv_error_code == "undefined")&& (mv_result.token != '')&& (mv_result.token != "undefined")) { // все получилось или нам пришел 0!
-                                $("#pum-6132").popmake('close'); // закрываем чертово диалогово окно 6132 но оно здесь лишнее
-                                console.log ( "<?php _e( 'Результат запроса списка по токену успешен: ', 'mv-web-reporter'); ?>" + mv_result.mv_error_code );
+                                $("#pum-6132").popmake('close'); // закрываем диалогово окно 6132
+                                console.log ( "<?php _e( 'Результат запроса списка по токену успешен: ', 'mv-web-reporter'); ?>" );
                                 //console.log ( mv_result.Message );
                                 //console.log ( mv_result.token );
                                 //console.log ( mv_result.organizations );
@@ -375,7 +374,7 @@ function mv_login_handler() {
                             }
                             else {
 
-                                $("#mv_login_error").slideDown('normal'); //выводим сообщение об ошибке в форме
+                                $("#mv_login_error").slideDown('normal'); //выводим сообщение об ошибке в форме - но если форма закрыта, то ничего не выведет 
                                 //alert ('Ошибка аутентификации!');
                                 console.log ( "<?php _e( 'Код ошибки запроса списка по токену: ', 'mv-web-reporter'); ?>" + mv_result.mv_error_code +" <?php _e( 'Сообщение: ', 'mv-web-reporter'); ?>" + mv_result.Message );
                             }
@@ -453,6 +452,7 @@ function mv_login_handler() {
                             }else {
                                 alert ("<?php _e( 'Ошибка конструктора отчета!: ', 'mv-web-reporter'); ?>" + mv_report_result.mv_data.mv_error_code);
                                 console.log ( mv_report_result.mv_data.mv_error_code );
+                                console.log ( mv_report_result.mv_data.Message );
                             }
                         },
                         error : function( result, status, jqxhr ){ // срабатывает только в случае если не сработает AJAX запрос на WP
@@ -483,7 +483,7 @@ add_action('wp_footer', 'mv_login_handler');
 
 /* *********************** PHP обработчики *******************  */
 
-/* !!!!!!!!!!! PHP обработчик AJAX запроса списков орг-ий и кофкеен по токену mv_ask_params_list !!!!!! */
+/* !!!!!!!!!!! PHP обработчик AJAX запроса списков орг-ий и кофеен ПО ТОКЕНУ mv_ask_params_list !!!!!! */
 add_action('wp_ajax_mv_ask_params_list' , 'mv_ask_params_list'); /* Вешаем обработчик mv_ask_params_list на ajax хук */
 add_action('wp_ajax_nopriv_mv_ask_params_list', 'mv_ask_params_list'); /* то же для незарегистрированных пользователей */
 
@@ -520,7 +520,7 @@ function mv_ask_params_list() {
 
 		//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );
 		//PC::debug($mv_result );
-		echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '" , ' . '"Message" : "' . $mv_result->Message . '"}';
+		echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '" , ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : "") . '"}';
 	};
 
 	// Не забываем завершать PHP
