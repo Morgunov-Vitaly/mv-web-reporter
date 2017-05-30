@@ -1,6 +1,30 @@
 /* Специальный класс для изменения вида курсора  */
 .mv-cursor-whait {
-	cursor: wait;
+	cursor: wait!important;
+}
+
+.mv-datepikcer { /* стиль кнопок выбора дат в параметрах отчетов */
+	background: #29b28f;
+    border-radius: 10px;
+    padding: 2px 8px;
+    text-align: center;
+    color: #fff;
+    margin: 3px 3px;
+    display: inline-block;	
+}
+a.mv-datepikcer:active, a.mv-datepikcer:focus { /* стиль кнопок выбора дат в параметрах отчетов */
+	background: #0089ec;
+	color: #fff!important;
+}
+a.mv-datepikcer:hover { /* стиль кнопок выбора дат в параметрах отчетов */
+	background: #0190a8;
+	color: #fff!important;
+}
+
+
+.w-btn.icon_atcenter i { /* Выравнивание иконки в кнопке */
+    left: inherit;
+	position: static;
 }
 
 #form_login label.description {

@@ -91,7 +91,7 @@
 		/* https://cscl.coffeeset.ru/ws/web/report/102/YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj/?dateFrom=2016-04-20T00:00:01&dateTo=2016-04-20T23:59:59&refObject=b0d6ce78-24ce-41d9-a997-f0b876895205&objectType=Company  */
 		$mv_url = "https://cscl.coffeeset.ru/ws/web/report/102/" . $token . "/?dateFrom=" . $dateFrom . "&dateTo="  . $dateTo . "&refObject=" . $refObject . "&objectType=" . $objectType; // Формируем строку запроса
 		
-		PC::debug($mv_url );	
+		//PC::debug($mv_url );	
 		
 		$mv_remote_get = wp_remote_get( $mv_url);	
 		
@@ -103,8 +103,8 @@
 			// Запись в БД в таблицу csc_mv_report_102
 			// Удаляем старые данные и записываем новые
 			
-			PC::debug( $mv_report_result );
-			PC::debug( $token );
+			//PC::debug( $mv_report_result );
+			//PC::debug( $token );
 			tr_truncate_table($token, 'mv_report_102'); // Очищаем таблицу
 			foreach ($mv_report_result->ReportList as $mv_rr):
 			tr_ins_ref_table( $mv_rr, $token, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
@@ -126,12 +126,17 @@
 			/* 
 				произошел сбой:
 				- 404 "Message": "User not found"
+				- 403 - какая-то таинственная ошибка которая переодически выскакивает
 				- 500 "Message": "Произошла ошибка.",  "ExceptionMessage": "Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding." 
 				
 			*/			
 			//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );	
-			//PC::debug($mv_report_result );	
-			echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" :  "' . $mv_report_result->Message . '"}';
+			//PC::debug($mv_report_result );
+			$mv_html = $mv_url; //вызваем конструктор аккордеона
+			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'" ', 'Message' => '"'. $mv_report_result->Message . '"'); 
+			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);			
+			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" :  "' . $mv_report_result->Message . '"}';
+			echo json_encode($mv_response); // Это передается во фронтэнед
 		};
 		
 		// Не забываем завершать PHP

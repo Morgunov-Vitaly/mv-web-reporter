@@ -66,36 +66,43 @@
 						
 						document.write('<input id="dateFrom" required type="date" name="dateFrom" value="' + mv_datamonth + '" />');						
 					</script>
-					<p><a id="mv_dd" href="#" >| вчера </a><a id="mv_ww" href="#" >| неделю назад</a><a id="mv_mm" href="#" >| месяц назад</a><a id="mv_yy" href="#" >| год назад |</a> </p>
+					<p><a id="mv_td" class="mv-datepikcer" href="#" >сегодня</a><a id="mv_dd" class="mv-datepikcer" href="#" >вчера</a><a id="mv_ww" class="mv-datepikcer" href="#" >неделю назад</a><a id="mv_mm" class="mv-datepikcer" href="#" >месяц назад</a><a id="mv_yy" class="mv-datepikcer" href="#" >год назад</a> </p>
 				</li>
 				<li><label class="description" for="dateTo">Дата по: </label>
 					<script type="text/javascript">
 						var now = new Date(); 
 						var mv_datamonth = mv_data_set(now, 0, 0, 0);
 						jQuery(document).ready(function($) {
+						
+							$("#mv_td").click(function(){
+								$("#dateFrom").val(mv_data_set(now, 0, 0, 0)); // устанавливаем вчера
+								$("#dateTo").val(mv_data_set(now, 0, 0, 0)); // устанавливаем +1 день
+								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+								
+							});
 							
 							$("#mv_dd").click(function(){
 								$("#dateFrom").val(mv_data_set(now, 1, 0, 0)); // устанавливаем вчера
-								$("#dateTo").val(mv_data_set(now, 0, 0, 0)); // устанавливаем +1 день
+								$("#dateTo").val(mv_data_set(now, 1, 0, 0)); // устанавливаем +1 день
 								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 								
 							});
 							$("#mv_ww").click(function(){
 								$("#dateFrom").val(mv_data_set(now, 7, 0, 0)); // устанавливаем неделю назад
-								$("#dateTo").val(mv_data_set(now, 6, 0, 0)); // устанавливаем +1 день
+								$("#dateTo").val(mv_data_set(now, 7, 0, 0)); // устанавливаем +1 день
 								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 							});
 							$("#mv_mm").click(function(){
 								
 								$("#dateFrom").val(mv_data_set(now, 0, 1, 0)); // устанавливаем неделю назад
-								$("#dateTo").val(mv_data_set(now, -1, 1, 0)); // устанавливаем +1 день
+								$("#dateTo").val(mv_data_set(now, 0, 1, 0)); // устанавливаем +1 день
 								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 							});
 
 							$("#mv_yy").click(function(){
 								
 								$("#dateFrom").val(mv_data_set(now, 0, 0, 1)); // устанавливаем неделю назад
-								$("#dateTo").val(mv_data_set(now, -1, 0, 1)); // устанавливаем +1 день
+								$("#dateTo").val(mv_data_set(now, 0, 0, 1)); // устанавливаем +1 день
 								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 							});
 							
@@ -105,7 +112,8 @@
 				</li>
 				<li class="buttons">
 					<input type="hidden" name="form_id" value="form_param" />
-					<input id="saveForm" disabled class="button_text w-btn  color_primary style_solid" type="submit" name="submit" value="Создать отчет" />
+					<input id="saveForm" disabled class="button_text w-btn  color_primary style_solid" type="submit" name="submit" value="Создать отчет" /> 
+					
 				</li>
 			</ul>
 		</form>
