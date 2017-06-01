@@ -262,7 +262,7 @@ function mv_login_handler() {
                             mv_password: $('#form_param_pass').val()
                         },
                         success : function(result, status) {
-                            console.log("<?php _e( 'Статус запроса токена: ', 'mv-web-reporter'); ?>" + status ); // Выводим сообщение об ошибках
+                            console.log("<?php _e( 'Статус выполнения AJAX запроса токена на локальный сервер: ', 'mv-web-reporter'); ?>" + status ); // Выводим сообщение об ошибках
                             mv_result = JSON.parse(result); // $.parseJSON(result); //функция JQuery
                             $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
 
@@ -521,8 +521,10 @@ function mv_ask_params_list() {
 
 		*/
 
-		//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );
-		//PC::debug($mv_result );
+		if ( is_wp_error( $mv_remote_get )) { //timeout ?
+			PC::debug( $mv_remote_get );
+			PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );
+		};
 		echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '" , ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : $mv_remote_get->get_error_code()) . '"}';
 	};
 
@@ -574,9 +576,12 @@ function mv_ask_token() {
 
 		*/
 
-		//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );
-		PC::debug($mv_result );
-		echo '{ "mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : $mv_remote_get->get_error_code()) . '"}';
+		if ( is_wp_error( $mv_remote_get )) { //timeout ?
+			PC::debug( $mv_remote_get );
+
+		};
+		PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );
+		echo '{ "mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" : "' . ((isset($mv_result->Message)) ? $mv_result->Message : (( is_wp_error( $mv_remote_get )) ? $mv_remote_get->get_error_code() : "")) . '"}';
 	};
 
 	// Не забываем завершать PHP
