@@ -72,12 +72,13 @@ function wpdt_mv_hook( $object, $table_id ) {
 	Ничего не сработает если токена не было на момент загрузки страницы,
 	или если токен поменяли сменив пользователя
  */
+
 add_action( 'template_redirect', 'mv_receive_token_param');
 function mv_receive_token_param(){
 	global $post;
 	if( has_shortcode( $post->post_content, 'wpdatatable' )) {
 			// Если в контенте есть [ wpdatatable ... ]  главное, чтобы значение не поменялось в БД, иначе сработает только один раз
-			$post->post_content = str_replace('[wpdatatable id=1 table_view=regular var1="YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj"]', '[wpdatatable id=1 table_view=regular var1="'.$_COOKIE['mv_cuc_token'].'"]', $post->post_content);
+			$post->post_content = str_replace('[wpdatatable id=1 table_view=regular var1="YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj"]', '[wpdatatable id=1 table_view=regular var1="'. (isset($_COOKIE['mv_cuc_token']) ? $_COOKIE['mv_cuc_token']: "") .'"]', $post->post_content);
 	}
 }
 /* /Функция для автоматической подстановки значения текущего ТОКЕНА в Шорткод таблицы WpDataTables */

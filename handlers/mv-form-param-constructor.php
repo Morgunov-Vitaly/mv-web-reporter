@@ -62,7 +62,7 @@
 							return yy + '-' + mm + '-' + dd;
 						}
 						
-						var mv_datamonth = mv_data_set(now, 1, 0, 0); 
+						var mv_datamonth = mv_data_set(now, 0, 0, 0); 
 						
 						document.write('<input id="dateFrom" required type="date" name="dateFrom" value="' + mv_datamonth + '" />');						
 					</script>

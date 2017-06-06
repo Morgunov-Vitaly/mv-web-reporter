@@ -4,6 +4,29 @@
 
 /* !!!!!!!!!!!!!!! Блок Передачи нужных переменных на фронтэнед !!!!!!!!!!!!!!!! */
 
+/* Добавляю шорткод [mv_closed] для указания на то, что запись закрыта для доступа без токена CSCL-reportera */
+add_shortcode('mv_closed',"mv_closed");
+function mv_closed(){
+	// Тут позже можно будет чего-нибудь вставить а пока нечего
+
+}
+/*  / Добавляю шорткод [mv_closed] для указания на то, что запись закрыта для доступа без токена CSCL-reportera */
+
+/* Обработчик закрытия страницы от доступа без токена CSCL-reportera  */
+add_action( 'template_redirect', 'mv_close_content');
+function mv_close_content() {
+	global $post;
+	$content = $post->post_content; /* Считываем контент страницы поста и смотрим есть ли шорткод [mv_closed] */
+	if( has_shortcode( $content, 'mv_closed' )) {
+		// Редирект со статусом 401 Неавторизованный запрос, если нет токена или логина $_COOKIE['mv_cuc_user']
+        if (!isset($_COOKIE['mv_cuc_token'])){
+	        wp_redirect( home_url(),401 ); //
+	        exit;
+        }
+	}
+}
+/* / Обработчик закрытия страницы от доступа без токена CSCL-reportera  */
+
 
 function mv_js_variables_login(){
 	//global $post;
@@ -226,6 +249,7 @@ function mv_login_handler() {
                         document.cookie = cookie_name + "=; path=/; expires=" + cookie_date.toGMTString();
                     }
                     delete_cookie ( "mv_cuc_token" ); // удаление куки с токеном
+                    delete_cookie ( "mv_cuc_user" ); // удаление куки с логином
                     $("#mv_login_error").slideUp('normal'); // скрываем сообщение об ошибке
                     $("#form_param_user").attr("value","");// очистить переменную пользователя и пароля
                     $("#form_param_pass").attr("value","");// очистить переменную пользователя и пароля
@@ -411,8 +435,8 @@ function mv_login_handler() {
                             mv_nonce: '<?php echo wp_create_nonce( "mv_take_report_data" ); ?>',
                             ref_organization : window.form_param_ref_organization.value, //по ID поля $('#form_param_ref_organization').val()
                             cafe_ref: window.form_param_cafe.value, //по ID поля $('#form_param_cafe').val()
-                            dateFrom: window.dateFrom.value, //по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '')
-                            dateTo: window.dateTo.value //по ID поля
+                            dateFrom: window.dateFrom.value + 'T00:00:01', //по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '')
+                            dateTo: window.dateTo.value + 'T23:59:59' //по ID поля
                         },
                         success : function( result, status ) {
                             $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
