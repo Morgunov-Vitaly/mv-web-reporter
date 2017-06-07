@@ -111,7 +111,7 @@
 					</script>
 				</li>
 				<li class="buttons">
-					<input type="hidden" name="form_id" value="form_param" />
+                    <input type="hidden" name="form_id" value="form_param" />
 					<input id="saveForm" disabled class="button_text w-btn  color_primary style_solid" type="submit" name="submit" value="<?php _e('Создать отчет', 'mv-web-reporter'); ?>" />
 					
 				</li>

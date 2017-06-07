@@ -1,5 +1,5 @@
 <?php
-/* 	конструктора Login обработчика с кнопкой Необходимо загрузить системные переменные	и осуществить проверку: если нет токена - автоматически запустить окно авторизации */
+/* 	конструктор Login обработчика с кнопкой Необходимо загрузить системные переменные	и осуществить проверку: если нет токена - автоматически запустить окно авторизации */
 
 
 /* !!!!!!!!!!!!!!! Блок Передачи нужных переменных на фронтэнед !!!!!!!!!!!!!!!! */
@@ -85,13 +85,13 @@ function mv_var_constructor() {
 			echo $_COOKIE['mv_cuc_user']; ?></p> <!-- значение текущего пользователя -->
         <p id="mv_user_token"><?php _e( 'Токен: ', 'mv-web-reporter' );
 			echo $_COOKIE['mv_cuc_token']; ?></p> <!-- значение токена -->
-		<?php
+        <?php
 	} else { // токена нет
 		?>
         <p id="mv_user"><?php _e( 'Пользователь: ', 'mv-web-reporter' );
 			_e( 'Пользователь не определен', 'mv-web-reporter' ); ?></p> <!-- значение пользователя -->
         <p id="mv_user_token"><?php _e( 'Токен не определен', 'mv-web-reporter' ); ?></p> <!-- значение токена -->
-		<?php
+        <?php
 	}
 	$html = ob_get_contents();
 	ob_get_clean();
@@ -274,7 +274,7 @@ function mv_login_handler() {
         jQuery(function ($) {
 
             /* !!!!!! #1  Обрабатывем нажатие на кнопку-ссылку LogOut  !!!!!!!!!! */
-            $("#mv_logout_btn").click(function (event) {
+            $("#mv_logout_btn").click(function(event_lo) {
                 // alert ('LogOut Done!');
                 function delete_cookie(cookie_name)// удаление куки с токеном
                 {
@@ -310,7 +310,7 @@ function mv_login_handler() {
                 $(".mv-login").html('<i class=\'fa fa-lock\'></i> LogIn'); // меняем надпись Ссылки на LogIn
                 $(".mv_token_show").slideUp('normal');// скрыть .mv_token_show - все объекты, которые должны отображаться только при наличии токена
                 $(".mv_notoken_show").slideDown('normal');// показать .mv_notoken_show - все объекты, которые должны отображаться когда нет токена
-                event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+                event_lo.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 				<?php
 				if ( has_shortcode( $content, 'mv_closed' ) ) { /* Для закрытых страниц */
 				?>
@@ -328,7 +328,7 @@ function mv_login_handler() {
             /* Обрабатываем ввод неверных данных  */
             /* Если даные корректны - получаем от удаленного сервера значение токена, логина, списка организаций и кофеен */
 
-            $("#form_login").submit(function (event) { /* Отправляем данные формы  */
+            $("#form_login").submit(function(event_li) { /* Отправляем данные формы  */
                 $("body, #saveForm, #mv_login_btn, .pum-container").addClass("mv-cursor-whait"); // устанавливаем курсор ожидание
                 $.ajax({
                     type: 'GET',
@@ -339,7 +339,7 @@ function mv_login_handler() {
                         mv_login: $('#form_param_user').val(),
                         mv_password: $('#form_param_pass').val()
                     },
-                    success: function (result, status) {
+                    success: function(result, status) {
                         console.log("<?php _e( 'Статус выполнения AJAX запроса токена на локальный сервер: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
                         mv_result = JSON.parse(result); // $.parseJSON(result); //функция JQuery
                         $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
@@ -394,15 +394,14 @@ function mv_login_handler() {
 
                     },
                     error: function (result, status, jqxhr) { /* срабатывает только в случае если не сработает AJAX запрос на WP */
-                        //$("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
-                        $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
-                        alert("<?php _e( 'Возникла ошибка при запросе токена к серверу WP! Ответ сервера: ', 'mv-web-reporter' ); ?>" + result);
-                        console.log("<?php _e( 'Статус: ', 'mv-web-reporter' ); ?>" + status);
-                        console.log("<?php _e( 'jqXHR статус: ', 'mv-web-reporter' ); ?>" + jqxhr.status + " " + jqxhr.statusText);
-                        console.log(jqxhr.getAllResponseHeaders());
+                       $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
+                       alert("<?php _e( 'Возникла ошибка при запросе токена к серверу WP! Ответ сервера: ', 'mv-web-reporter' ); ?>" + result);
+                       console.log("<?php _e( 'Статус: ', 'mv-web-reporter' ); ?>" + status);
+                       console.log("<?php _e( 'jqXHR статус: ', 'mv-web-reporter' ); ?>" + jqxhr.status + " " + jqxhr.statusText);
+                       console.log(jqxhr.getAllResponseHeaders());
                     }
                 });
-                event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+                event_li.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 	            <?php
 	            if ( has_shortcode( $content, 'mv_closed' ) ) { /* Для закрытых страниц [mv_param_form] */
 	            ?>
@@ -442,7 +441,7 @@ function mv_login_handler() {
         jQuery(document).ready(function ($) {
             // проверяем наличие токена
             mv_token = mv_getCookie('mv_cuc_token');
-            if ((mv_token !== "") && (typeof mv_token !== "undefined") && (mv_flag_token_ask == 0)) { /* если токен не пустой и флаг усановлен на 1 */
+            if ((mv_token != "") && (typeof mv_token != "undefined") && (mv_flag_token_ask == 0)) { /* если токен не пустой и флаг усановлен на 1 */
                 mv_flag_token_ask = mv_flag_token_ask + 1;
                 /* изменяем флаг им можно будет пользоваться для подсчета кол-во срабатываний данного обработчика */
                 $("body, #saveForm, #mv_login_btn, .pum-container").addClass("mv-cursor-whait");
@@ -509,11 +508,11 @@ function mv_login_handler() {
         jQuery(function ($) {
             /* !!!!! AJAX  Обработчик отправки данных формы параметров отчетов и вызова конструктора табличного отчета(102) !!!!!  */
 
-            $("#form_param").on('submit', function (event) {  /* отправка данных формы с параметрами для построения отчета */
-                $("body, #saveForm, #mv_login_btn, .pum-container").addClass("mv-cursor-whait"); // устанавливаем курсор ожидание
+            $("#form_param").submit(function (event_pr) { /* отправка данных формы с параметрами для построения отчета */
+                $("body, #saveForm, #mv_login_btn, .pum-container").addClass("mv-cursor-whait"); /* устанавливаем курсор ожидание */
                 $.ajax({
                     type: 'GET',
-                    url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся как альтернатива '*/
+                    url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся как альтернатива */
                     data: {
                         action: 'mv_take_report_data', /* Вызывам обработчик делающий запрос данных отчета*/
                         mv_nonce: '<?php echo wp_create_nonce( "mv_take_report_data" ); ?>',
@@ -523,28 +522,12 @@ function mv_login_handler() {
                         dateTo: window.dateTo.value + 'T23:59:59' //по ID поля
                     },
                     success: function (result, status) {
-                        $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
-                        //$("#mv_report_place").append( 'Ответ удаленного сервера: ' +  result);
-                        //console.log( 'Ответ на запрос 2: ' +  result ); /* выводим результаты в консоли */
-                        //$("#mv_report_place").html(result);
-                        //alert ('Ответ на запрос 2: ' + result);
+                        $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); /* убираем курсор ожидание */
                         mv_report_result = result;
                         //console.log('mv_report_result: ');
                         //console.log(mv_report_result);
                         mv_report_result = JSON.parse(result);
-                        //console.log('mv_report_result.mv_data: ');
-                        //console.log(mv_report_result.mv_data);
 
-                        //console.log('mv_report_result.mv_data.mv_error_code: ');
-                        //console.log(mv_report_result.mv_data.mv_error_code);
-
-                        //console.log('mv_report_result.mv_html: ');
-                        //console.log(mv_report_result.mv_html);
-                        //mv_report_result = JSON.parse(result.mv_data); // $.parseJSON(result); //функция JQuery превратит строку с данными в формате JSON в JavaScript-объект/массив/
-                        //console.log('mv_report_result: ');
-                        //console.log(mv_report_result);
-                        //console.log('mv_report_result.mv_error_code: ');
-                        //console.log(mv_report_result.mv_error_code);
                         $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); // убираем курсор ожидание
                         if (mv_report_result.mv_data.mv_error_code == "200") { //Все получилось!
                             $(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
@@ -573,8 +556,7 @@ function mv_login_handler() {
                     }
                 });
 
-                event.preventDefault();
-                // Отменяем стандартное действие кнопки Submit в форме
+                event_pr.preventDefault();/* Отменяем стандартное действие кнопки Submit в форме */
             });
             /* !!!!!!!!! / AJAX  Обработчик отправки данных формы параметров отчетов  !!!!!!!!!!!!! */
         });
@@ -706,5 +688,4 @@ function mv_ask_token() {
 
 ;
 /* !!!!!!!!!!! / PHP обработчик AJAX запроса mv_ask_token !!!!!!!!!!! */
-
 ?>

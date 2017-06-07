@@ -101,12 +101,12 @@
 		echo'<td style="border: none;"></td>';
 		echo'</tr>';
 		echo'<tr>';
-		echo'<td style="border: none;"></td>';
+		echo'<td style="border: none;"><i class="fa fa-diamond" aria-hidden="true"></i></td>';
 		echo'<td style="border: none;">Бонусов продано + кэшбэк</td>';
 		echo'<td style="border: none;" title="BonusAddTotal">' . $tr->BonusAddTotal . '</td>';
 		echo'</tr>';
 		echo'<tr>';
-		echo'<td style="border: none;"><i class="fa fa-diamond" aria-hidden="true"></i></td>';
+		echo'<td style="border: none;"></td>';
 		echo'<td style="border: none;">Бонусов продано</td>';
 		echo'<td style="border: none;" title="BonusSalesAmount">' . $tr->BonusSalesAmount . '</td>';
 		echo'</tr>';
