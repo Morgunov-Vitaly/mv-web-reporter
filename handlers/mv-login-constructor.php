@@ -315,7 +315,7 @@ function mv_login_handler() {
 				if ( has_shortcode( $content, 'mv_closed' ) ) { /* Для закрытых страниц */
 				?>
 
-                document.location.href = 'http://cscl-reporter.com/reports'; //Редирект на страницу дашборда ру енг? http://cscl-reporter.com/ru/otchety
+                document.location.href = 'http://cscl-reporter.com'; //Редирект на гл. страницу  ру енг? http://cscl-reporter.com/ru/otchety
 				<?php
 				}/* /Для закрытых страниц отчетов и закупок */
 				?>
@@ -405,7 +405,7 @@ function mv_login_handler() {
 	            <?php
 	            if ( has_shortcode( $content, 'mv_closed' ) ) { /* Для закрытых страниц [mv_param_form] */
 	            ?>
-                document.location.href = 'http://cscl-reporter.com/reports'; //Редирект на страницу дашборда ру енг? http://cscl-reporter.com/ru/otchety
+                document.location.href = 'http://cscl-reporter.com'; //Редирект на главную страницу ру енг? http://cscl-reporter.com/ru/otchety
                 <?php
 	            } /* / Для закрытых страниц */
 	            ?>
