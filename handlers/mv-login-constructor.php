@@ -516,10 +516,10 @@ function mv_login_handler() {
                     data: {
                         action: 'mv_take_report_data', /* Вызывам обработчик делающий запрос данных отчета*/
                         mv_nonce: '<?php echo wp_create_nonce( "mv_take_report_data" ); ?>',
-                        ref_organization: window.form_param_ref_organization.value, //по ID поля $('#form_param_ref_organization').val()
-                        cafe_ref: window.form_param_cafe.value, //по ID поля $('#form_param_cafe').val()
-                        dateFrom: window.dateFrom.value + 'T00:00:01', //по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '')
-                        dateTo: window.dateTo.value + 'T23:59:59' //по ID поля
+                        ref_organization: document.getElementById('form_param_ref_organization').value, //по ID поля $('#form_param_ref_organization').val() window.form_param_ref_organization.value
+                        cafe_ref: document.getElementById('form_param_cafe').value, //по ID поля $('#form_param_cafe').val() window.form_param_cafe.value
+                        dateFrom: document.getElementById('dateFrom').value + 'T00:00:01', //по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '') window.dateFrom.value + 'T00:00:01',
+                        dateTo: document.getElementById('dateTo').value + 'T23:59:59' //по ID поля document.getElementById('form_param_ref_organization').value   window.dateTo.value + 'T23:59:59'
                     },
                     success: function (result, status) {
                         $("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); /* убираем курсор ожидание */
