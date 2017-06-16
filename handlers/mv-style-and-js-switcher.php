@@ -16,8 +16,8 @@
 			wp_register_style( 'mvaccordioncss', plugins_url('../css/accordion.core.css', __FILE__));
 			wp_enqueue_style( 'mvaccordioncss' );
 		}
-		if( has_shortcode( $content, 'mv_login_code' ) ) {
-			// смотрим нет ли указанных шорткодов в контенте.	
+		if( has_shortcode( $content, 'mv_param_form' ) ) {
+			// смотрим нет ли шорткода [mv_param_form]  в контенте. Раньше стояло [mv_login_code]
 			
 			// Подключаем измененный файл стилей 
 			// wp_register_style( 'select2css', plugins_url('css/select2.css', __FILE__));
@@ -49,8 +49,8 @@
 			wp_enqueue_script( 'mvaccordionjs' );
 		}		
 		
-		if( has_shortcode( $content, 'mv_login_code' ) ) {
-			// смотрим нет ли указанных шорткодов в контенте.
+		if( has_shortcode( $content, 'mv_param_form' ) ) {
+			// смотрим нет ли шорткода [mv_param_form]  в контенте. Раньше стояло [mv_login_code]
 			// wp_register_script( 'select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array( 'jquery' ), '1.0', true );
 			wp_register_script( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js', array( 'jquery' ), '1.0', true );
 			wp_enqueue_script( 'select2' );
