@@ -12,10 +12,25 @@
 	
 	/* Конструктор формы ввода предварительных параметров отчетов */
 	
+	
 	function mv_param_form_constructor(){
 		ob_start();
+
+	// Забираем токен из кукиса и смотрим не равен ли он '', если его нет, то нужно вызвать форму регистрации
+	if ( isset( $_COOKIE['mv_cuc_token'] ) ) { /* токен есть надо просто вызвать конструктор формы параметров (выбора отчетов) */
+		?><script type='text/javascript'> mv_flag_token_ask = 0; /* переменная флаг нужно ли делать запрос по токену -1 - токена нет 0- да более - нет */
+        </script>
+		<?php
+	} else { // программно вызываем окно авторизации
+		?><script type="text/javascript">
+            mv_flag_token_ask = -1; /* переменная флаг нужно ли делать запрос по токену -1 - токена нет 0- да более - нет */
+            jQuery(document).ready(function () { /* было function($)*/
+				PUM.open(6132);
+            });
+        </script>
+		<?php
+	}
 	?>
-	
 	<!-- Форма ввода предварительных параметров отчетов  -->
 	<div id="form_param_container_inputs" style="display: none;">
 		
@@ -41,7 +56,9 @@
 						</div> 
 					</div> 
 				</li>
-				<li><label class="description" for="dateFrom"><?php _e('Дата от: ', 'mv-web-reporter'); ?></label>
+				<li><p><a id="mv_td" class="mv-datepikcer" href="#"><?php _e('сегодня', 'mv-web-reporter'); ?></a><a id="mv_dd" class="mv-datepikcer" href="#"><?php _e('вчера', 'mv-web-reporter'); ?></a><a id="mv_ww" class="mv-datepikcer" href="#" ><?php _e('неделю назад', 'mv-web-reporter'); ?></a><a id="mv_mm" class="mv-datepikcer" href="#"><?php _e('месяц назад', 'mv-web-reporter'); ?></a><a id="mv_yy" class="mv-datepikcer" href="#"><?php _e('год назад', 'mv-web-reporter'); ?></a><a id="mv_more" class="mv-datepikcer" href="#"><?php _e('...', 'mv-web-reporter'); ?></a></p>
+				<div id="mv_data_from" style="display: none">
+				<label class="description" for="dateFrom"><?php _e('Дата от: ', 'mv-web-reporter'); ?></label>
 					<script type="text/javascript">
 						function mv_data_set(ord, orm, ory, vdd, vmm, vyy) { 
 							// В параметрах указываем месяц от 1 до 12
@@ -87,7 +104,7 @@
 						
 						document.write('<input id="dateFrom" required type="date" name="dateFrom" value="' + mv_datamonth + '" />');						
 					</script>
-					<p><a id="mv_td" class="mv-datepikcer" href="#"><?php _e('сегодня', 'mv-web-reporter'); ?></a><a id="mv_dd" class="mv-datepikcer" href="#"><?php _e('вчера', 'mv-web-reporter'); ?></a><a id="mv_ww" class="mv-datepikcer" href="#" ><?php _e('неделю назад', 'mv-web-reporter'); ?></a><a id="mv_mm" class="mv-datepikcer" href="#"><?php _e('месяц назад', 'mv-web-reporter'); ?></a><a id="mv_yy" class="mv-datepikcer" href="#"><?php _e('год назад', 'mv-web-reporter'); ?></a> </p>
+					</div>
 				</li>
 				<li><label class="description" style="display: none" for="dateTo"><?php _e('Дата по: ', 'mv-web-reporter'); ?></label>
 					<script type="text/javascript">
@@ -124,6 +141,10 @@
 								$("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год назад
 								$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год день
 								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+							});
+							
+							$("#mv_more").click(function(){ // открываем поле ввода даты От вручную
+								$("#mv_data_from").toggle("normal");
 							});
 							
 							$("#dateFrom").change(function(){ // автоматическое присвоение Дате до того же значения, что и Дата От

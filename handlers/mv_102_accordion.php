@@ -19,7 +19,7 @@
 		} else {
 		echo'<div class="org_name"><i class="fa fa-circle-o mv_aim" aria-hidden="true"></i>' . $tr->ObjectName . '</div>'; 
 			}
-		echo'<div class="sale_val">' . number_format($tr->SalesTotal, 2, ',', ' ') . '</div>';
+		echo'<div class="sale_val">' . number_format($tr->RevenueFactSum, 2, ',', ' ') . '</div>'; //number_format($tr->SalesTotal, 2, ',', ' ')
 		echo'</div>';
 		echo'<div class="panel g-cols vc_row wpb_row vc_row-fluid">';
 		echo'<div class="vc_col-sm-6 wpb_column vc_column_container">';

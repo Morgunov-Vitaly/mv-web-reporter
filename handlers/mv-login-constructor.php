@@ -114,22 +114,12 @@ function mv_login_constructor() {
                                    href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> <span
                         class="w-btn-label"> <?php _e( 'Выход', 'mv-web-reporter' ); ?></span></a>
         </p> <!-- <button id="mv_login_modal_init">Вход / Выход</button> -->
-        <script type='text/javascript'>
-            mv_flag_token_ask = 0;
-            /* переменная флаг нужно ли делать запрос по токену -1 - токена нет 0- да более - нет */
-        </script>
 		<?php
 	} else { // кнопка сама нажимается и всплывает окно авторизации
 		?>
         <p class="align_center"><a id="mv_login_modal_init" class="w-btn style_solid color_primary icon_atcenter"
                                    href="#"><i class="fa fa-sign-in" aria-hidden="true"></i><span
                         class="w-btn-label"> <?php _e( 'Вход', 'mv-web-reporter' ); ?></span></a></p>
-        <script type="text/javascript">
-            mv_flag_token_ask = -1; /* переменная флаг нужно ли делать запрос по токену -1 - токена нет 0- да более - нет */
-            jQuery(document).ready(function () { /* было function($)*/
-                PUM.open(6132);
-            });
-        </script>
 		<?php
 	}
 	$html = ob_get_contents();
