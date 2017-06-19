@@ -35,22 +35,22 @@
 		),
 		array( 
 		'%s',
-		'%d',
-		'%d',
-		'%d',
-		'%d',
-		'%d',
-		'%d',
-		'%s',
-		'%d',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
 		'%d',
 		'%s',
 		'%d',
 		'%d',
-		'%d',
-		'%d',
-		'%d',
-		'%d',
+		'%s',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
 		'%s',
 		'%s'
 		)
@@ -65,7 +65,7 @@
 		//$delete = $wpdb->query("TRUNCATE TABLE $table"); /* надо дополнить условием отбора по токену */
 		$wpdb->delete( $table, array( 'token' => $token ), array( '%s' ) );
 		//$wpdb->query( "DELETE FROM $table WHERE token='$token'");
-
+		
 	}
 	
 	
@@ -96,7 +96,7 @@
 		//PC::debug($mv_url );	
 		
 		$mv_remote_get = wp_remote_get( $mv_url, array(
-			'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
+		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
 		
 		$mv_report_result = json_decode( wp_remote_retrieve_body( $mv_remote_get ) ); /* PHP функция Принимает закодированную в JSON строку и преобразует ее в переменную PHP */
 		// Ну и если ответ сервера 200 OK, то можно вывести что-нибудь
@@ -111,7 +111,7 @@
 			foreach ($mv_report_result->ReportList as $mv_rr):
 			tr_ins_ref_table( $mv_rr, $token, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
 			endforeach;
-
+			
 			$mv_html = mv_102_accordion_constructor($mv_report_result); //вызваем конструктор аккордеона
 			//PC::debug( $mv_html );
 			$mv_data = array('mv_error_code' => '200', 'Message' => 'Well done!'); 

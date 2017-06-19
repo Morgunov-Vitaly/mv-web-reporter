@@ -12,14 +12,14 @@
 	
 		foreach ($mv_report_result->ReportList as $tr):
 		echo'<li>';  $mv_revenueFactSum = $tr->SalesRevenue + $tr->BonusPayTotal - $tr->BonusSalesAmount - $tr->CardSalesAmount;
-		$gradient = ($tr->RevenuePlanSum > 0) ? ( 100 * $mv_revenueFactSum / $tr->RevenuePlanSum ) : 0;
+		$gradient = ($tr->RevenuePlanSum > 0) ? ( 100 * $tr->RevenueFactSum / $tr->RevenuePlanSum ) : 0; //$mv_revenueFactSum
 		echo'<div class="mv_handle" style="background: linear-gradient(to right, #a2ddce 0%, #a2ddce '. $gradient .'%, rgba(255,255,255,1) '. $gradient .'%, rgba(255,255,255,1) 100%);">';
 		if ($gradient >= 100 ) { 
 		echo'<div class="org_name"><i class="fa fa-check-circle mv_aim mv_status_done" aria-hidden="true"></i>' . $tr->ObjectName . '</div>'; 
 		} else {
 		echo'<div class="org_name"><i class="fa fa-circle-o mv_aim" aria-hidden="true"></i>' . $tr->ObjectName . '</div>'; 
 			}
-		echo'<div class="sale_val">' . number_format($tr->RevenueFactSum, 2, ',', ' ') . '</div>'; //number_format($tr->SalesTotal, 2, ',', ' ')
+		echo'<div class="sale_val">' . number_format($tr->SalesRevenue, 2, ',', ' ') . '</div>'; //number_format($tr->RevenueFactSum, 2, ',', ' ')
 		echo'</div>';
 		echo'<div class="panel g-cols vc_row wpb_row vc_row-fluid">';
 		echo'<div class="vc_col-sm-6 wpb_column vc_column_container">';
@@ -35,16 +35,16 @@
 		echo'<td style="border: none;">Выручка (только кэш)</td>';
 		echo'<td style="border: none;" title="SalesRevenue">' . number_format($tr->SalesRevenue, 2, ',', ' ') . '</td>';
 		echo'</tr>';
-		echo'<tr>';
-		echo'<td style="border: none;"></td>';
-		echo'<td style="border: none;">Факт товарных продаж</td>';
-		echo'<td style="border: none;" title="RevenueFactSum ">' . number_format($mv_revenueFactSum, 2, ',', ' ') .'<span class="mv_small"> ' . number_format($gradient, 1, ',', ' ') .'%</span></td>';
-		echo'</tr>';
+		//echo'<tr>';
+		//echo'<td style="border: none;"></td>';
+		//echo'<td style="border: none;">Факт товарных продаж расчет.</td>';
+		//echo'<td style="border: none;" title="RevenueFactSum ">' . number_format($mv_revenueFactSum, 2, ',', ' ') .'<span class="mv_small"> ' . number_format($gradient, 1, ',', ' ') .'%</span></td>';
+		//echo'</tr>';
 		
 		echo'<tr>';
 		echo'<td style="border: none;"></td>';
-		echo'<td style="border: none;">Факт товарных продаж из базы</td>';
-		echo'<td style="border: none;" title="RevenueFactSum ">' . number_format($tr->RevenueFactSum, 2, ',', ' ') . '</td>';
+		echo'<td style="border: none;">Факт товарных продаж</td>';
+		echo'<td style="border: none;" title="RevenueFactSum ">' . number_format($tr->RevenueFactSum, 2, ',', ' ') .'<span class="mv_small"> ' . number_format($gradient, 1, ',', ' ') .'%</span></td>';
 		echo'</tr>';
 		
 		echo'<tr>';

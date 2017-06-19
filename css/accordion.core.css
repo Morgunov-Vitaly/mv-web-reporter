@@ -95,7 +95,7 @@ ol.mv_accordion {
 .org_name {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    color: #676f7c;
+    color: #416960; /* #676f7c */
     font-style: normal;
     font-weight: normal;
     overflow: hidden;
@@ -108,7 +108,7 @@ ol.mv_accordion {
 .sale_val {
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
-    color: #676f7c;
+    color: #416e6a; /* #676f7c */
     font-style: normal;
     font-weight: bold;
     text-align: right;
@@ -126,7 +126,7 @@ ol.mv_accordion {
     content: "\f078";
     font-family: FontAwesome;
     font-style: normal;
-    color: #dfe0e3;
+    color: #91bfb4; /* #dfe0e3 #7d9c95 */
     font-weight: normal;
     position: absolute;
     top: 12px;
@@ -148,7 +148,7 @@ ol.mv_accordion {
 } 
 
 .mv_accordion-opener:hover {
-background-color: #f2f3f5; /* #e6f8ee;*/
+background-color: #f0faf7; /* #e6f8ee; #f2f3f5 */
 	
 } 
 
@@ -157,9 +157,56 @@ background-color: #f2f3f5; /* #e6f8ee;*/
 
 .mv_aim { /* мой стиль для значка цели*/
 	font-size: 20px;
-	color:#dfe0e3;
+	color:#88cdbc; /* #dfe0e3 */
 	margin: 0 20px 0 25px;
 }
 .mv_status_done { /* мой стиль для значка цели - выполнено*/
-	color: #67bd98;
+	color: #416e6a; /* #67bd98; */
 }
+
+.mv_102_report_table {
+	width: 90%;
+	border: none;
+}
+.mv_102_report_table td{
+	padding: 0.3rem 0.1rem;
+}
+
+.mv_102_rt_border_top {
+	border-top: 1px dotted #ccc;
+}
+.mv_102_rt_padding_top {
+	padding-top: 15px;
+}
+.mv_small {
+	font-size: 10px;
+	color: #29b28f;
+}
+
+/* Медиаклассы для мобильных экранов */
+
+/* IPhone 5 320x 568 */
+
+@media (max-width: 414px){	
+.org_name {
+    font-size: 14px;
+    width: 55%;
+}
+.sale_val {
+    font-size: 14px;
+    padding: 0 37px 0 10px;
+}
+
+.mv_accordion-opener:after {
+    right: 13px;
+}
+
+.active .mv_accordion-opener:after {
+    right: 13px;
+}
+.mv_102_report_table td {
+    font-size: 14px;
+}
+}
+
+/* / Медиаклассы для мобильных экранов */
