@@ -518,7 +518,7 @@ function mv_login_handler() {
                     success: function (result, status) {
                         //$("body, #saveForm, #mv_login_btn, .pum-container").removeClass("mv-cursor-whait"); /* убираем курсор ожидание */
                         $("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
-                        mv_report_result = result;
+                        //mv_report_result = result;
                         //console.log('mv_report_result: ');
                         //console.log(mv_report_result);
                         mv_report_result = JSON.parse(result);
@@ -529,6 +529,9 @@ function mv_login_handler() {
                             $(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
                             //$("#mv_report_table").html(result);// раньше это был построитель таблицы
                             $("#mv_ac_tast").html(mv_report_result.mv_html);// обновляем аккардеон
+							document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;		
+							document.getElementById("displaydatefrom").innerHTML = document.getElementById("dateFrom").value; 
+							document.getElementById("displaydateto").innerHTML = document.getElementById("dateTo").value;
 
                             wpDataTables.table_1.fnDraw(); // Обновляем wpDataTables
                             console.log("<?php _e( 'Статус запроса конструктора отчета: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках

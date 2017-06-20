@@ -8,8 +8,14 @@
 	function mv_102_accordion_constructor( $mv_report_result){
 		
 		ob_start();
+		// start Выводим заголовок отчета: дата от до, название организации 
+		echo '<p style="display: inline;">'.__('Организация: ', 'mv-web-reporter').'</p><p id="displayorgname" style="display: inline;"></p>';
+		echo '<p style="display: inline;"><br>'.__('Дата от: ', 'mv-web-reporter').'</p><p id="displaydatefrom" style="display: inline;"></p>';
+		echo '<p style="display: inline;"> / '.__('Дата по: ', 'mv-web-reporter').'</p><p id="displaydateto" style="display: inline;"></p>';
+		echo '<p><br></p>';
+		// end Выводим заголовок отчета: дата от до, название организации 
 		echo'<ul id="mv_accordion" class="mv_accordion">';
-	
+		
 		foreach ($mv_report_result->ReportList as $tr):
 		echo'<li>';  $mv_revenueFactSum = $tr->SalesRevenue + $tr->BonusPayTotal - $tr->BonusSalesAmount - $tr->CardSalesAmount;
 		$gradient = ($tr->RevenuePlanSum > 0) ? ( 100 * $tr->RevenueFactSum / $tr->RevenuePlanSum ) : 0; //$mv_revenueFactSum
