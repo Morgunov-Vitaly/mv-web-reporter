@@ -21,6 +21,34 @@ a.mv-datepikcer:hover { /* стиль кнопок выбора дат в пар
 	color: #fff!important;
 }
 
+/* стиль кнопок выбора дат в параметрах отчетов  */
+
+input[type=radio] {display: none;}
+
+input[type=radio] + label {
+    border-radius: 10px;
+    background: #29b28f;
+    color: white;
+    display: inline-block;
+    font-size: 10px;    
+    line-height: 40px;
+    margin: 3px 3px;
+    padding: 2px 8px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;    
+    transition: font-size ease .3s;
+}
+input[type=radio] + label:hover {
+  background: #0190a8;
+}
+input[type=radio]:checked + label {
+    background: #0089ec;    
+}
+
+
+
+/* / стиль кнопок выбора дат в параметрах отчетов  */
 
 .w-btn.icon_atcenter i { /* Выравнивание иконки в кнопке */
     left: inherit;

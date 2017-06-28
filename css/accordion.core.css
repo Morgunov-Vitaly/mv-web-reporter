@@ -187,7 +187,7 @@ background-color: #f0faf7; /* #e6f8ee; #f2f3f5 */
 
 /* IPhone 5 320x 568 */
 
-@media (max-width: 414px){	
+@media (max-width: 515px){	/* 414px*/
 .org_name {
     font-size: 14px;
     width: 55%;
@@ -207,6 +207,13 @@ background-color: #f0faf7; /* #e6f8ee; #f2f3f5 */
 .mv_102_report_table td {
     font-size: 14px;
 }
+
 }
+
+/* @media (max-width: 900px){ */
+.mv_align_right {
+	text-align: right;
+}
+/* } */
 
 /* / Медиаклассы для мобильных экранов */

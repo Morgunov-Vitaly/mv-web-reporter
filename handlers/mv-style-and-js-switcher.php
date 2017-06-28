@@ -4,7 +4,7 @@
 	Разделил, чтобы стили подсоединились в шапке, а скрипты в футере !!!!!!!!!!!!!!!!!!*/
 	
 	
-	/* !!!!!!!!!!   Подключаем стили !!!!!!!!!! */	
+	/* !!!!!!!!!!   Подключаем стили в зависимости от обнаруженных шорткодов !!!!!!!!!! */	
 	
 	function enqueue_mv_style() {
 		/* Проверяем наличие шорткода в посте */
@@ -18,9 +18,8 @@
 		}
 		if( has_shortcode( $content, 'mv_param_form' ) ) {
 			// смотрим нет ли шорткода [mv_param_form]  в контенте. Раньше стояло [mv_login_code]
-			
 			// Подключаем измененный файл стилей 
-			// wp_register_style( 'select2css', plugins_url('css/select2.css', __FILE__));
+			// wp_register_style( 'select2css', plugins_url('css/select2.min.css', __FILE__));
 			wp_register_style( 'select2css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
 			wp_enqueue_style( 'select2css' );
 		}	
@@ -51,7 +50,7 @@
 		
 		if( has_shortcode( $content, 'mv_param_form' ) ) {
 			// смотрим нет ли шорткода [mv_param_form]  в контенте. Раньше стояло [mv_login_code]
-			// wp_register_script( 'select2', 'http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.js', array( 'jquery' ), '1.0', true );
+			// wp_register_script( 'select2', plugins_url('js/select2.full.min.js', __FILE__), array( 'jquery' ), '1.0', true );
 			wp_register_script( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js', array( 'jquery' ), '1.0', true );
 			wp_enqueue_script( 'select2' );
 			

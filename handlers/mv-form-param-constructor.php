@@ -56,7 +56,16 @@
 						</div> 
 					</div> 
 				</li>
-				<li><p><a id="mv_td" class="mv-datepikcer" href="#"><?php _e('сегодня', 'mv-web-reporter'); ?></a><a id="mv_dd" class="mv-datepikcer" href="#"><?php _e('вчера', 'mv-web-reporter'); ?></a><a id="mv_ww" class="mv-datepikcer" href="#" ><?php _e('неделю назад', 'mv-web-reporter'); ?></a><a id="mv_mm" class="mv-datepikcer" href="#"><?php _e('месяц назад', 'mv-web-reporter'); ?></a><a id="mv_yy" class="mv-datepikcer" href="#"><?php _e('год назад', 'mv-web-reporter'); ?></a><a id="mv_more" class="mv-datepikcer" href="#"><?php _e('...', 'mv-web-reporter'); ?></a></p>
+				<li><p>
+					<input  type="radio" id="mv_td" name="mv_radio" checked /><label for="mv_td"><?php _e('сегодня', 'mv-web-reporter'); ?></label>
+					<input  type="radio" id="mv_dd" name="mv_radio" /><label for="mv_dd"><?php _e('вчера', 'mv-web-reporter'); ?></label>
+					<input  type="radio" id="mv_ww" name="mv_radio" /><label for="mv_ww"><?php _e('неделю назад', 'mv-web-reporter'); ?></label>
+					<input  type="radio" id="mv_mm" name="mv_radio" /><label for="mv_mm"><?php _e('месяц назад', 'mv-web-reporter'); ?></label>
+					<input  type="radio" id="mv_yy" name="mv_radio" /><label for="mv_yy"><?php _e('год назад', 'mv-web-reporter'); ?></label>
+					<input  type="radio" id="mv_more" name="mv_radio" /><label for="mv_more"><?php _e('...', 'mv-web-reporter'); ?></label>
+
+					<!--<a id="mv_td" class="mv-datepikcer" href="#"><?php _e('сегодня', 'mv-web-reporter'); ?></a><a id="mv_dd" class="mv-datepikcer" href="#"><?php _e('вчера', 'mv-web-reporter'); ?></a><a id="mv_ww" class="mv-datepikcer" href="#" ><?php _e('неделю назад', 'mv-web-reporter'); ?></a><a id="mv_mm" class="mv-datepikcer" href="#"><?php _e('месяц назад', 'mv-web-reporter'); ?></a><a id="mv_yy" class="mv-datepikcer" href="#"><?php _e('год назад', 'mv-web-reporter'); ?></a><a id="mv_more" class="mv-datepikcer" href="#"><?php _e('...', 'mv-web-reporter'); ?></a> -->
+					</p>
 				</li>
 				<li>
 					<div class="mv_data_from" style="display: none">
@@ -116,7 +125,7 @@
 								$("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
 								$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
 								$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+								// event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 								
 							});
 							
@@ -124,21 +133,21 @@
 								$("#dateFrom").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
 								$("#dateTo").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
 								$("#form_param").submit(); //Отправляем данные формы "Субмитим"								
-								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+								//event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 								
 							});
 							$("#mv_ww").click(function(){ //клик по кнопке неделю назад
 								$("#dateFrom").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем неделю назад
 								$("#dateTo").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем +1 день
 								$("#form_param").submit(); //Отправляем данные формы "Субмитим"								
-								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+								//event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 							});
 							$("#mv_mm").click(function(){ //клик по кнопке месяц назад
 								
 								$("#dateFrom").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
 								$("#dateTo").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
 								$("#form_param").submit(); //Отправляем данные формы "Субмитим"								
-								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+								//event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 							});
 							
 							$("#mv_yy").click(function(){ //клик по кнопке год назад
@@ -146,7 +155,7 @@
 								$("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год назад
 								$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год день
 								$("#form_param").submit(); //Отправляем данные формы "Субмитим"								
-								event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
+								//event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 							});
 							
 							$("#mv_more").click(function(){ // открываем поле ввода "Дата ОТ" вручную
