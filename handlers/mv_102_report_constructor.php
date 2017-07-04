@@ -6,14 +6,14 @@
 	*/
 	
 	/* Функция вставки новых значений в таблицу БД WP - работает	*/
-	function tr_ins_ref_table($mv_rr, $token, $mv_table_name ){
+	function tr_ins_ref_table($mv_rr, $mv_user, $mv_table_name ){
 		
 		global $wpdb;
 		
 		$wpdb->insert( 
 		$wpdb->prefix . $mv_table_name, // указываем таблицу
 		array(
-		'token'=> $token,
+		'user'=> $mv_user,
 		'avgcheckvalue'=> $mv_rr->AvgCheckValue,
 		'bonusaddtotal'=> $mv_rr->BonusAddTotal,
 		'bonuspaytotal'=> $mv_rr->BonusPayTotal,
@@ -58,13 +58,13 @@
 		
 	}
 	/* Функция  очистки таблицы БД WP */
-	function tr_truncate_table($token, $mv_table_name){
+	function tr_truncate_table($mv_user, $mv_table_name){
 		
 		global $wpdb;
 		$table  = $wpdb->prefix . $mv_table_name;
 		//$delete = $wpdb->query("TRUNCATE TABLE $table"); /* надо дополнить условием отбора по токену */
-		$wpdb->delete( $table, array( 'token' => $token ), array( '%s' ) );
-		//$wpdb->query( "DELETE FROM $table WHERE token='$token'");
+		$wpdb->delete( $table, array( 'user' => $mv_user ), array( '%s' ) );
+		//$wpdb->query( "DELETE FROM $table WHERE user='$mv_user'");
 		
 	}
 	
@@ -107,9 +107,10 @@
 			
 			//PC::debug( $mv_report_result );
 			//PC::debug( $token );
-			tr_truncate_table($token, 'mv_report_102'); // Очищаем таблицу
+			$mv_user = ( $_COOKIE['mv_cuc_user'] != '' ? $_COOKIE['mv_cuc_user'] : '');
+			tr_truncate_table($mv_user, 'mv_report_102'); // Очищаем таблицу
 			foreach ($mv_report_result->ReportList as $mv_rr):
-			tr_ins_ref_table( $mv_rr, $token, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
+			tr_ins_ref_table( $mv_rr, $mv_user, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
 			endforeach;
 			
 			$mv_html = mv_102_accordion_constructor($mv_report_result); //вызваем конструктор аккордеона
@@ -147,4 +148,67 @@
 		
 	};		
 	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 102 отчета !!!!!!!!!!! */
+	
+	
+	
+	/* поменяем настройки плагина WpDataTables изменим меню отображения количества строк таблицы */
+	
+	add_filter( 'wpdatatables_filter_table_description', 'wpdt_mv_hook', 10, 2 );
+	
+	function wpdt_mv_hook( $object, $table_id ) {
+		
+		$object->dataTableParams->aLengthMenu = array(
+		array(
+		2,
+		3,
+		10,
+		25,
+		- 1
+		),
+		array(
+		2,
+		3,
+		10,
+		25,
+		"All"
+		)
+		);
+		
+	//	PC::debug($object->advancedFilterOptions['aoColumns'][3]->values);
+		// а здесь попробуем изменить список организаций для фильтра - checkbox
+	 /*  $object->advancedFilterOptions['aoColumns'][3]->values = array( //теперь надо указать правильный список кофеен, но это будет работать только один раз :( 
+		'yes1', 
+		'yes2', 
+		'yes3'
+		); */
+		
+		
+		return $object;
+		
+	}
+	/* / поменяем настройки плагина WpDataTables изменим меню отображения количества строк таблицы */
+	
+	
+	
+	/* Функция для автоматической подстановки значения текущего ТОКЕНА в Шорткод таблицы WpDataTables */
+	/*
+		Данная версия работает только при обновлении страницы при имеющемся токене.
+		Ничего не сработает если токена не было на момент загрузки страницы,
+		или если токен поменяли сменив пользователя
+	*/
+	
+	add_action( 'template_redirect', 'mv_receive_token_param');
+	function mv_receive_token_param(){
+		global $post;
+		if( has_shortcode( $post->post_content, 'wpdatatable' )) {
+			// Если в контенте есть [ wpdatatable ... ]  главное, чтобы значение не поменялось в БД, иначе сработает только один раз
+			/* $post->post_content = str_replace('var1="123413543154"]', 'var1="'. (isset($_COOKIE['mv_cuc_token']) ? $_COOKIE['mv_cuc_token']: "") .'"]', $post->post_content); */
+		//	PC::debug($_COOKIE['mv_cuc_user'] );
+			$post->post_content = str_replace('var1="123413543154"]', 'var1="' . (isset($_COOKIE['mv_cuc_user']) ? $_COOKIE['mv_cuc_user']: "") . '"]', $post->post_content);
+		//	PC::debug($post->post_content );
+		}
+	}
+	/* /Функция для автоматической подстановки значения текущего ТОКЕНА в Шорткод таблицы WpDataTables */	
+	
+
 ?>

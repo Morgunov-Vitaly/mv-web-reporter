@@ -51,7 +51,7 @@
 						<label class="description" for="form_param_cafe"><?php _e('Выберите кофейню: ', 'mv-web-reporter'); ?></label>
 						<div>
 							<select id="form_param_cafe" name="cafe_ref"> 
-								<option value="0" selected ><?php _e('Все кофейни ', 'mv-web-reporter'); ?></option>
+								<option value="0" selected ><?php _e( '00 Все кофейни', 'mv-web-reporter' ); ?></option>
 							</select>
 						</div> 
 					</div> 

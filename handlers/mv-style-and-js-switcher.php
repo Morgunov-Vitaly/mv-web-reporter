@@ -23,10 +23,10 @@
 			wp_register_style( 'select2css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
 			wp_enqueue_style( 'select2css' );
 		}	
-			wp_register_style( 'mv_stylecss', WP_PLUGIN_URL . '/mv-web-reporter/css/mv_style.css'); // регистрируем стили используемые плагином
-			wp_enqueue_style( 'mv_stylecss' );
-			
-
+		wp_register_style( 'mv_stylecss', WP_PLUGIN_URL . '/mv-web-reporter/css/mv_style.css'); // регистрируем стили используемые плагином
+		wp_enqueue_style( 'mv_stylecss' );
+		
+		
 	}
 	/* Подвешиваем к хуку функцию подключения стилей */	
 	add_action( 'template_redirect', 'enqueue_mv_style' );
@@ -41,7 +41,7 @@
 		/* Проверяем наличие шорткода в посте */
 		global $post;
 		$content = $post->post_content; /* Просматриваем контент страницы поста */
-				
+		
 		if( has_shortcode( $content, 'mv_report_accordion_code' )) {
 			// Если в контенте есть [ mv_report_accordion_code ] 	
 			wp_register_script( 'mvaccordionjs', plugins_url('../js/jquery.accordion.2.0.js', __FILE__), array( 'jquery' ), '1.0', true);
@@ -83,12 +83,17 @@
 		<?php
 			
 		}
+		/* Подключаем файл с пользовательскими функциями  */
+			// wp_register_script( 'mv_functions', plugins_url('../js/mv-functions.js', __FILE__), array( 'jquery' ), '1.0', true ); // array( 'select2' ), true
+		//	wp_enqueue_script( 'mv_functions' );		
+		
+		
 	}	
 	
-/* Подвешиваем к хуку функцию подключения скриптов */	
-add_action( 'wp_footer', 'enqueue_mv_jquery' );
-/* !!!!!!!!!!  / Подключаем скрипты !!!!!!!!!! */	
-
-/* !!!!!!!!!!!!! / Подключаем скрипты и стили на страницу с шорткодом !!!!!!!!! */
-
+	/* Подвешиваем к хуку функцию подключения скриптов */	
+	add_action( 'wp_footer', 'enqueue_mv_jquery' );
+	/* !!!!!!!!!!  / Подключаем скрипты !!!!!!!!!! */	
+	
+	/* !!!!!!!!!!!!! / Подключаем скрипты и стили на страницу с шорткодом !!!!!!!!! */
+	
 ?>
