@@ -193,7 +193,7 @@ form.mv_form {
     top: 50% !important;
     margin-top: -25px;
     width: 25px;
-    z-index: 9000 !important;
+    z-index: 999 !important;
     display: none;
 }
 
@@ -206,3 +206,15 @@ form.mv_form {
 
 /*/ Стиль колеса загрузки */
 
+/* Исправляю отображение блоков в старой версии impreza*/
+.wpb_wrapper {
+min-height: 1px;
+}
+.mv_reports_container { /* Контейнеры Impreza -область построения отчета */
+	display: none; /* по умолчанию - прячем */
+	
+}
+#mv_report_container { /* Контейнер отчета внутренний */
+ width: 100%;
+	
+}

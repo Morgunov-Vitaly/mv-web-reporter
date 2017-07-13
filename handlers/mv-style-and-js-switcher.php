@@ -11,11 +11,6 @@
 		global $post;
 		$content = $post->post_content; /* Считываем контент страницы поста  */
 		
-		if( has_shortcode( $content, 'mv_report_accordion_code' )) {
-			// Если в контенте есть [ mv_report_accordion_code ] .	
-			wp_register_style( 'mvaccordioncss', plugins_url('../css/accordion.core.css', __FILE__));
-			wp_enqueue_style( 'mvaccordioncss' );
-		}
 		if( has_shortcode( $content, 'mv_param_form' ) ) {
 			// смотрим нет ли шорткода [mv_param_form]  в контенте. Раньше стояло [mv_login_code]
 			// Подключаем измененный файл стилей 
@@ -41,12 +36,6 @@
 		/* Проверяем наличие шорткода в посте */
 		global $post;
 		$content = $post->post_content; /* Просматриваем контент страницы поста */
-		
-		if( has_shortcode( $content, 'mv_report_accordion_code' )) {
-			// Если в контенте есть [ mv_report_accordion_code ] 	
-			wp_register_script( 'mvaccordionjs', plugins_url('../js/jquery.accordion.2.0.js', __FILE__), array( 'jquery' ), '1.0', true);
-			wp_enqueue_script( 'mvaccordionjs' );
-		}		
 		
 		if( has_shortcode( $content, 'mv_param_form' ) ) {
 			// смотрим нет ли шорткода [mv_param_form]  в контенте. Раньше стояло [mv_login_code]
@@ -83,11 +72,6 @@
 		<?php
 			
 		}
-		/* Подключаем файл с пользовательскими функциями  */
-			// wp_register_script( 'mv_functions', plugins_url('../js/mv-functions.js', __FILE__), array( 'jquery' ), '1.0', true ); // array( 'select2' ), true
-		//	wp_enqueue_script( 'mv_functions' );		
-		
-		
 	}	
 	
 	/* Подвешиваем к хуку функцию подключения скриптов */	

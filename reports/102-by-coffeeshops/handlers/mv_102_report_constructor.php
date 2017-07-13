@@ -71,14 +71,11 @@
 	
 	/* !!!!!!!!!!!   PHP обработчик AJAX запроса данных 102 отчета таблица !!!!!!!!!!! */
 	
-	add_action('wp_ajax_mv_take_report_data' , 'mv_take_report_data'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
-	add_action('wp_ajax_nopriv_mv_take_report_data', 'mv_take_report_data'); /* то же для незарегистрированных пользователей */
-	
-	function mv_take_report_data() {
+	function mv_take_report_data_102() {
 		
 		$nonce = $_GET['mv_nonce']; // Вытаскиваем из AJAX запроса переданное значение mv_nonce и заносим в переменную $nonce
 		// проверяем nonce код, если проверка не пройдена прерываем обработку
-		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data' ) ) wp_die('Stop! Nonce code of mv_take_report_data incorrect!');
+		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_102' ) ) wp_die('Stop! Nonce code of mv_take_report_data_102 incorrect!');
 		
 		if (isset($_GET['cafe_ref']) && $_GET['cafe_ref']!=="0"){ 
 			$refObject = $_GET['cafe_ref'];
@@ -91,9 +88,9 @@
 		$dateTo = $_GET['dateTo'];
 		$token = ( $_COOKIE['mv_cuc_token'] != '' ? $_COOKIE['mv_cuc_token'] : ''); //Забираем токен из кукиса
 		/* https://cscl.coffeeset.ru/ws/web/report/102/YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj/?dateFrom=2016-04-20T00:00:01&dateTo=2016-04-20T23:59:59&refObject=b0d6ce78-24ce-41d9-a997-f0b876895205&objectType=Company  */
-		$mv_url = "https://cscl.coffeeset.ru/ws/web/report/102/" . $token . "/?dateFrom=" . $dateFrom . "&dateTo="  . $dateTo . "&refObject=" . $refObject . "&objectType=" . $objectType; // Формируем строку запроса
+		$mv_url = "https://cscl.coffeeset.ru/ws/web/report/102/" . $token . "/?dateFrom=" . $dateFrom . "&dateTo="  . $dateTo . "&refObject=" . $refObject . "&objectType=" .$objectType; // Формируем строку запроса
 		
-		//PC::debug($mv_url );	
+		//PC::debug($mv_url);
 		
 		$mv_remote_get = wp_remote_get( $mv_url, array(
 		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
@@ -115,31 +112,32 @@
 			
 			$mv_html = mv_102_accordion_constructor($mv_report_result); //вызваем конструктор аккордеона
 			//PC::debug( $mv_html );
-			$mv_data = array('mv_error_code' => '200', 'Message' => 'Well done!'); 
+			$mv_data = array('mv_error_code' => '200', 'message' => 'Well done!'); 
 			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);
 			
 			//print_r ($mv_report_result); // Это передается во фронтэнед 
 			echo json_encode($mv_response); // Это передается во фронтэнед
-			// echo '{"mv_error_code" : "200", "Message" : " Well done!" , "mv_html" : "'. $mv_html .'" }'; // Это передается во фронтэнед
+			// echo '{"mv_error_code" : "200", "message" : " Well done!" , "mv_html" : "'. $mv_html .'" }'; // Это передается во фронтэнед
 			
 			}else {
 			
 			/* 
 				произошел сбой:
-				- 404 "Message": "User not found"
+				- 401 отказано в доступе 401 Unauthorized («не авторизован»)
+				- 404 "message": "User not found"
 				- 403 - какая-то таинственная ошибка которая переодически выскакивает
-				- 500 "Message": "Произошла ошибка.",  "ExceptionMessage": "Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding." 
+				- 500 "message": "Произошла ошибка.",  "Exceptionmessage": "Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding." 
 				
 			*/			
 			//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );	
 			//PC::debug($mv_report_result );
-			if ( is_wp_error( $mv_remote_get )) { //timeout
-				PC::debug( $mv_remote_get );
+			if ( is_wp_error( $mv_remote_get )) { //timeout? отказ в доступе и пр.
+				//PC::debug( $mv_remote_get );
 			}
 			$mv_html = $mv_url; //запишем в пустующий раздел адресс ссылки-запроса к удаленному серверу
-			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'"', 'Message' => '"'. ((isset($mv_report_result->Message)) ? $mv_report_result->Message : $mv_remote_get->get_error_code()) . '"');
+			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'"', 'message' => '"'. ((isset($mv_report_result->message)) ? $mv_report_result->message : $mv_remote_get->get_error_code()) . '"');
 			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);			
-			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"Message" :  "' . $mv_report_result->Message . '"}';
+			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"message" :  "' . $mv_report_result->message . '"}';
 			echo json_encode($mv_response); // Это передается во фронтэнед
 		};
 		
@@ -147,6 +145,10 @@
 		wp_die();
 		
 	};		
+	
+	add_action('wp_ajax_mv_take_report_data_102' , 'mv_take_report_data_102'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
+	add_action('wp_ajax_nopriv_mv_take_report_data_102', 'mv_take_report_data_102'); /* то же для незарегистрированных пользователей */
+	
 	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 102 отчета !!!!!!!!!!! */
 	
 	
@@ -190,7 +192,11 @@
 	
 	
 	
-	/* Функция для автоматической подстановки значения текущего ТОКЕНА в Шорткод таблицы WpDataTables */
+	/* 
+		Функция для автоматической подстановки 
+		значения текущего ТОКЕНА в Шорткод таблицы 
+		WpDataTables 
+	*/
 	/*
 		Данная версия работает только при обновлении страницы при имеющемся токене.
 		Ничего не сработает если токена не было на момент загрузки страницы,
@@ -201,14 +207,12 @@
 	function mv_receive_token_param(){
 		global $post;
 		if( has_shortcode( $post->post_content, 'wpdatatable' )) {
-			// Если в контенте есть [ wpdatatable ... ]  главное, чтобы значение не поменялось в БД, иначе сработает только один раз
-			/* $post->post_content = str_replace('var1="123413543154"]', 'var1="'. (isset($_COOKIE['mv_cuc_token']) ? $_COOKIE['mv_cuc_token']: "") .'"]', $post->post_content); */
+		// Если в контенте есть [ wpdatatable ... ]  главное, чтобы значение не поменялось в БД, иначе сработает только один раз
+
 		//	PC::debug($_COOKIE['mv_cuc_user'] );
 			$post->post_content = str_replace('var1="123413543154"]', 'var1="' . (isset($_COOKIE['mv_cuc_user']) ? $_COOKIE['mv_cuc_user']: "") . '"]', $post->post_content);
 		//	PC::debug($post->post_content );
 		}
 	}
 	/* /Функция для автоматической подстановки значения текущего ТОКЕНА в Шорткод таблицы WpDataTables */	
-	
-
 ?>

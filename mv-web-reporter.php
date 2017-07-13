@@ -9,6 +9,10 @@
 		Version: 20170424
 	*/
 	
+	// установим глобальную переменную с ID модального окна LogIn для удобства укажем ее здесь	
+	$mv_login_popup = 6132; 
+	
+	
 	/* Локализация плагина */
 	add_action( 'plugins_loaded', 'mv_load_plugin_textdomain' );
 	
@@ -19,44 +23,78 @@
 	
 	/* !!!!!!! Подключаем стили и скрипты для ВСЕХ ОТЧЕТОВ конструкторов  !!!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv-style-and-js-switcher.php' );
-		
-	/* !!!!!! Подключаем файл шорткода [mv_report_accordion_code]
-	конструктора Login обработчика с кнопкой  и передаем системные переменные !!!!!!!!!!!!!!!! */
+	
+	/* !!!!!! Подключаем Login обработчик с кнопкой  и передаем системные переменные !!!!!!!!!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv-login-constructor.php' );
 	
 	/* !!!!!!! Подключаем шорткод конструктора формы ввода предварительных параметров отчетов  !!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv-form-param-constructor.php' );
 	
-	/* !!!!!!! Подключаем файл шорткода [mv_report_accordion_code] конструктора вывода контейнера для отчета в виде аккардеона !!!!!!!!!!!!!!!! */
-	require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv-accordion-constructor.php' );
-	
-	/* !!!!!!! Подключаем файл конструктора 102 отчета в виде аккардеона !!!!!!!!!!!!!!!! */
-	require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102_accordion.php' );
-	
-	/* !!!!!! Подключаем файл Конструктора 102 отчета и его вспомогательные функции !!!!!!!!!!!!!!!! */
-	require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102_report_constructor.php' );
+	/* !!!!!!! Подключаем менеджер отчета 102 - By Coffeeshops !!!!!!!!! */
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/102-by-coffeeshops/102-by-coffeeshops.php' );
 	
 	/* !!!!!!! Подключаем менеджер отчета 160 - Sales Mix !!!!!!!!! */
-	//require_once( plugin_dir_path( __FILE__ ) . 'reports/sales-mix/sales-mix.php' );
-
-	/*!!!!!!!! Обработчик шорткода отчетов [mv_reports id="" userid="?"] !!!!!!!!!!*/
-	/* function mv_reports($atts){
-	$params = shortcode_atts( array( // в массиве укажите значения параметров по умолчанию
-	'id' => '160', // ID по умолчанию, если его не указывать
-	'user' => 'v.morgunov' // идентификатор пользователя
-	), $atts );
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/sales-mix/sales-mix.php' );
 	
-	if ($params['id'] == 160) { // 160 отчет SalesMix
-	// запускаем функции конструктора отчета
-		}
 	
+	/*
+		!!!!!!!! 
+		Обработчик шорткода отчетов 
+		[mv_reports id="номер отчета"]
+		!!!!!!!!!!
+	*/
+	function mv_reports($atts){
+		// задаем значения параметров по умолчанию
+		// ID по умолчанию, если его не указывать
+		global $mv_report_params;
+		$mv_report_params = shortcode_atts( array('id' => '102'), $atts);
+		
+		//global $mv_login_popup; 	
+		
+		
+		ob_start(); // передадим значение mv_report_id в фронт-энд ! возможно это - лишнее
+	?>
+	<div id="mv_report_container"> <!-- контейнер отчета -->
+	</div>
+	<script type="text/javascript">
+		mv_report_id = <?php echo $mv_report_params['id'] ?>;
+		
+		/* !!!!!!!!!!!!!!!!!!!! */
+		/* Конструкторы отчетов */
+		/* !!!!!!!!!!!!!!!!!!!! */
+		jQuery(function ($) {
+			$(document).ready(function(){
+				$("#form_param").submit(function (event_pr) { /* отправка данных формы с параметрами для построения отчета */
+					if (mv_document_ready > 0) {
+						$("#mv_report_progress_circle").slideDown('normal'); // Отображаем колесо загрузчик ожидание slideUp('normal')
+						<?php 
+							
+							//PC::debug($mv_report_params['id']);
+							if ($mv_report_params['id'] == 102) { /* Отчет по кофейням 160 */
+								echo mv_102_report(); 
+							}
+							if ($mv_report_params['id'] == 160) { /* Отчет по кофейням 160 */
+								echo mv_160_sales_mix_report(); 
+							}
+						?>
+						mv_document_ready = mv_document_ready + 1; // счетчик для предотвращения повторного срабатывания функций
+						$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal');
+						event_pr.preventDefault();/* Отменяем стандартное действие кнопки Submit в форме */
+					}
+				});
+				/* !!!!!!!!! / AJAX  Обработчик отправки данных формы параметров отчетов  !!!!!!!!!!!!! */
+			});
+		});
+	</script>
+	<?php
+		$html = ob_get_contents();
+		ob_get_clean();
+		return $html;
 	}
 	// Также подключаем обработчики других отчетов
 	
-	
-	add_shortcode('mv_reports', 'mv_reports'); //  */
-	/*!!!!!!!! / Обработчик шорткода отчетов [mv_reports id="" userid="?"] !!!!!!!!!!*/
-	
+	add_shortcode('mv_reports', 'mv_reports');   
+	/*/ Обработчик шорткода отчетов [mv_reports]*/
 	
 	
 	/* добавляем шорткод для вставки колеса загрузки progress circle */
@@ -79,4 +117,23 @@
 		ob_get_clean();
 		return $html;
 	}	
-	/* / добавляем шорткод для вставки колеса загрузки progress circle */	
+	/* / добавляем шорткод для вставки колеса загрузки progress circle */
+	
+	
+	/* 
+		Добавление шорткода [mv-current-username] 
+		отображающего LogIn/LogOut пользователя 
+		в систему reporter  
+	*/
+	add_shortcode( 'mv-login' , 'mv_LogIn' );
+	
+	function mv_LogIn(){
+		$UsName =  (isset($_COOKIE['mv_cuc_user'])) ? $_COOKIE['mv_cuc_user'] : "LogIn" ;
+		If ($UsName == "LogIn"){
+			$LogInLink = "<a class='w-text-value mv_login_modal_init' href='#'><i class='fa fa-lock'></i> ". $UsName ."</a>";
+			} else {
+			$LogInLink = "<a class='w-text-value mv_login_modal_init' href='#'><i class='fa fa-unlock-alt'></i> " . $UsName . "</a>"; /* #mv_login_modal_init - это триггер для модального окна LogIn */
+		}
+		echo $LogInLink;
+	}
+/* / Добавление шорткода [mv-current-username] отображающего LogIn/LogOut пользователя в систему reporter  */

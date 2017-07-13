@@ -1,0 +1,292 @@
+/* 
+	*******************************
+	Cтили формы отчета 160 SalesMix
+	*******************************
+	
+*/
+#mv_report_container{
+    width: 95%;
+    padding: 0;
+    margin: 50px auto;
+	margin-top: 20px;
+	
+}
+div {
+    display: block;
+}
+
+.report_header, .report_header_orgname, .report_data{ 
+    height: 92px;
+    margin: 0;
+    padding: 0;
+}
+
+.report_header, .report_header_orgname {
+    font-weight: bold;
+    background: url(../img/fon_g_w_92.svg) top center repeat-x;
+}
+
+/* стиль иконок заголовка таблицы */
+.mv_header_img{
+    background: url(../img/fon_g_w_92.svg) top center repeat-x;
+	/* background: #67bd98; */
+    margin: 0;
+    padding: 0;
+	color: #868992;
+	text-align: center;
+	line-height: 19px;
+    text-transform: uppercase;
+}
+.mv_75_img {
+	height: 69px;
+	padding: 0;
+}
+
+/* стиль ячеек с данными  */
+.report_data{ 
+    background: #fff;
+    color: inherit;
+    font-weight: normal;
+	position: relative;   
+}
+/* стиль заголовка таблицы с названием организации цвет и фон меняется в МЕДИА */
+.mv_orgname {
+	/*  background: #67bd98; */
+    color: white;
+	margin: 0;
+    padding: 35px 0 0 10px;
+	font-size: 16px;
+	white-space: nowrap; /* запрет переноса */
+    overflow: hidden;
+	width: 100%;
+    
+}
+/* стиль ячеек с данными конкретнее */
+.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+    background: #fff;
+    color: inherit;
+	margin: 0;
+    padding: 0 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+	text-align: right;
+	font-size: 15px;
+	font-weight: bold;
+	width: 100%;
+	line-height: 15px;
+	
+}
+.mv_employee_name {
+	background: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+	text-align: left;	
+	margin: 0;
+    padding: 10px 0 0 10px; /* 16px 0 0 10px; */
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+}
+
+.report_data{ 
+	height: 55px;
+}
+
+.mv_rep_data_qty{ /* стиль значения количества*/
+	color: #8b8e92;
+    font-weight: normal;
+	font-size: 10px;
+}
+
+.mv_rep_data_percent{  /* стиль значения процентов */
+	color: #2c9e7b;
+    font-weight: normal;
+	font-size: 10px;
+}
+
+.report_footer_total, .report_footer{ 
+    border-top: 2px solid;
+    text-align: right;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    height: 40px;
+    margin: 0 auto;
+    padding: 12px 10px;
+}
+
+/* 
+	*********************************
+	Медиаклассы для мобильных экранов 
+	*********************************
+*/
+@media (max-width: 767px){ /* 1-й перескок деление строк */
+
+	.mv_employee_name {
+		font-size: 14px;
+		width: 100%;
+		padding: 6px 0 0 10px;
+		text-align: center;
+		background-color: #f2faf8;
+	}
+		.report_header_orgname {
+		font-weight: bold;
+		background: none;
+		height: 40px;
+		display: none;
+	}
+}	
+@media (max-width: 600px){ 
+	.mv_orgname {
+		line-height: 30px;
+		background: #fff;
+		color: inherit;
+		font-weight: bold;
+		width: 100%;
+		padding: 0 0 0 10px;
+	}
+	
+.mv_header_img{
+	font-size: 14px;
+	line-height: 18px;
+    
+}	
+	
+	.report_header_orgname {
+		font-weight: bold;
+		background: none;
+		height: 40px;
+		display: none;
+	}
+	
+	.report_data{ 
+		height: 40px;
+	}	
+
+	.report_data_emp_name{ 
+		height: 28px;
+	}
+	
+	.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+		font-size: 13px;
+		width: 100%;
+	}
+	.mv_employee_name {
+		font-size: 14px;
+		width: 100%;
+		padding: 3px 0 0 10px;
+		/* color: #00aff0; */
+		text-align: center;
+		background-color: #f2faf8;
+	}
+	.report_footer_total, .report_footer{ 
+
+    font-size: 16px;
+    margin: 0 auto;
+    padding: 12px 10px;
+	line-height: 16px;
+}
+}
+
+@media (max-width: 414px){	
+	/* -webkit-transform:scale(.75); */
+	/* transform: scale(.75);		 */
+	#mv_report_container{
+	width: 97%;
+    padding: 0;
+    margin: 30px auto;	
+	
+}
+	
+	.report_header{
+		font-weight: bold;
+		background: url(../img/fon_g_w_70.svg) top center repeat-x;
+		height: 70px;
+	}
+
+	.report_header_orgname {
+		font-weight: bold;
+		background: none;
+		height: 40px;
+		display: none;
+	}
+	
+	/* стиль иконок заголовка таблицы */
+	.mv_header_img{
+		background: url(../img/fon_g_w_70.svg) top center repeat-x;
+		line-height: 15px;
+		font-size: 12px;
+		
+	}
+	
+	.mv_75_img{
+		height: 55px;
+		padding: 0;
+	}
+	
+	.mv_orgname{
+		line-height: 30px;
+		background: #fff;
+		color: inherit;
+		font-weight: bold;
+		font-size: 13px;
+		width: 100%;
+		padding: 0 0 0 10px;
+	}
+
+	.report_data{ 
+		height: 30px;
+	}
+	
+	.report_data_emp_name{ 
+		height: 25px;
+	}
+	
+	.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+		font-size: 13px;
+		width: 100%;
+	}
+	.mv_employee_name{
+		font-size: 13px;
+		/* color: color: #00aff0; */
+		white-space: nowrap;
+		overflow: hidden;
+		padding: 0 10px;
+		width: 100%;
+		text-align: center;
+		background-color: #f2faf8; /* #fdf4df */		
+	}
+	.report_footer_total, .report_footer{ 
+		
+    font-size: 14px;
+    margin: 0 auto;
+    padding: 12px 7px;
+	line-height: 16px;
+}	
+	
+}
+
+@media (max-width: 375px){
+	#mv_report_container{
+	width: 100%;
+    padding: 0;
+    margin: 30px auto;	
+	}
+	.report_data {
+		height: 38px;
+}
+	.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+		font-size: 12px;
+		padding: 0 5px;
+	}
+	.report_footer_total, .report_footer{ 	
+	font-size: 13px;
+    margin: 0 auto;
+    padding: 10px 3px;
+    line-height: 15px;
+	}
+	
+}	
+/* / Медиаклассы для мобильных экранов */
