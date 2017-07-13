@@ -5,7 +5,7 @@
 	
 */
 #mv_report_container{
-    width: 95%;
+    width: 100%;
     padding: 0;
     margin: 50px auto;
 	margin-top: 20px;
@@ -33,8 +33,9 @@ div {
     margin: 0;
     padding: 0;
 	color: #868992;
+	font-size: 14px;
 	text-align: center;
-	line-height: 19px;
+	line-height: 20px;
     text-transform: uppercase;
 }
 .mv_75_img {
@@ -194,9 +195,10 @@ div {
 	/* -webkit-transform:scale(.75); */
 	/* transform: scale(.75);		 */
 	#mv_report_container{
-	width: 97%;
+	width: 100%;
     padding: 0;
-    margin: 30px auto;	
+    margin: 30px auto;
+	margin-top: 20px;	
 	
 }
 	
@@ -272,7 +274,8 @@ div {
 	#mv_report_container{
 	width: 100%;
     padding: 0;
-    margin: 30px auto;	
+    margin: 30px auto;
+	margin-top: 20px;	
 	}
 	.report_data {
 		height: 38px;
