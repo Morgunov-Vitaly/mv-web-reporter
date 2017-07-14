@@ -1,0 +1,239 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: mv-web-reporter\n"
+"POT-Creation-Date: 2017-06-22 12:43+0300\n"
+"PO-Revision-Date: 2017-06-22 12:53+0300\n"
+"Last-Translator: \n"
+"Language-Team: MV morgunov-vitaly@yandex.ru\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.2\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: mv-form-param-constructor.php:41
+msgid "Выберите организацию: "
+msgstr "Select an organization: "
+
+#: mv-form-param-constructor.php:51
+msgid "Выберите кофейню: "
+msgstr "Select a coffee house: "
+
+#: mv-form-param-constructor.php:54
+msgid "Все кофейни "
+msgstr "All coffee shops "
+
+#: mv-form-param-constructor.php:59
+msgid "сегодня"
+msgstr "today"
+
+#: mv-form-param-constructor.php:59
+msgid "вчера"
+msgstr "yesterday"
+
+#: mv-form-param-constructor.php:59
+msgid "неделю назад"
+msgstr "week ago"
+
+#: mv-form-param-constructor.php:59
+msgid "месяц назад"
+msgstr "month ago"
+
+#: mv-form-param-constructor.php:59
+msgid "год назад"
+msgstr "year ago"
+
+#: mv-form-param-constructor.php:59
+msgid "..."
+msgstr "..."
+
+#: mv-form-param-constructor.php:63 mv_102_accordion.php:13
+msgid "Дата от: "
+msgstr "Date from: "
+
+#: mv-form-param-constructor.php:110 mv_102_accordion.php:14
+msgid "Дата по: "
+msgstr "Date by: "
+
+#: mv-form-param-constructor.php:167
+msgid "Создать отчет"
+msgstr "Create report"
+
+#: mv-login-constructor.php:58 mv-login-constructor.php:89
+msgid "Пользователь не определен"
+msgstr "User not defined"
+
+#: mv-login-constructor.php:81 mv-login-constructor.php:88
+#: mv-login-constructor.php:346
+msgid "Пользователь: "
+msgstr "User: "
+
+#: mv-login-constructor.php:83 mv-login-constructor.php:348
+msgid "Токен: "
+msgstr "Token: "
+
+#: mv-login-constructor.php:90 mv-login-constructor.php:288
+msgid "Токен не определен"
+msgstr "Token is not defined"
+
+#: mv-login-constructor.php:115 mv-login-constructor.php:345
+msgid "Выход"
+msgstr "Log Out"
+
+#: mv-login-constructor.php:122 mv-login-constructor.php:283
+msgid "Вход"
+msgstr "Log In"
+
+#: mv-login-constructor.php:205
+msgid "Все кофейни"
+msgstr "All coffee shops"
+
+#: mv-login-constructor.php:286
+msgid "Пользователь: Пользователь не определен"
+msgstr "User: User not defined"
+
+#: mv-login-constructor.php:332
+msgid "Статус выполнения AJAX запроса токена на локальный сервер: "
+msgstr "The status of execution of AJAX request token on the local server:"
+
+#: mv-login-constructor.php:381
+msgid "Ошибка аутентификации!"
+msgstr "Authentication failed!"
+
+#: mv-login-constructor.php:382
+msgid "Код ошибки запроса токена: "
+msgstr "Error code of token request: "
+
+#: mv-login-constructor.php:382 mv-login-constructor.php:479
+msgid "Сообщение: "
+msgstr "Message: "
+
+#: mv-login-constructor.php:389
+msgid "Возникла ошибка при запросе токена к серверу WP! Ответ сервера: "
+msgstr ""
+"An error occurred while requesting a token to the WP server! Server "
+"Response: "
+
+#: mv-login-constructor.php:390 mv-login-constructor.php:486
+#: mv-login-constructor.php:553
+msgid "Статус: "
+msgstr "Status: "
+
+#: mv-login-constructor.php:391 mv-login-constructor.php:487
+#: mv-login-constructor.php:554
+msgid "jqXHR статус: "
+msgstr "jqXHR status: "
+
+#: mv-login-constructor.php:450
+msgid "Статус запроса списка по токену: "
+msgstr "The status of the list request by token: "
+
+#: mv-login-constructor.php:457
+msgid "Результат запроса списка по токену успешен: "
+msgstr "The result of the list request by token is successful: "
+
+#: mv-login-constructor.php:479
+msgid "Код ошибки запроса списка по токену: "
+msgstr "The error code of the list request by token: "
+
+#: mv-login-constructor.php:485
+msgid ""
+"Упс! Возникла ошибка при запросе списка по токену к серверу WP! Ответ "
+"сервера: "
+msgstr ""
+"Oops! An error occurred while querying the token list to the WP server! "
+"Server Response: "
+
+#: mv-login-constructor.php:537
+msgid "Статус запроса конструктора отчета: "
+msgstr "Report designer query status: "
+
+#: mv-login-constructor.php:543
+msgid "Ошибка конструктора отчета!: "
+msgstr "Report Designer Error: "
+
+#: mv-login-constructor.php:552
+msgid "Упс! Возникла ошибка при обращении №2 к серверу WP! Ответ сервера: "
+msgstr ""
+"Oops! An error occurred while accessing # 2 to the WP server! Server "
+"Response: "
+
+#: mv_102_accordion.php:12
+msgid "Организация: "
+msgstr "Organization: "
+
+#: mv_102_accordion.php:36
+msgid "Сумма заказов"
+msgstr "Sales total"
+
+#: mv_102_accordion.php:41
+msgid "Выручка (только кэш)"
+msgstr "Revenue (cash only)"
+
+#: mv_102_accordion.php:52
+msgid "Факт товарных продаж"
+msgstr "Actual revenue"
+
+#: mv_102_accordion.php:58
+msgid "План товарных продаж"
+msgstr "Planned revenue"
+
+#: mv_102_accordion.php:63
+msgid "Всего заказов"
+msgstr "Orders total"
+
+#: mv_102_accordion.php:69
+msgid "Заказов с картами"
+msgstr "Orders with cards"
+
+#: mv_102_accordion.php:75
+msgid "Средний чек"
+msgstr "Avg bill"
+
+#: mv_102_accordion.php:80
+msgid "Плановый средний чек"
+msgstr "Avg bill plan"
+
+#: mv_102_accordion.php:85
+msgid "Фактический средний чек"
+msgstr "Avg bill fact"
+
+#: mv_102_accordion.php:96
+msgid "Карт продано на сумму"
+msgstr "Card sales amount"
+
+#: mv_102_accordion.php:101
+msgid "Кол-во проданных карт"
+msgstr "Card sales count"
+
+#: mv_102_accordion.php:107
+msgid "Бонусов продано + кэшбэк"
+msgstr "Bonus add total"
+
+#: mv_102_accordion.php:112
+msgid "Бонусов продано"
+msgstr "Bonus sales"
+
+#: mv_102_accordion.php:117
+msgid "Бонусов списано"
+msgstr "Bonus pay"
+
+#: mv_102_accordion.php:123
+msgid "Общий кэшбэк"
+msgstr "Total cashback"
+
+#: mv_102_accordion.php:128
+msgid "Кэшбэк (с бонусов)"
+msgstr "Bonus sales cashback"
+
+#: mv_102_accordion.php:133
+msgid "Кэшбек (с проданных карт)"
+msgstr "Card sales cashback"
+
+#~ msgid "Статус запроса токена: "
+#~ msgstr "Status of token request: "

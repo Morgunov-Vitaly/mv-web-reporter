@@ -55,8 +55,9 @@ function mv_102_report() {
 	global $post;
 	$content = $post->post_content; /* Считываем контент страницы поста для проверки наличия шорткодов */
 	ob_start();
-	?>
-	
+	?> 
+	 mv_progress_circle_show();// Отображаем колесо загрузчик ожидание slideUp('normal')
+
 	$.ajax({
 		type: 'GET',
 		url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся как альтернатива */
@@ -80,7 +81,8 @@ function mv_102_report() {
 				if (mv_report_result.mv_data.mv_error_code == "200") { //Все получилось!
 					$(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
 					
-					$("#mv_report_container").html(mv_report_result.mv_html);// обновляем аккордеон
+					$("#mv_report_container").html(mv_report_result.mv_html); // обновляем аккордеон
+					
 					//Добавить условие, если этот блок с выводом параметров отчета вообще есть
 					if ( document.getElementById("displayorgname") != undefined) {
 						document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;
@@ -100,6 +102,8 @@ function mv_102_report() {
 					//console.log(jqxhr.getAllResponseHeaders());
 					//console.log('mv_report_result.mv_error_code:');
 					//console.log(mv_report_result.mv_error_code);
+					mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
+
 					} else {
 					//alert("<?php _e( 'Ошибка конструктора отчета!: ', 'mv-web-reporter' ); ?>" + mv_report_result.mv_data.mv_error_code);
 					$("#mv_report_container").html('<H3 style="text-align: center;">Ошибка конструктора: ' + mv_report_result.mv_data.mv_error_code + '</h3><p style="text-align: center;">message: ' + mv_report_result.mv_data.message + '</p>'); // Выводим сообщение об ошибке
@@ -108,22 +112,22 @@ function mv_102_report() {
 					console.log('message: ' + mv_report_result.mv_data.message);
 					console.log('report URL: ' + mv_report_result.mv_html);
 					/* Здесь надо вывести окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */
+					mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 				}
 				}else{
 				console.log("<?php _e( 'Удаленный сервер вернул пустую строку: ', 'mv-web-reporter' ); ?>" + result);
+				mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 			}
-			$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 			
 		},
 		error: function (result, status, jqxhr) { // срабатывает только в случае если не сработает AJAX запрос на WP
-			
-			$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 			alert("<?php _e( 'Упс! Возникла ошибка при обращении №2 к серверу WP! Ответ сервера: ', 'mv-web-reporter' ); ?>" + result);
 			console.log("<?php _e( 'Статус: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
 			console.log("<?php _e( 'jqXHR статус: ', 'mv-web-reporter' ); ?>" + jqxhr.status + " " + jqxhr.statusText);
 			console.log(jqxhr.getAllResponseHeaders());
+			mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 		}
-	});
+	});	
 	
 	<?php
 	$html = ob_get_contents();

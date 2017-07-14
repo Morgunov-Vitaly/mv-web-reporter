@@ -60,7 +60,7 @@ ol.mv_accordion {
 	height:         0;
 	clear:          both;
 	visibility:     hidden;
-	*zoom:          1;
+	zoom:          1;
 }
 .mv_accordion li li {
     list-style-type:    disc;
@@ -78,7 +78,7 @@ ol.mv_accordion {
     height: 50px;
     margin: 0;
     padding: 0;
-    /* border-top: 1px solid #e6e6e6; */
+/* border-top: 1px solid #e6e6e6; */
     border-bottom: 1px solid #e6e6e6;
     width: 100%;
 }
@@ -210,10 +210,8 @@ background-color: #f0faf7; /* #e6f8ee; #f2f3f5 */
 
 }
 
-/* @media (max-width: 900px){ */
 .mv_align_right {
 	text-align: right;
 }
-/* } */
 
 /* / Медиаклассы для мобильных экранов */

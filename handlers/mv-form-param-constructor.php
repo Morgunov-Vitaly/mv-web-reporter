@@ -41,7 +41,7 @@
             jQuery(document).ready(function () { /* было function($)*/
 				PUM.open(<?php echo $mv_login_popup ?>);
 			});
-		</script>
+			</script>
 		<?php
 		}
 	?>
@@ -143,8 +143,6 @@
 								if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
 									$("#form_param").submit(); //Отправляем данные формы "Субмитим"
 								}; 
-								// event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
-								
 								
 							});
 							
@@ -187,9 +185,7 @@
 							
 							$("#dateFrom").change(function(){ // автоматическое присвоение "Дата ДО" того же значения, что и Дата От
 								$("#dateTo").val(document.getElementById('dateFrom').value);
-								//event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 							});
-							event.preventDefault(); // Отменяем стандартное действие кнопки Submit в форме
 						});
 					</script>
 				</li>
@@ -369,14 +365,13 @@
 			ПО ТОКЕНУ 
 			!!!!!!!!!!!! 
 		*/
-		jQuery(document).ready(function ($) {
+		jQuery(document).ready(function ($){
 			// проверяем наличие токена
 			mv_token = mv_getCookie('mv_cuc_token');
 			if ((mv_token != "") && (typeof mv_token != "undefined") && (mv_flag_token_ask === 0)) { /* если токен не пустой и флаг усановлен на 0 */
 				mv_flag_token_ask = mv_flag_token_ask + 1;
 				/* изменяем флаг им можно будет пользоваться для подсчета кол-во срабатываний данного обработчика */
-				
-				//$("#mv_report_progress_circle").slideDown('normal'); // Отображаем колесо загрузчик ожидание slideUp('normal')
+				mv_progress_circle_show(); // Отображаем колесо загрузчик ожидание slideUp('normal')
 				$.ajax({
 					type: 'GET',
 					url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся */
@@ -406,16 +401,16 @@
 							}else {
 							console.log("<?php _e( 'Удаленный сервер вернул пустую строку: ', 'mv-web-reporter' ); ?>" + result);
 						}
-						$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
+						mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 					},
 					error: function (result, status, jqxhr) { // срабатывает только в случае если не сработает AJAX запрос на WP
-						$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 						alert("<?php _e( 'Упс! Возникла ошибка при запросе списка по токену к серверу WP! Ответ сервера: ', 'mv-web-reporter' ); ?>" + result);
 						console.log("<?php _e( 'Статус: ', 'mv-web-reporter' ); ?>" + status);
 						console.log("<?php _e( 'jqXHR статус: ', 'mv-web-reporter' ); ?>" + jqxhr.status + " " + jqxhr.statusText);
 						console.log(jqxhr.getAllResponseHeaders());
+						mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 					}
-				});
+				});				
 			}
 		});
 		/*  / Конструктор формы ввода предварительных параметров отчетов при наличии токена  */

@@ -66,7 +66,7 @@
 			$(document).ready(function(){
 				$("#form_param").submit(function (event_pr) { /* отправка данных формы с параметрами для построения отчета */
 					if (mv_document_ready > 0) {
-						$("#mv_report_progress_circle").slideDown('normal'); // Отображаем колесо загрузчик ожидание slideUp('normal')
+						//$("#mv_report_progress_circle").slideDown('normal'); // Отображаем колесо загрузчик ожидание slideUp('normal')
 						<?php 
 							
 							//PC::debug($mv_report_params['id']);
@@ -78,7 +78,7 @@
 							}
 						?>
 						mv_document_ready = mv_document_ready + 1; // счетчик для предотвращения повторного срабатывания функций
-						$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal');
+						// $("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal');
 						event_pr.preventDefault();/* Отменяем стандартное действие кнопки Submit в форме */
 					}
 				});

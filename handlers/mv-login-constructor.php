@@ -184,6 +184,21 @@
 		}
 		/*  / Функция  отображения /скрытия при ОТСУТСТВИИ ТОКЕНА  */
 		
+		/* Функция для ПОКАЗА индикатора загрузки */
+		function mv_progress_circle_show(){
+			jQuery("#mv_report_progress_circle").slideDown('normal'); // показываем колесо загрузчик ожидание slideUp('normal')
+			}
+		
+		/* /Функция для ПОКАЗА отображения индикатора загрузки */
+
+		/* Функция для СКРЫТИЯ индикатора загрузки */
+		function mv_progress_circle_hide(){
+			jQuery("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
+			}
+		
+		/* /Функция для СКРЫТИЯ индикатора загрузки */
+
+		
 		<?php
 			
 			/* Проверка на наличие шорткода [mv_dashboard]  в контенте */

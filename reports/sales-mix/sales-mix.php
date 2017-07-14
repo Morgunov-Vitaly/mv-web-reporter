@@ -33,7 +33,7 @@ function mv_160_sales_mix_report (){
 	$content = $post->post_content; /* Считываем контент страницы поста и смотрим есть ли шорткод [mv_closed] или [mv_reports] */
 	ob_start();
 	?>
-	
+	mv_progress_circle_show(); // Отображаем колесо загрузчик ожидание slideUp('normal')
 	$.ajax({
 		type: 'GET',
 		url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся как альтернатива */
@@ -63,7 +63,7 @@ function mv_160_sales_mix_report (){
 					}
 					
 					console.log("<?php _e( 'Статус запроса конструктора отчета: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
-					
+					$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 					} else {
 					
 					/* Здесь надо вывести окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */
@@ -73,9 +73,11 @@ function mv_160_sales_mix_report (){
 					console.log('mv_error_code: ' + mv_report_result.mv_data.mv_error_code);
 					console.log('message: ' + mv_report_result.mv_data.message);
 					console.log('report URL: ' + mv_report_result.mv_html);
+					$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 				}
 				}else{
 				console.log("<?php _e( 'Удаленный сервер вернул пустую строку: ', 'mv-web-reporter' ); ?>" + result);
+				$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 			}
 			//$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 			
@@ -87,6 +89,7 @@ function mv_160_sales_mix_report (){
 			console.log("<?php _e( 'Статус: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
 			console.log("<?php _e( 'jqXHR статус: ', 'mv-web-reporter' ); ?>" + jqxhr.status + " " + jqxhr.statusText);
 			console.log(jqxhr.getAllResponseHeaders());
+			$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
 		}
 	});
 	
