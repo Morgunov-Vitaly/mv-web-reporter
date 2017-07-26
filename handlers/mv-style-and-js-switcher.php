@@ -14,8 +14,8 @@
 		if( has_shortcode( $content, 'mv_param_form' ) ) {
 			// смотрим нет ли шорткода [mv_param_form]  в контенте. Раньше стояло [mv_login_code]
 			// Подключаем измененный файл стилей 
-			// wp_register_style( 'select2css', plugins_url('css/select2.min.css', __FILE__));
-			wp_register_style( 'select2css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
+			 wp_register_style( 'select2css', plugins_url('../css/select2.min.css', __FILE__));
+			//wp_register_style( 'select2css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
 			wp_enqueue_style( 'select2css' );
 		}	
 		wp_register_style( 'mv_stylecss', WP_PLUGIN_URL . '/mv-web-reporter/css/mv_style.css'); // регистрируем стили используемые плагином

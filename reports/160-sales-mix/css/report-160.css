@@ -4,6 +4,13 @@
 	*******************************
 	
 */
+/**
+ * @ .report_second_header_orgname - стиль повторющейся шапки таблицы с названием организации
+ * @ .mv_header_img - стиль иконок заголовка таблицы
+ * @ .report_data - стиль ячеек с данными
+ * @ .mv_orgname - стиль заголовка таблицы с названием организации цвет и фон меняется в МЕДИА 
+ * @ .mv_mobile_view - класс для включения /отключения повторяющейся шапки таблицы для коротких/ длинный дисплеев
+ */
 div {
     display: block;
 }
@@ -16,13 +23,18 @@ div {
 	
 }
 
-.report_header, .report_header_orgname, .report_data{ 
+/* стили чекбоксов дополнительных параметров */
+.mv_report_addition_param  {
+	vertical-align: baseline;
+}
+
+.report_header, .report_header_orgname, .report_second_header_orgname,  .report_data{ 
     height: 92px;
     margin: 0;
     padding: 0;
 }
 
-.report_header, .report_header_orgname {
+.report_header, .report_header_orgname, .report_second_header_orgname {
     font-weight: bold;
     background: url(../img/fon_g_w_92.svg) top center repeat-x;
 }
@@ -34,7 +46,7 @@ div {
     margin: 0;
     padding: 0;
 	color: #868992;
-	font-size: 14px;
+	font-size: 12px;
 	text-align: center;
 	line-height: 20px;
     text-transform: uppercase;
@@ -53,7 +65,6 @@ div {
 }
 /* стиль заголовка таблицы с названием организации цвет и фон меняется в МЕДИА */
 .mv_orgname {
-	/*  background: #67bd98; */
     color: white;
 	margin: 0;
     padding: 35px 0 0 10px;
@@ -99,13 +110,13 @@ div {
 .mv_rep_data_qty{ /* стиль значения количества*/
 	color: #8b8e92;
     font-weight: normal;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 .mv_rep_data_percent{  /* стиль значения процентов */
 	color: #2c9e7b;
     font-weight: normal;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 .report_footer_total, .report_footer{ 
@@ -117,6 +128,7 @@ div {
     height: 40px;
     margin: 0 auto;
     padding: 12px 10px;
+	line-height: 20px;
 }
 
 .mv_mobile_view{
@@ -147,17 +159,34 @@ div {
 		font-weight: bold;
 		background: none;
 		height: 40px;
+		
+	}
+	.report_second_header_orgname{
 		display: none;
+	}	
+	
+	.report_footer_total, .report_footer {
+		
+		height: 53px;
+		padding: 12px 10px;
+		line-height: 15px;
+	}	
+	.mv_orgname {		
+		background: #24a684; /* ораньжевый фон - #f7ba35 зеленый - #24a684 */
+		color: #fff;
+		padding: 5px 0 5px 10px;
+		margin: 0;
 	}
 }	
 @media (max-width: 600px){ 
-	.mv_orgname {
+
+	.mv_orgname{
 		line-height: 30px;
-		background: #fff;
-		color: inherit;
+		background: #24a684;
+		color: #fff;
+		padding: 3px 0 3px 10px;
 		font-weight: bold;
 		width: 100%;
-		padding: 0 0 0 10px;
 	}
 	
 	.mv_header_img{
@@ -170,8 +199,10 @@ div {
 		font-weight: bold;
 		background: none;
 		height: 40px;
-		display: none;
 	}
+	.report_second_header_orgname{
+		display: none;
+	}	
 	
 	.report_data{ 
 		height: 40px;
@@ -190,16 +221,16 @@ div {
 		width: 100%;
 		padding: 3px 0 0 10px;
 		/* color: #00aff0; */
-		text-align: center;
-		background-color: #f2faf8;
-	}
-	.report_footer_total, .report_footer{ 
-		
-		font-size: 16px;
-		margin: 0 auto;
-		padding: 12px 10px;
-		line-height: 16px;
-	}
+	text-align: center;
+	background-color: #f2faf8;
+}
+.report_footer_total, .report_footer{ 
+	
+	font-size: 16px;
+	margin: 0 auto;
+	padding: 12px 10px;
+	line-height: 16px;
+}
 }
 
 @media (max-width: 414px){	
@@ -213,9 +244,6 @@ div {
 		
 	}
 	
-/* .mv_mobile_view{
-		display: block;
-	} */
 	
 	.report_header{
 		font-weight: bold;
@@ -223,10 +251,13 @@ div {
 		height: 70px;
 	}
 	
-	.report_header_orgname {
+	.report_header_orgname{
 		font-weight: bold;
 		background: none;
 		height: 40px;
+	}
+	
+	.report_second_header_orgname{
 		display: none;
 	}
 	
@@ -245,8 +276,10 @@ div {
 	
 	.mv_orgname{
 		line-height: 30px;
-		background: #fff;
-		color: inherit;
+		/* background: #fff; */
+		/* color: inherit; */
+		background: #24a684;
+		color: #fff;
 		font-weight: bold;
 		font-size: 13px;
 		width: 100%;
@@ -305,6 +338,15 @@ div {
 		padding: 10px 3px;
 		line-height: 15px;
 	}
+	.mv_rep_data_qty{ /* стиль значения количества*/
+		
+		font-size: 11px;
+	}
+	
+	.mv_rep_data_percent{  /* стиль значения процентов */
+		
+		font-size: 11px;
+	}	
 	
 }	
 /* / Медиаклассы для мобильных экранов */

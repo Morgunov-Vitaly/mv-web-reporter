@@ -240,7 +240,7 @@
 						//console.log(t.ref);
 						for (var coffeeshop in t.divisions) if (t.divisions.hasOwnProperty(coffeeshop)) {
 							var c = t.divisions[coffeeshop]; // t.divisions - массив кофеен
-							if (c.Ref == mv_result.ref_default_access_object) { // находим организацию к которой принадлежит указанная в ref_default_access_object кофейня
+							if (c.ref == mv_result.ref_default_access_object) { // находим организацию к которой принадлежит указанная в ref_default_access_object кофейня
 								mv_default_org = t.ref; // значение организации по умолчанию
 								mv_default_coffee = mv_result.ref_default_access_object; // По умолчанию кофейня указанная в параметрах удаленного сервера 
 								break; // остановить перебор
@@ -303,20 +303,20 @@
 				
 				//console.log ( mv_results2_data);
 				
-				for (var organization in result) if (result.hasOwnProperty(organization)) { //перебираем массив организаций из-за неоптимальной структуры объекта: у организации есть номер от 0 до .., вместо Ref'a a Ref находится во внутренних свойствах т.е. mv_result.organizations.[0].Ref :(
+				for (var organization in result) if (result.hasOwnProperty(organization)) { //перебираем массив организаций из-за неоптимальной структуры объекта: у организации есть номер от 0 до .., вместо ref'a a ref находится во внутренних свойствах т.е. mv_result.organizations.[0].ref :(
 					var t = result[organization];
 					
 					if (t.ref == currentFirm) { // находим выбранную компанию (может есть способ без перебора компаний?)
 						//var selLen = caffeeSelObj.options.length; // определяем количество строк <option > во втором селекте
 						for (var coffeeshop in t.divisions) if (t.divisions.hasOwnProperty(coffeeshop)) {
 							var c = t.divisions[coffeeshop]; // t.divisions - массив подразделений (кофеен)
-							if (( c['active']=="1") || ((mv_result.accessType == "coffeeshop") && (c['Ref'] == mv_result.ref_default_access_object)) ){ // учитываем только активные кофейни, но если это назначенная кофейня для пользователя с уровнем доступа "coffeeshop" то ее тоже включаем в список
+							if (( c['active']=="1") || ((mv_result.accessType == "coffeeshop") && (c['ref'] == mv_result.ref_default_access_object)) ){ // учитываем только активные кофейни, но если это назначенная кофейня для пользователя с уровнем доступа "coffeeshop" то ее тоже включаем в список
 								var mv_local_arr = {}; //обнуляем
 								mv_local_arr.length = 0; //дополнительно обнуляем
 								//else {
 								//caffeeSelObj.options[selLen ++] = new Option(c.name, c.ref); // создания новых элементов списка мы //используем конструктор	Option(text, value), где text — это отображаемая метка элемента списка, а value — //её значение.
-								mv_local_arr['id'] = c['Ref'];
-								mv_local_arr['text'] = c['Name'];
+								mv_local_arr['id'] = c['ref'];
+								mv_local_arr['text'] = c['name'];
 								mv_results2_data.push(mv_local_arr); //добавляем значение
 								//}
 							}

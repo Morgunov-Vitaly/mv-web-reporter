@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+.mv_accordion {
+	/* border: 1px solid #6b9638; */
+	border-top: 1px solid #e6e6e6; /*rgba(158, 158, 158, 0.26) */
+	/* width:  50%; */
+}
+.mv_accordion li h3 a {
+	background:            #8BC34A;
+ /* background:             #666 -webkit-gradient(linear, left top, left bottom, from(#999), to(#666)) no-repeat;
+	background:             #666 -moz-linear-gradient(top,  #999,  #666) no-repeat;*/
+	border-bottom:          1px solid #fff;
+ /* border-top:             1px solid #fff;   */
+	color:   #fff;
+	display:   block;
+	font-style:   normal;
+	margin:  0;
+	padding: 5px 10px;
+	border-radius: 10px 0 0 0;
+	/*     text-shadow:            0 -1px 2px #333, #ccc 0 1px 2px; */
+}
+.mv_accordion li.active h3 a {
+	background:    #6b9638;
+	/*  background:             #369 -webkit-gradient(linear, left top, left bottom, from(#69c), to(#369)) no-repeat;
+		background:             #369 -moz-linear-gradient(top,  #69c,  #369) no-repeat;
+		border-bottom:          1px solid #036;
+		border-top:             1px solid #9cf; */
+	/*  text-shadow:            0 -1px 2px #036, #9cf 0 1px 2px; */
+}
+.mv_accordion li.locked h3 a {
+	background:   #963;
+	background:   #963 -webkit-gradient(linear, left top, left bottom, from(#c96), to(#963)) no-repeat;
+	background:   #963 -moz-linear-gradient(top,  #c96,  #963) no-repeat;
+	border-bottom:   1px solid #630;
+	border-top:    1px solid #fc9;
+	text-shadow:   0 -1px 2px #630, #fc9 0 1px 2px;
+}
+.mv_accordion li h3 {
+	margin:         0;
+	padding:       0;
+}
+.mv_accordion .panel {
+	padding:        10px;
+	height: 100%;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+ul.mv_accordion,
+ol.mv_accordion {
+    margin:             0;
+    padding:            0;
+}
+.mv_accordion li {
+    list-style-type:    none;
+    margin:             0;
+    padding:            0;
+}
+.mv_accordion li:after {
+	content:        ".";
+	display:        block;
+	height:         0;
+	clear:          both;
+	visibility:     hidden;
+	zoom:          1;
+}
+.mv_accordion li li {
+    list-style-type:    disc;
+    margin-left:        1em;
+}
+.mv_accordion a {
+    color:              inherit;
+    text-decoration:    inherit;
+}
+
+/* Мои классы для списка */
+
+.mv_handle {
+    background: linear-gradient(to right, #f4faf8 0%, #f4faf8 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%); /* Это свойство должно формироваться автоматически */
+    height: 50px;
+    margin: 0;
+    padding: 0;
+/* border-top: 1px solid #e6e6e6; */
+    border-bottom: 1px solid #e6e6e6;
+    width: 100%;
+}
+
+.mv_accordion-opener {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    width: 100%;
+    position: relative;
+}
+
+.org_name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #416960; /* #676f7c */
+    font-style: normal;
+    font-weight: normal;
+    overflow: hidden;
+    text-align: left;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    width: 70%;
+}
+.sale_val {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    color: #416e6a; /* #676f7c */
+    font-style: normal;
+    font-weight: bold;
+    text-align: right;
+    padding: 0 50px 0 10px;
+    height: 50px;
+    line-height: 50px;
+    /* float: right; */
+    /* width: 17%; */
+	
+}
+
+
+/* Проставляем стрелочки  вниз и вверх  */
+.mv_accordion-opener:after {
+    content: "\f078";
+    font-family: FontAwesome;
+    font-style: normal;
+    color: #91bfb4; /* #dfe0e3 #7d9c95 */
+    font-weight: normal;
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    display: block;
+} 
+
+.active .mv_accordion-opener:after {
+	content: "\f077";
+    font-family: FontAwesome;
+    font-style: normal;
+	color: #67bd98;
+    font-weight: normal;
+    text-decoration: inherit;
+    position: absolute;
+    top: 12px;
+    right: 18px;
+	
+} 
+
+.mv_accordion-opener:hover {
+background-color: #f0faf7; /* #e6f8ee; #f2f3f5 */
+	
+} 
+
+
+/* !!!!!!!!!!!!!!!!!!!!! MV мои классы !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+
+.mv_aim { /* мой стиль для значка цели*/
+	font-size: 20px;
+	color:#88cdbc; /* #dfe0e3 */
+	margin: 0 20px 0 25px;
+}
+.mv_status_done { /* мой стиль для значка цели - выполнено*/
+	color: #416e6a; /* #67bd98; */
+}
+
+.mv_102_report_table {
+	width: 90%;
+	border: none;
+}
+.mv_102_report_table td{
+	padding: 0.3rem 0.1rem;
+}
+
+.mv_102_rt_border_top {
+	border-top: 1px dotted #ccc;
+}
+.mv_102_rt_padding_top {
+	padding-top: 15px;
+}
+.mv_small {
+	font-size: 10px;
+	color: #29b28f;
+}
+
+/* Медиаклассы для мобильных экранов */
+
+/* IPhone 5 320x 568 */
+
+@media (max-width: 515px){	/* 414px*/
+.org_name {
+    font-size: 14px;
+    width: 55%;
+}
+.sale_val {
+    font-size: 14px;
+    padding: 0 37px 0 10px;
+}
+
+.mv_accordion-opener:after {
+    right: 13px;
+}
+
+.active .mv_accordion-opener:after {
+    right: 13px;
+}
+.mv_102_report_table td {
+    font-size: 14px;
+}
+
+}
+
+.mv_align_right {
+	text-align: right;
+}
+
+/* / Медиаклассы для мобильных экранов */

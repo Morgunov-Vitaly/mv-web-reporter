@@ -14,24 +14,24 @@
 		$wpdb->prefix . $mv_table_name, // указываем таблицу
 		array(
 		'user'=> $mv_user,
-		'avgcheckvalue'=> $mv_rr->avgCheckValue,
-		'bonusaddtotal'=> $mv_rr->bonusAddTotal,
-		'bonuspaytotal'=> $mv_rr->bonusPayTotal,
-		'bonussalesamount'=> $mv_rr->bonusSalesAmount,
-		'cardsalesamount'=> $mv_rr->cardSalesAmount,
-		'cardsalescount'=> $mv_rr->cardSalesCount,
-		'objectname'=> $mv_rr->objectName,
-		'orderscount'=> $mv_rr->ordersCount,
-		'orderswithcardcount'=> $mv_rr->ordersWithCardCount,
-		'refobject'=> $mv_rr->refObject,
-		'revenuefactavgcheck'=> $mv_rr->revenueFactAvgCheck,
-		'revenuefactsum'=> $mv_rr->revenueFactSum,
-		'revenueplanavgcheck'=> $mv_rr->revenuePlanAvgCheck,
-		'revenueplansum'=> $mv_rr->revenuePlanSum,
-		'salesrevenue'=> $mv_rr->salesRevenue,
-		'salestotal'=> $mv_rr->salesTotal,
-		'firstDateClosed'=> date("Y-m-d H:i:s", strtotime($mv_rr->firstDateClosed)),
-		'lastDateClosed'=> date("Y-m-d H:i:s", strtotime($mv_rr->lastDateClosed))
+		'avgcheckvalue'=> $mv_rr->AvgCheckValue,
+		'bonusaddtotal'=> $mv_rr->BonusAddTotal,
+		'bonuspaytotal'=> $mv_rr->BonusPayTotal,
+		'bonussalesamount'=> $mv_rr->BonusSalesAmount,
+		'cardsalesamount'=> $mv_rr->CardSalesAmount,
+		'cardsalescount'=> $mv_rr->CardSalesCount,
+		'objectname'=> $mv_rr->ObjectName,
+		'orderscount'=> $mv_rr->OrdersCount,
+		'orderswithcardcount'=> $mv_rr->OrdersWithCardCount,
+		'refobject'=> $mv_rr->RefObject,
+		'revenuefactavgcheck'=> $mv_rr->RevenueFactAvgCheck,
+		'revenuefactsum'=> $mv_rr->RevenueFactSum,
+		'revenueplanavgcheck'=> $mv_rr->RevenuePlanAvgCheck,
+		'revenueplansum'=> $mv_rr->RevenuePlanSum,
+		'salesrevenue'=> $mv_rr->SalesRevenue,
+		'salestotal'=> $mv_rr->SalesTotal,
+		'firstDateClosed'=> date("Y-m-d H:i:s", strtotime($mv_rr->FirstDateClosed)),
+		'lastDateClosed'=> date("Y-m-d H:i:s", strtotime($mv_rr->LastDateClosed))
 		),
 		array( 
 		'%s',
@@ -79,10 +79,10 @@
 		
 		if (isset($_GET['cafe_ref']) && $_GET['cafe_ref']!=="0"){ 
 			$refObject = $_GET['cafe_ref'];
-			$objectType='coffeeshop';
+			$objectType='Coffeeshop';
 			} else {
 			$refObject = $_GET['ref_organization'];
-			$objectType='company';
+			$objectType='Company';
 		}
 		$dateFrom = $_GET['dateFrom'];
 		$dateTo = $_GET['dateTo'];
@@ -90,7 +90,7 @@
 		/* https://cscl.coffeeset.ru/ws/web/report/102/YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj/?dateFrom=2016-04-20T00:00:01&dateTo=2016-04-20T23:59:59&refObject=b0d6ce78-24ce-41d9-a997-f0b876895205&objectType=Company  */
 		$mv_url = "https://cscl.coffeeset.ru/ws/web/report/102/" . $token . "/?dateFrom=" . $dateFrom . "&dateTo="  . $dateTo . "&refObject=" . $refObject . "&objectType=" .$objectType; // Формируем строку запроса
 		
-		PC::debug($mv_url);
+		//PC::debug($mv_url);
 		
 		$mv_remote_get = wp_remote_get( $mv_url, array(
 		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
@@ -106,7 +106,7 @@
 			//PC::debug( $token );
 			$mv_user = ( $_COOKIE['mv_cuc_user'] != '' ? $_COOKIE['mv_cuc_user'] : '');
 			tr_truncate_table($mv_user, 'mv_report_102'); // Очищаем таблицу
-			foreach ($mv_report_result->reportList as $mv_rr):
+			foreach ($mv_report_result->ReportList as $mv_rr):
 			tr_ins_ref_table( $mv_rr, $mv_user, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
 			endforeach;
 			

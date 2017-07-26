@@ -47,7 +47,6 @@ input[type=radio]:checked + label {
 }
 
 
-
 /* / стиль кнопок выбора дат в параметрах отчетов  */
 
 .w-btn.icon_atcenter i { /* Выравнивание иконки в кнопке */
@@ -193,7 +192,7 @@ form.mv_form {
     top: 50% !important;
     margin-top: -25px;
     width: 25px;
-    z-index: 999 !important;
+    z-index: 999!important;
     display: none;
 }
 
@@ -217,4 +216,14 @@ min-height: 1px;
 #mv_report_container { /* Контейнер отчета внутренний */
  width: 100%;
 	
+}
+
+/* стили окна справки для отчетов */
+.ult_modal-body {
+    padding: 30px 45px!important;
+}
+/* стиль иконки для вызова модального окна со справкой */
+.mv_help_open {
+    color: #29b28f!important;
+    cursor: pointer!important;
 }

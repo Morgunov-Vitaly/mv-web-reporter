@@ -33,8 +33,14 @@
 	/* !!!!!!! Подключаем менеджер отчета 102 - By Coffeeshops !!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'reports/102-by-coffeeshops/102-by-coffeeshops.php' );
 	
+	/* !!!!!!! Подключаем менеджер отчета 102t - table report By Coffeeshops !!!!!!!!! */
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/102-table/102-table.php' );
+	
+	/* !!!!!!! Подключаем менеджер отчета 150 - Sales Mix !!!!!!!!! */
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/150-golden-invoice/150-golden-invoice.php' );
+	
 	/* !!!!!!! Подключаем менеджер отчета 160 - Sales Mix !!!!!!!!! */
-	require_once( plugin_dir_path( __FILE__ ) . 'reports/sales-mix/sales-mix.php' );
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/160-sales-mix/160-sales-mix.php' );
 	
 	
 	/*
@@ -57,7 +63,7 @@
 	<div id="mv_report_container"> <!-- контейнер отчета -->
 	</div>
 	<script type="text/javascript">
-		mv_report_id = <?php echo $mv_report_params['id'] ?>;
+		mv_report_id = '<?php echo $mv_report_params['id'] ?>';
 		
 		/* !!!!!!!!!!!!!!!!!!!! */
 		/* Конструкторы отчетов */
@@ -69,11 +75,17 @@
 						//$("#mv_report_progress_circle").slideDown('normal'); // Отображаем колесо загрузчик ожидание slideUp('normal')
 						<?php 
 							
-							//PC::debug($mv_report_params['id']);
-							if ($mv_report_params['id'] == 102) { /* Отчет по кофейням 160 */
+							PC::debug($mv_report_params['id']);
+							if ($mv_report_params['id'] == "102") { /* Отчет по кофейням 102 */
 								echo mv_102_report(); 
 							}
-							if ($mv_report_params['id'] == 160) { /* Отчет по кофейням 160 */
+							if ($mv_report_params['id'] == "102t") { /* Отчет по кофейням 102t */
+								echo mv_102t_report(); 
+							}
+							if ($mv_report_params['id'] == "150") { /* Отчет Золотой чек 150 */
+								echo mv_150_report(); 
+							}							
+							if ($mv_report_params['id'] == "160") { /* Отчет SalesMix 160 */
 								echo mv_160_sales_mix_report(); 
 							}
 						?>
@@ -130,9 +142,9 @@
 	function mv_LogIn(){
 		$UsName =  (isset($_COOKIE['mv_cuc_user'])) ? $_COOKIE['mv_cuc_user'] : "LogIn" ;
 		If ($UsName == "LogIn"){
-			$LogInLink = "<a class='w-text-value mv_login_modal_init' href='#'><i class='fa fa-lock'></i> ". $UsName ."</a>";
+			$LogInLink = "<a class='w-text-value mv_login_code mv_login_modal_init' href='#'><i class='fa fa-lock'></i> ". $UsName ."</a>";
 			} else {
-			$LogInLink = "<a class='w-text-value mv_login_modal_init' href='#'><i class='fa fa-unlock-alt'></i> " . $UsName . "</a>"; /* #mv_login_modal_init - это триггер для модального окна LogIn */
+			$LogInLink = "<a class='w-text-value mv_login_code mv_login_modal_init' href='#'><i class='fa fa-unlock-alt'></i> " . $UsName . "</a>"; /* #mv_login_modal_init - это триггер для модального окна LogIn */
 		}
 		echo $LogInLink;
 	}

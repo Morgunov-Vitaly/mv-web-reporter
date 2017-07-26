@@ -1,12 +1,12 @@
 <?php
 	/*
 		
-		Конструктор 102 отчета и его вспомогательные функции 
+		Конструктор 102t отчета и его вспомогательные функции 
 		
 	*/
 	
 	/* Функция вставки новых значений в таблицу БД WP - работает	*/
-	function tr_ins_ref_table($mv_rr, $mv_user, $mv_table_name ){
+	function mv_tr_ins_ref_table($mv_rr, $mv_user, $mv_table_name ){
 		
 		global $wpdb;
 		
@@ -58,7 +58,7 @@
 		
 	}
 	/* Функция  очистки таблицы БД WP */
-	function tr_truncate_table($mv_user, $mv_table_name){
+	function mv_tr_truncate_table($mv_user, $mv_table_name){
 		
 		global $wpdb;
 		$table  = $wpdb->prefix . $mv_table_name;
@@ -69,13 +69,13 @@
 	}
 	
 	
-	/* !!!!!!!!!!!   PHP обработчик AJAX запроса данных 102 отчета таблица !!!!!!!!!!! */
+	/* !!!!!!!!!!!   PHP обработчик AJAX запроса данных 102t отчета таблица !!!!!!!!!!! */
 	
-	function mv_take_report_data_102() {
+	function mv_take_report_data_102t() {
 		
 		$nonce = $_GET['mv_nonce']; // Вытаскиваем из AJAX запроса переданное значение mv_nonce и заносим в переменную $nonce
 		// проверяем nonce код, если проверка не пройдена прерываем обработку
-		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_102' ) ) wp_die('Stop! Nonce code of mv_take_report_data_102 incorrect!');
+		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_102t' ) ) wp_die('Stop! Nonce code of mv_take_report_data_102t incorrect!');
 		
 		if (isset($_GET['cafe_ref']) && $_GET['cafe_ref']!=="0"){ 
 			$refObject = $_GET['cafe_ref'];
@@ -87,7 +87,6 @@
 		$dateFrom = $_GET['dateFrom'];
 		$dateTo = $_GET['dateTo'];
 		$token = ( $_COOKIE['mv_cuc_token'] != '' ? $_COOKIE['mv_cuc_token'] : ''); //Забираем токен из кукиса
-		/* https://cscl.coffeeset.ru/ws/web/report/102/YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj/?dateFrom=2016-04-20T00:00:01&dateTo=2016-04-20T23:59:59&refObject=b0d6ce78-24ce-41d9-a997-f0b876895205&objectType=Company  */
 		$mv_url = "https://cscl.coffeeset.ru/ws/web/report/102/" . $token . "/?dateFrom=" . $dateFrom . "&dateTo="  . $dateTo . "&refObject=" . $refObject . "&objectType=" .$objectType; // Формируем строку запроса
 		
 		PC::debug($mv_url);
@@ -105,12 +104,12 @@
 			//PC::debug( $mv_report_result );
 			//PC::debug( $token );
 			$mv_user = ( $_COOKIE['mv_cuc_user'] != '' ? $_COOKIE['mv_cuc_user'] : '');
-			tr_truncate_table($mv_user, 'mv_report_102'); // Очищаем таблицу
+			mv_tr_truncate_table($mv_user, 'mv_report_102'); // Очищаем таблицу
 			foreach ($mv_report_result->reportList as $mv_rr):
-			tr_ins_ref_table( $mv_rr, $mv_user, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
+			mv_tr_ins_ref_table( $mv_rr, $mv_user, 'mv_report_102' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
 			endforeach;
 			
-			$mv_html = mv_102_accordion_constructor($mv_report_result); //вызваем конструктор аккордеона
+			$mv_html = mv_102t_constructor(); //вызваем конструктор аккордеона
 			//PC::debug( $mv_html );
 			$mv_data = array('mv_error_code' => '200', 'message' => 'Well done!'); 
 			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);
@@ -146,8 +145,8 @@
 		
 	};		
 	
-	add_action('wp_ajax_mv_take_report_data_102' , 'mv_take_report_data_102'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
-	add_action('wp_ajax_nopriv_mv_take_report_data_102', 'mv_take_report_data_102'); /* то же для незарегистрированных пользователей */
+	add_action('wp_ajax_mv_take_report_data_102t' , 'mv_take_report_data_102t'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
+	add_action('wp_ajax_nopriv_mv_take_report_data_102t', 'mv_take_report_data_102t'); /* то же для незарегистрированных пользователей */
 	
 	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 102 отчета !!!!!!!!!!! */
 	
@@ -155,9 +154,9 @@
 	
 	/* поменяем настройки плагина WpDataTables изменим меню отображения количества строк таблицы */
 	
-	add_filter( 'wpdatatables_filter_table_description', 'wpdt_mv_hook', 10, 2 );
+	add_filter( 'wpdatatables_filter_table_description', 'mv_wpdt_hook', 10, 2 );
 	
-	function wpdt_mv_hook( $object, $table_id ) {
+	function mv_wpdt_hook( $object, $table_id ) {
 		
 		$object->dataTableParams->aLengthMenu = array(
 		array(
@@ -203,8 +202,8 @@
 		или если токен поменяли сменив пользователя
 	*/
 	
-	add_action( 'template_redirect', 'mv_receive_token_param');
-	function mv_receive_token_param(){
+	add_action( 'template_redirect', 'mv_receive_token_param_102t');
+	function mv_receive_token_param_102t(){
 		global $post;
 		if( has_shortcode( $post->post_content, 'wpdatatable' )) {
 		// Если в контенте есть [ wpdatatable ... ]  главное, чтобы значение не поменялось в БД, иначе сработает только один раз

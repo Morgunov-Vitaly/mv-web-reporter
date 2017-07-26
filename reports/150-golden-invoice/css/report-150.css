@@ -1,9 +1,17 @@
 /* 
-	*******************************
-	Cтили формы отчета 160 SalesMix
-	*******************************
-	
+	*************************************
+	Cтили формы отчета 150 Golden Invoice
+	*************************************
 */
+
+/**
+ * @ .report_second_header_orgname - стиль повторющейся шапки таблицы с названием организации
+ * @ .mv_header_img - стиль иконок заголовка таблицы
+ * @ .report_data - стиль ячеек с данными
+ * @ .mv_orgname - стиль заголовка таблицы с названием организации цвет и фон меняется в МЕДИА
+ * @ .mv_mobile_view - класс для включения /отключения повторяющейся шапки таблицы для коротких/ длинный дисплеев
+ */
+
 div {
     display: block;
 }
@@ -16,13 +24,14 @@ div {
 	
 }
 
-.report_header, .report_header_orgname, .report_data{ 
+
+.report_header, .report_header_orgname, .report_second_header_orgname, .report_data{ 
     height: 92px;
     margin: 0;
     padding: 0;
 }
 
-.report_header, .report_header_orgname {
+.report_header, .report_header_orgname, .report_second_header_orgname {
     font-weight: bold;
     background: url(../img/fon_g_w_92.svg) top center repeat-x;
 }
@@ -30,7 +39,6 @@ div {
 /* стиль иконок заголовка таблицы */
 .mv_header_img{
     background: url(../img/fon_g_w_92.svg) top center repeat-x;
-	/* background: #67bd98; */
     margin: 0;
     padding: 0;
 	color: #868992;
@@ -41,6 +49,12 @@ div {
 }
 .mv_75_img {
 	height: 69px;
+	padding: 0;
+}
+
+.mv_35_img {
+	height: 35px;
+	vertical-align: middle;
 	padding: 0;
 }
 
@@ -64,20 +78,24 @@ div {
     
 }
 /* стиль ячеек с данными конкретнее */
-.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+.mv_coffee, .mv_drinks, .mv_rate, .mv_food {
     background: #fff;
     color: inherit;
 	margin: 0;
-    padding: 0 10px;
+    padding: 0 15px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-	text-align: right;
+	text-align: center;
 	font-size: 15px;
 	font-weight: bold;
 	width: 100%;
 	line-height: 15px;
 	
+}
+
+.mv_rate {
+		text-align: center;
 }
 .mv_employee_name {
 	background: #fff;
@@ -105,7 +123,7 @@ div {
 .mv_rep_data_percent{  /* стиль значения процентов */
 	color: #2c9e7b;
     font-weight: normal;
-	font-size: 10px;
+	/* font-size: 10px; */
 }
 
 .report_footer_total, .report_footer{ 
@@ -119,6 +137,9 @@ div {
     padding: 12px 10px;
 }
 
+.report_footer{
+    text-align: center;
+}
 .mv_mobile_view{
 	display: none;
 }
@@ -146,18 +167,27 @@ div {
 	.report_header_orgname {
 		font-weight: bold;
 		background: none;
-		height: 40px;
-		display: none;
+		height: 40px;		
 	}
+	.report_second_header_orgname{
+		display: none;
+	}	
+	.mv_orgname {		
+		background: #24a684; /* ораньжевый фон - #f7ba35 зеленый - #24a684 */
+		color: #fff;
+		padding: 5px 0 5px 10px;
+		margin: 0;
+	}	
 }	
 @media (max-width: 600px){ 
 	.mv_orgname {
 		line-height: 30px;
-		background: #fff;
-		color: inherit;
+		background: #24a684;
+		color: #fff;
+		padding: 3px 0 3px 10px;
 		font-weight: bold;
 		width: 100%;
-		padding: 0 0 0 10px;
+		/* padding: 0 0 0 10px; */
 	}
 	
 	.mv_header_img{
@@ -170,8 +200,11 @@ div {
 		font-weight: bold;
 		background: none;
 		height: 40px;
-		display: none;
+		
 	}
+	.report_second_header_orgname{
+		display: none;
+	}		
 	
 	.report_data{ 
 		height: 40px;
@@ -181,7 +214,7 @@ div {
 		height: 28px;
 	}
 	
-	.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+	.mv_coffee, .mv_drinks, .mv_rate, .mv_food {
 		font-size: 13px;
 		width: 100%;
 	}
@@ -213,10 +246,6 @@ div {
 		
 	}
 	
-/* .mv_mobile_view{
-		display: block;
-	} */
-	
 	.report_header{
 		font-weight: bold;
 		background: url(../img/fon_g_w_70.svg) top center repeat-x;
@@ -226,9 +255,11 @@ div {
 	.report_header_orgname {
 		font-weight: bold;
 		background: none;
-		height: 40px;
-		display: none;
+		height: 40px;		
 	}
+	.report_second_header_orgname{
+		display: none;
+	}		
 	
 	/* стиль иконок заголовка таблицы */
 	.mv_header_img{
@@ -245,8 +276,8 @@ div {
 	
 	.mv_orgname{
 		line-height: 30px;
-		background: #fff;
-		color: inherit;
+		background: #24a684;
+		color: #fff;
 		font-weight: bold;
 		font-size: 13px;
 		width: 100%;
@@ -261,7 +292,7 @@ div {
 		height: 25px;
 	}
 	
-	.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+	.mv_coffee, .mv_drinks, .mv_rate, .mv_food {
 		font-size: 13px;
 		width: 100%;
 	}
@@ -295,7 +326,7 @@ div {
 	.report_data {
 		height: 38px;
 	}
-	.mv_coffee, .mv_drinks, .mv_others, .mv_food {
+	.mv_coffee, .mv_drinks, .mv_rate, .mv_food {
 		font-size: 12px;
 		padding: 0 5px;
 	}

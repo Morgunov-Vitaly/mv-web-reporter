@@ -201,7 +201,7 @@
 		
 		<?php
 			
-			/* Проверка на наличие шорткода [mv_dashboard]  в контенте */
+			/* Проверка на наличие токена и отключаем то что должно быть скрыто при наличии токена */
 			if ( isset( $_COOKIE['mv_cuc_token'] ) ) {
 			?>
 			mv_show_hide_token_on();
@@ -220,7 +220,7 @@
             $("#mv_logout_btn").click(function(event_lo) {
                 delete_cookie("mv_cuc_token"); // удаление куки с токеном
                 delete_cookie("mv_cuc_user"); // удаление куки с логином
-				$(".mv-login").html('<i class="fa fa-lock"></i> LogIn'); // меняем надпись Ссылки LogIn на логин пользователя
+				$(".mv_login_code").html('<i class="fa fa-lock"></i> LogIn'); // меняем надпись Ссылки LogIn на логин пользователя
                 $("#mv_login_error").slideUp('normal'); // скрываем сообщение об ошибке   !его желательно скрыть и при изменении одного из полей формы
 				<?php
 					if( has_shortcode( $content, 'mv_param_form' )){ /* Для страниц отчетов */
@@ -291,7 +291,7 @@
 							?>
 							mv_show_hide_token_on();// показать .mv_token_show скрыть .mv_notoken_show
 							
-                            $(".mv-login").html('<i class=\'fa fa-unlock-alt\'></i> ' + mv_result.login); // меняем надпись Ссылки LogIn на логин пользователя
+                            $(".mv_login_code").html('<i class=\'fa fa-unlock-alt\'></i> ' + mv_result.login); // /.mv-login меняем надпись Ссылки LogIn на логин пользователя
 						}
 						
                         else {
@@ -394,8 +394,8 @@
 		'timeout' => 11
 		) ); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек);
 		
-		PC::debug($mv_remote_get );
-		PC::debug($mv_url);
+		//PC::debug($mv_remote_get );
+		//PC::debug($mv_url);
 		$mv_result = json_decode( wp_remote_retrieve_body( $mv_remote_get ) ); //json_decode PHP функция Принимает закодированную в JSON строку и преобразует ее в переменную PHP
 		// Если ответ сервера 200 OK, то удачная передача
 		// PC::debug($mv_result);
@@ -411,8 +411,8 @@
 			*/
 			
 			if ( is_wp_error( $mv_remote_get ) ) { //timeout ?
-				PC::debug( $mv_remote_get );
-				PC::debug( wp_remote_retrieve_response_code( $mv_remote_get ) );
+				//PC::debug( $mv_remote_get );
+				//PC::debug( wp_remote_retrieve_response_code( $mv_remote_get ) );
 			};
 			echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '" , ' . '"message" : "' . ( ( isset( $mv_result->message ) ) ? $mv_result->message : $mv_remote_get->get_error_code() ) . '"}';
 		};
@@ -474,10 +474,10 @@
 			*/
 			
 			if ( is_wp_error( $mv_remote_get ) ) { //timeout ?
-				PC::debug( $mv_remote_get );
+				//PC::debug( $mv_remote_get );
 				
 			};
-			PC::debug( wp_remote_retrieve_response_code( $mv_remote_get ) );
+			//PC::debug( wp_remote_retrieve_response_code( $mv_remote_get ) );
 			echo '{ "mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"message" : "' . ( ( isset( $mv_result->message ) ) ? $mv_result->message : ( ( is_wp_error( $mv_remote_get ) ) ? $mv_remote_get->get_error_code() : "" ) ) . '"}';
 		};
 		

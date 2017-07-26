@@ -14,7 +14,7 @@ function enqueue_mv_stylecss_102() {
 	/* Проверяем наличие шорткода  в посте */
 	global $mv_report_params;	
 	//PC::debug($mv_report_params['id']);
-	if ($mv_report_params['id'] == '102') {
+	if ($mv_report_params['id'] == 102) {
 		wp_register_style( 'mvaccordioncss', plugins_url('css/accordion.core.css', __FILE__));
 		//wp_register_style( 'mvaccordioncss', WP_PLUGIN_URL . '/mv-web-reporter/reports/102-by-coffeeshops/css/accordion.core.css');
 		wp_enqueue_style( 'mvaccordioncss' );
@@ -30,7 +30,7 @@ function enqueue_mv_stylecss_102() {
 function enqueue_mv_102_jquery() {
 	/* Проверяем наличие шорткода в посте */
 	global $mv_report_params;
-	if ($mv_report_params['id'] == '102') {
+	if ($mv_report_params['id'] == 102) {
 		wp_register_script( 'mvaccordionjs', plugins_url('js/jquery.accordion.2.0.js', __FILE__), array( 'jquery' ), '1.0', true);
 		wp_enqueue_script( 'mvaccordionjs' );
 	}		

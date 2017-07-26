@@ -1,69 +1,33 @@
 <?php	
 /*
 	
-	Менеджер отчета  102 By coffeeshops
-	ID 102 
+	Менеджер отчета  102t table report By coffeeshops
+	ID 102t 
 	
 	
 */
 
-/* !!!!!!!!!!   Подключаем стили  !!!!!!!!!! */	
-
-add_action( 'wp_footer', 'enqueue_mv_stylecss_102' );
-function enqueue_mv_stylecss_102() {
-	/* Проверяем наличие шорткода  в посте */
-	global $mv_report_params;	
-	//PC::debug($mv_report_params['id']);
-	if ($mv_report_params['id'] == '102') {
-		wp_register_style( 'mvaccordioncss', plugins_url('css/accordion.core.css', __FILE__));
-		//wp_register_style( 'mvaccordioncss', WP_PLUGIN_URL . '/mv-web-reporter/reports/102-by-coffeeshops/css/accordion.core.css');
-		wp_enqueue_style( 'mvaccordioncss' );
-	}
-}
-/* Подвешиваем к хуку функцию подключения стилей */	
-//add_action( 'template_redirect', 'enqueue_mv_stylecss_102' );
-/* / Подключаем стили !!!!!!!!!! */	
 
 
-/* !!!!!!!!!!  Подключаем скрипты !!!!!!!!!! */	
+/* !!!!!! Подключаем файл Конструктора 102t отчета и его вспомогательные функции !!!!!!!!!!!!!!!! */
+require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102t_handler.php' );
 
-function enqueue_mv_102_jquery() {
-	/* Проверяем наличие шорткода в посте */
-	global $mv_report_params;
-	if ($mv_report_params['id'] == '102') {
-		wp_register_script( 'mvaccordionjs', plugins_url('js/jquery.accordion.2.0.js', __FILE__), array( 'jquery' ), '1.0', true);
-		wp_enqueue_script( 'mvaccordionjs' );
-	}		
-}	
+/* !!!!!! Подключаем файл Конструктора 102t шапки отчета и его вспомогательные функции !!!!!!!!!!!!!!!! */
+require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102t_constructor.php' );
 
-/* Подвешиваем к хуку функцию подключения скриптов */	
-add_action( 'wp_footer', 'enqueue_mv_102_jquery' );
-/* / Подключаем скрипты */
-
-
-/* !!!!!!! Подключаем файл конструктора 102 отчета в виде аккардеона !!!!!!!!!!!!!!!! */
-require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102_accordion.php' );
-
-/* !!!!!!! Подключаем файл шорткода [mv_report_accordion_code] конструктора вывода контейнера для отчета в виде аккардеона !!!!!!!!!!!!!!!! */
-//require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv-accordion-constructor.php' );
-
-
-/* !!!!!! Подключаем файл Конструктора 102 отчета и его вспомогательные функции !!!!!!!!!!!!!!!! */
-require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv_102_report_constructor.php' );
-
-function mv_102_report() {
+function mv_102t_report() {
 	global $post;
 	$content = $post->post_content; /* Считываем контент страницы поста для проверки наличия шорткодов */
 	ob_start();
 	?> 
 	 mv_progress_circle_show();// Отображаем колесо загрузчик ожидание slideUp('normal')
-
+/* 102t табличный отчет по кофейням */
 	$.ajax({
 		type: 'GET',
 		url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся как альтернатива */
 		data: {
-			action: 'mv_take_report_data_102', /* Вызывам обработчик делающий запрос данных отчета  mv_take_report_data_102*/
-			mv_nonce: '<?php echo wp_create_nonce( "mv_take_report_data_102" ); ?>',
+			action: 'mv_take_report_data_102t', /* Вызывам обработчик делающий запрос данных отчета  mv_take_report_data_102t */
+			mv_nonce: '<?php echo wp_create_nonce( "mv_take_report_data_102t" ); ?>',
 			ref_organization: document.getElementById('form_param_ref_organization').value, /* по ID поля $('#form_param_ref_organization').val() window.form_param_ref_organization.value */
 			cafe_ref: document.getElementById('form_param_cafe').value, //по ID поля $('#form_param_cafe').val() window.form_param_cafe.value
 			dateFrom: document.getElementById('dateFrom').value + 'T00:00:00', /* по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '') window.dateFrom.value + 'T00:00:00', */
@@ -81,7 +45,7 @@ function mv_102_report() {
 				if (mv_report_result.mv_data.mv_error_code == "200") { //Все получилось!
 					$(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
 					
-					$("#mv_report_container").html(mv_report_result.mv_html); // обновляем аккордеон
+					$("#mv_report_container").html(mv_report_result.mv_html); // обновляем контейнер отчета
 					
 					//Добавить условие, если этот блок с выводом параметров отчета вообще есть
 					if ( document.getElementById("displayorgname") != undefined) {
