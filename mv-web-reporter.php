@@ -12,6 +12,12 @@
 	// установим глобальную переменную с ID модального окна LogIn для удобства укажем ее здесь	
 	$mv_login_popup = 6132; 
 	
+	// установим глобальную переменную с html кодом дополнительных параметров для формы дополнительных параметров
+	$mv_extra_options_html =''; 
+
+	// установим глобальную переменную с html кодом отчета
+	$mv_report_html =''; 
+	
 	
 	/* Локализация плагина */
 	add_action( 'plugins_loaded', 'mv_load_plugin_textdomain' );
@@ -42,6 +48,60 @@
 	/* !!!!!!! Подключаем менеджер отчета 160 - Sales Mix !!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'reports/160-sales-mix/160-sales-mix.php' );
 	
+	/* !!!!!!! Подключаем менеджер отчета id=132 ReportOrderList !!!!!!!!! */
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/132-orders/132-orders.php' );	
+	
+	
+	/*
+		!!!!!!!! 
+		Подключение отчетов 
+		находим шорткод отчетов в контенте [mv_reports id="номер отчета"] определяем указанные параметры  
+		и установим ряд глобальных переменных для дальнейшего построения отчетов
+		!!!!!!!!!!
+	*/	
+	
+	add_action( 'template_redirect', 'mv_set_global_variables' );
+	
+	function mv_set_global_variables (){
+		global $post;
+		global $mv_extra_options_html;
+		global $mv_report_html;
+		
+		if( has_shortcode( $post->post_content, 'mv_reports' )) { // если в контенте есть шорткод отчета
+		/* считываем параметр отчета - его ID */
+			$mv_report_params;
+			$mv_report_params = '';
+			/* preg_match_all('#\[mv_reports id=\'(.+?)\']#is', $post->post_content, $arr); */ // Найденное значение будет в $arr[1]
+			preg_match('#\[mv_reports\s*id\s*=\s*[\'\"](.+?)[\'\"]]#is', $post->post_content, $arr); // Найденное значение будет в $arr[1]
+			$mv_report_params = $arr[1];
+			PC::debug($mv_report_params);
+			
+							if ($mv_report_params == "102") { /* Отчет по кофейням 102 */
+								$mv_report_html = mv_102_report(); 
+							}
+							if ($mv_report_params == "102t") { /* Отчет по кофейням 102t */
+								$mv_report_html = mv_102t_report(); 
+							}
+							if ($mv_report_params == "150") { /* Отчет Золотой чек 150 */
+								$mv_report_html = mv_150_report(); 
+							}							
+							if ($mv_report_params == "160") { /* Отчет SalesMix 160 */
+								$mv_extra_options_html = mv_160_extra_options_html(); // формируем строку для дополнительных параметров
+								$mv_report_html = mv_160_sales_mix_report(); 
+							}
+							if ($mv_report_params == "132") { /* Отчет ReportOrderList 132 */
+								$mv_extra_options_html = mv_132_extra_options_html(); // формируем строку для дополнительных параметров
+								$mv_report_html = mv_132_report();								
+							}										
+		/* устанавливаем глобальную переменную - html строку для вывода дополнительных параметров */
+		
+		/* устанавливаем глобальную переменную mv_report_id  с ID отчета */
+		
+		/* определим глобальную строковую переменную с  html кодом самого отчета */
+		}
+	}
+	
+	
 	
 	/*
 		!!!!!!!! 
@@ -53,8 +113,9 @@
 		// задаем значения параметров по умолчанию
 		// ID по умолчанию, если его не указывать
 		global $mv_report_params;
+		global $mv_report_html;		
 		$mv_report_params = shortcode_atts( array('id' => '102'), $atts);
-		
+		//global $mv_extra_options_html;
 		//global $mv_login_popup; 	
 		
 		
@@ -74,20 +135,7 @@
 					if (mv_document_ready > 0) {
 						//$("#mv_report_progress_circle").slideDown('normal'); // Отображаем колесо загрузчик ожидание slideUp('normal')
 						<?php 
-							
-							PC::debug($mv_report_params['id']);
-							if ($mv_report_params['id'] == "102") { /* Отчет по кофейням 102 */
-								echo mv_102_report(); 
-							}
-							if ($mv_report_params['id'] == "102t") { /* Отчет по кофейням 102t */
-								echo mv_102t_report(); 
-							}
-							if ($mv_report_params['id'] == "150") { /* Отчет Золотой чек 150 */
-								echo mv_150_report(); 
-							}							
-							if ($mv_report_params['id'] == "160") { /* Отчет SalesMix 160 */
-								echo mv_160_sales_mix_report(); 
-							}
+							echo $mv_report_html;
 						?>
 						mv_document_ready = mv_document_ready + 1; // счетчик для предотвращения повторного срабатывания функций
 						// $("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal');

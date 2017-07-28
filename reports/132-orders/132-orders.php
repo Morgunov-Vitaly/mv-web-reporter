@@ -1,34 +1,54 @@
 <?php	
 /*
 	
-	Менеджер отчета Sales Mix
-	ID 160 
+	Менеджер отчета ReportOrderList
+	ID 132 
 	
 	
 */
 
 /* !!!!!!!!!!   Подключаем стили  !!!!!!!!!! */	
 
-add_action( 'wp_footer', 'enqueue_mv_stylecss_160' );
+add_action( 'wp_footer', 'enqueue_mv_stylecss_132' );
 /* Подвешиваем к хуку функцию подключения стилей */	
 
-function enqueue_mv_stylecss_160() {
+function enqueue_mv_stylecss_132() {
 	/* Проверяем наличие шорткода  в посте */
 	global $mv_report_params;	
 	//PC::debug($mv_report_params['id']);
-	if ($mv_report_params['id'] == 160) {
-		wp_register_style( 'mv_stylecss_160', plugins_url('css/report-160.css', __FILE__));
-		wp_enqueue_style( 'mv_stylecss_160' );
+	if ($mv_report_params['id'] == '132') {
+		wp_register_style( 'mv_stylecss_132', plugins_url('css/report-132.css', __FILE__));
+		wp_enqueue_style( 'mv_stylecss_132' );
+		
+		wp_register_style( 'mvaccordioncss', plugins_url('css/accordion.core.css', __FILE__));
+		wp_enqueue_style( 'mvaccordioncss' );
 	}
 }
 /* / Подключаем стили !!!!!!!!!! */	
 
-/* !!!!!!! Подключаем AJAX обработчик отчета 160 JS !!!!!!!! */
-require_once( plugin_dir_path( __FILE__ ) . 'handlers/report-constructor-160.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'handlers/report-handler-160.php' );
+/* !!!!!!!!!!  Подключаем скрипты !!!!!!!!!! */	
+
+function enqueue_mv_132_jquery() {
+	/* Проверяем наличие шорткода в посте */
+	global $mv_report_params;
+	if ($mv_report_params['id'] == '132') {
+		wp_register_script( 'mvaccordionjs', plugins_url('js/jquery.accordion.2.0.js', __FILE__), array( 'jquery' ), '1.0', true);
+		wp_enqueue_script( 'mvaccordionjs' );
+	}		
+}	
+
+/* Подвешиваем к хуку функцию подключения скриптов */	
+add_action( 'wp_footer', 'enqueue_mv_132_jquery' );
+/* / Подключаем скрипты */
 
 
-function mv_160_sales_mix_report (){
+
+/* !!!!!!! Подключаем AJAX обработчик отчета 132 JS !!!!!!!! */
+require_once( plugin_dir_path( __FILE__ ) . 'handlers/report-constructor-132.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'handlers/report-handler-132.php' );
+
+
+function mv_132_report(){
 	global $post;
 	$content = $post->post_content; /* Считываем контент страницы поста и смотрим есть ли шорткод [mv_closed] или [mv_reports] */
 	ob_start();
@@ -38,8 +58,8 @@ function mv_160_sales_mix_report (){
 		type: 'GET',
 		url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся как альтернатива */
 		data: {
-			action: 'mv_take_report_data_160', /* Вызывам обработчик делающий запрос данных отчета*/
-			mv_nonce: '<?php echo wp_create_nonce( "mv_take_report_data_160" ); ?>',
+			action: 'mv_take_report_data_132', /* Вызывам обработчик делающий запрос данных отчета*/
+			mv_nonce: '<?php echo wp_create_nonce( "mv_take_report_data_132" ); ?>',
 			ref_organization: document.getElementById('form_param_ref_organization').value, //по ID поля $('#form_param_ref_organization').val() window.form_param_ref_organization.value
 			cafe_ref: document.getElementById('form_param_cafe').value, //по ID поля $('#form_param_cafe').val() window.form_param_cafe.value
 			dateFrom: document.getElementById('dateFrom').value + 'T00:00:00', //по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '') window.dateFrom.value + 'T00:00:00',

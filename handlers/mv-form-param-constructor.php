@@ -18,6 +18,7 @@
 	
 	function mv_param_form_constructor($atts){
 		global $mv_login_popup;  // глобальная переменная со сведениями по модальному окну LogIn
+		global $mv_extra_options_html; // глобальная переменная c html кодом дополнительных параметров
 		$params = shortcode_atts( array( //  задаем значения по умолчанию
 		'type' => 1, // тип 1 (по умолчанию) - отчет, по всем кофейням 2- тип, когда обязательно выбрана одна из кофеен (первая по списку)
 		), $atts );	
@@ -196,6 +197,12 @@
 				</li>
 			</ul>
 		</form>
+		
+			<!-- контейнер для дополнительных  параметров отчетов  -->
+		<div id="mv_extra_options">
+		<?php echo $mv_extra_options_html; ?>
+		</div>
+		
 	</div>
 	
 	<script type="text/javascript">	

@@ -1,19 +1,19 @@
 <?php
 	/*
 		
-		PHP обработчик запроса на удаленный сервер данных 160 отчета 
+		PHP обработчик запроса на удаленный сервер данных 132 отчета 
 		
 	*/
 	
 	
-	add_action('wp_ajax_mv_take_report_data_160' , 'mv_take_report_data_160'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
-	add_action('wp_ajax_nopriv_mv_take_report_data_160', 'mv_take_report_data_160'); /* то же для незарегистрированных пользователей */
+	add_action('wp_ajax_mv_take_report_data_132' , 'mv_take_report_data_132'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
+	add_action('wp_ajax_nopriv_mv_take_report_data_132', 'mv_take_report_data_132'); /* то же для незарегистрированных пользователей */
 	
-	function mv_take_report_data_160() {
+	function mv_take_report_data_132() {
 		
 		$nonce = $_GET['mv_nonce']; // Вытаскиваем из AJAX запроса переданное значение mv_nonce и заносим в переменную $nonce
 		// проверяем nonce код, если проверка не пройдена прерываем обработку
-		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_160' ) ) wp_die('Stop! Nonce code of mv_take_report_data_160 incorrect!');
+		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_132' ) ) wp_die('Stop! Nonce code of mv_take_report_data_132 incorrect!');
 		
 		if (isset($_GET['cafe_ref']) && $_GET['cafe_ref']!=="0"){ 
 			$refObject = $_GET['cafe_ref'];
@@ -23,11 +23,11 @@
 		$dateFrom = $_GET['dateFrom'];
 		$dateTo = $_GET['dateTo'];
 		$token = ( $_COOKIE['mv_cuc_token'] != '' ? $_COOKIE['mv_cuc_token'] : ''); //Забираем токен из кукиса
-		/* https://cscl.coffeeset.ru/ws-test/web/report?token=...&id=160&dateFrom=...&dateTo=...&refDivision=193A9F3B-15AE-4030-B3BA-6DE2DA537383
+		/* https://cscl.coffeeset.ru/ws-test/web/report?token=...&id=132&dateFrom=...&dateTo=...&refDivision=193A9F3B-15AE-4030-B3BA-6DE2DA537383
 		*/
-		$mv_url = 'https://cscl.coffeeset.ru/ws-test/web/report?token=' . $token . '&id=160&dateFrom=' . $dateFrom . '&dateTo='  . $dateTo . '&refDivision=' . $refObject; // Формируем строку запроса
-		//$mv_url = "https://cscl.coffeeset.ru/ws-test/web/report?token=YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj&id=160&dateFrom=2017-01-01T00:00:01&dateTo=2017-01-31T23:59:59&refDivision=193A9F3B-15AE-4030-B3BA-6DE2DA537383";
-		PC::debug($mv_url );	
+		$mv_url = 'https://cscl.coffeeset.ru/ws-test/web/report?token=' . $token . '&id=132&dateFrom=' . $dateFrom . '&dateTo='  . $dateTo . '&refDivision=' . $refObject; // Формируем строку запроса
+		//$mv_url = "https://cscl.coffeeset.ru/ws-test/web/report?token=YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj&id=132&dateFrom=2016-02-20T00:00:01&dateTo=2016-02-20T23:59:59&refDivision=54CA99F6-7E6D-4C9A-AC2C-AE549257F585";
+		//PC::debug($mv_url );	
 		$mv_remote_get = wp_remote_get( $mv_url, array(
 		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
 		
@@ -45,8 +45,8 @@
 				вызваем конструктор отчета
 				!!!!!!!!!!!! 
 			*/
-			 if(! empty( $mv_report_result->employeeSummary ) ){
-				$mv_html = mv_160_report_constructor($mv_report_result); 
+			 if(! empty( $mv_report_result->orders ) ){
+				$mv_html = mv_132_report_constructor($mv_report_result); 
 				} else {
 				$mv_html ='<p style="text-align: center;">' . __( 'Данные отсутствуют', 'mv-web-reporter' ) . '</p>';
 			};
@@ -85,5 +85,5 @@
 		wp_die();
 		
 	};		
-	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 160 отчета !!!!!!!!!!! */
+	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 132 отчета !!!!!!!!!!! */
 ?>

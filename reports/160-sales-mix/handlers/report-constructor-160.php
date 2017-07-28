@@ -38,11 +38,6 @@
 		echo '<p style="display: inline;"> / '.__('Дата по: ', 'mv-web-reporter').'</p><p id="displaydateto" style="display: inline;"></p>';
 		// end Выводим заголовок отчета: дата от до, название организации 
 		
-		/* Блок вывода дополнительных параметров отчета */
-		echo '<p><input id="mv_check_1" class="mv_report_addition_param" type="checkbox" checked="checked" name="mv_report_addition_param_01" /> '.__('Показывать проценты', 'mv-web-reporter').' | <input id="mv_check_2" class="mv_report_addition_param" type="checkbox" checked="checked" name="mv_report_addition_param_02" />' .__('Показывать кол-во чеков', 'mv-web-reporter') . '</p>';
-		echo '<script>jQuery("#mv_check_1, #mv_check_2").change(function(){ if(jQuery("#mv_check_1").prop("checked")){ jQuery (".mv_rep_data_percent").slideDown("normal"); } else { jQuery (".mv_rep_data_percent").slideUp("normal"); } if(jQuery("#mv_check_2").prop("checked")) { jQuery (".mv_rep_data_qty").slideDown("normal"); } else { jQuery (".mv_rep_data_qty").slideUp("normal"); }}); </script>';
-		/* Блок вывода дополнительных параметров отчета */		
-		
 		/* строковая переменная с повторяющимся элементом шапки таблицы */
 		$mv_report160_head_mobile = 'vc_col-sm-4  vc_col-xs-12 wpb_column vc_column_container" ><p class ="mv_orgname">' . $mv_report_result->employeeSummary[0]->divisionName . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/coffee.svg"><br>' .__('Кофе', 'mv-web-reporter') . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/drinks.svg"><br>' .__('Напитки', 'mv-web-reporter') . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/food.svg"><br> ' .__('Еда', 'mv-web-reporter') . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/other.svg"><br>' .__('Прочее', 'mv-web-reporter') . '</p></div></div>';
 		
@@ -144,5 +139,25 @@
 		return $html;
 		//PC::debug( $html );
 	} 
+	/*
+	*
+	*	функция - конструктор
+	*	для передачи html кода 
+	*	формы дополнительных параметров отчета
+	*
+	*
+	*/
 	
+	function mv_160_extra_options_html(){
+		ob_start();
+
+		/* Блок вывода дополнительных параметров отчета */
+		echo '<p><input id="mv_check_1" class="mv_report_addition_param" type="checkbox" checked="checked" name="mv_report_addition_param_01" /> '.__('Показывать проценты', 'mv-web-reporter').'<br> <input id="mv_check_2" class="mv_report_addition_param" type="checkbox" checked="checked" name="mv_report_addition_param_02" />' .__('Показывать кол-во чеков', 'mv-web-reporter') . '</p>';
+		echo '<script>jQuery("#mv_check_1, #mv_check_2").change(function(){ if(jQuery("#mv_check_1").prop("checked")){ jQuery (".mv_rep_data_percent").slideDown("normal"); } else { jQuery (".mv_rep_data_percent").slideUp("normal"); } if(jQuery("#mv_check_2").prop("checked")) { jQuery (".mv_rep_data_qty").slideDown("normal"); } else { jQuery (".mv_rep_data_qty").slideUp("normal"); }}); </script>';
+		/* Блок вывода дополнительных параметров отчета */			
+		
+		$html = ob_get_contents();
+		ob_get_clean();
+		return $html;
+	}		
 ?>

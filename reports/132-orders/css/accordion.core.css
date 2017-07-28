@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+.mv_accordion {
+	/* border: 1px solid #6b9638; */
+	border-top: 1px solid #e6e6e6; /*rgba(158, 158, 158, 0.26) */
+	/* width:  50%; */
+}
+.mv_accordion li h3 a {
+	background:            #8BC34A;
+	/* background:             #666 -webkit-gradient(linear, left top, left bottom, from(#999), to(#666)) no-repeat;
+	background:             #666 -moz-linear-gradient(top,  #999,  #666) no-repeat;*/
+	border-bottom:          1px solid #fff;
+	/* border-top:             1px solid #fff;   */
+	color:   #fff;
+	display:   block;
+	font-style:   normal;
+	margin:  0;
+	padding: 5px 10px;
+	border-radius: 10px 0 0 0;
+	/*     text-shadow:            0 -1px 2px #333, #ccc 0 1px 2px; */
+}
+.mv_accordion li.active h3 a {
+	background:    #6b9638;
+	/*  background:             #369 -webkit-gradient(linear, left top, left bottom, from(#69c), to(#369)) no-repeat;
+		background:             #369 -moz-linear-gradient(top,  #69c,  #369) no-repeat;
+		border-bottom:          1px solid #036;
+	border-top:             1px solid #9cf; */
+	/*  text-shadow:            0 -1px 2px #036, #9cf 0 1px 2px; */
+}
+.mv_accordion li.locked h3 a {
+	background:   #963;
+	background:   #963 -webkit-gradient(linear, left top, left bottom, from(#c96), to(#963)) no-repeat;
+	background:   #963 -moz-linear-gradient(top,  #c96,  #963) no-repeat;
+	border-bottom:   1px solid #630;
+	border-top:    1px solid #fc9;
+	text-shadow:   0 -1px 2px #630, #fc9 0 1px 2px;
+}
+.mv_accordion li h3 {
+	margin:         0;
+	padding:       0;
+}
+.mv_accordion .panel {
+	padding:        10px;
+	height: 100%;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+ul.mv_accordion,
+ol.mv_accordion {
+    margin:             0;
+    padding:            0;
+}
+.mv_accordion li {
+    list-style-type:    none;
+    margin:             0;
+    padding:            0;
+}
+.mv_accordion li:after {
+	content:        ".";
+	display:        block;
+	height:         0;
+	clear:          both;
+	visibility:     hidden;
+	zoom:          1;
+}
+.mv_accordion li li {
+    list-style-type:    disc;
+    margin-left:        1em;
+}
+.mv_accordion a {
+    color:              inherit;
+    text-decoration:    inherit;
+}
+
+/* 
+	!!!!!!!!!!!!!!!!!!!! 
+	MV классы для списка 
+	!!!!!!!!!!!!!!!!!!!!
+*/
+
+/* !!!!!!!!!!!!!!!!!!!!! MV классы  для шапки аккардеона !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+.mv_handle {
+    background: #fff;
+    height: 70px;
+    margin: 0;
+    padding: 0;
+	/* border-top: 1px solid #e6e6e6; */
+    border-bottom: 1px solid #e6e6e6;
+    width: 100%;
+}
+
+/* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
+.mv_header_1{
+	font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+	line-height: 70px;
+    /* color: #416960; */
+	white-space: nowrap; /* запрет переноса */
+    overflow: hidden;
+}
+.mv_header_1 span {
+	font-size: 18px;
+}
+
+/* Стиль второй части шапки аккардеона блоки иконок индикаторов*/
+.mv_header_2 {
+	height: 70px;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+}
+/* стиль текстового абзаца второго блока */
+.mv_header_2_content{
+	vertical-align: middle; /* бесполезно p - block element */
+	line-height: 70px;
+	text-align: right;
+}
+/* Стиль третей части шапки аккардеона сумма и даты */
+.mv_header_3 {
+	height: 70px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: bold;	
+    vertical-align: middle;
+	text-align: right;
+	padding: 0;
+	padding-right: 50px;
+    margin: 0;
+	line-height: 20px;
+    top: 18px;
+	
+}
+.mv_date {
+	font-size: 12px;
+    font-style: normal;
+    font-weight: normal;	
+}
+
+.mv_accordion-opener {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 70px;
+    width: 100%;
+    position: relative;
+}
+
+.autor_name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #416960; /* #676f7c */
+    font-style: normal;
+    font-weight: normal;
+    overflow: hidden;
+    text-align: left;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    width: 70%;
+}
+.sale_val {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    color: #416e6a; /* #676f7c */
+    font-style: normal;
+    font-weight: bold;
+    text-align: right;
+    height: 70px;
+    line-height: 50px;
+}
+
+
+/* Проставляем стрелочки  вниз и вверх  */
+.mv_accordion-opener:after {
+    content: "\f078";
+    font-family: FontAwesome;
+    font-style: normal;
+   /* color: #91bfb4; */ /* #dfe0e3 #7d9c95 */
+    font-weight: normal;
+    position: absolute;
+    top: 20px;
+    right: 18px;
+    display: block;
+} 
+
+.active .mv_accordion-opener:after {
+	content: "\f077";
+    font-family: FontAwesome;
+    font-style: normal;
+	color: #29b28f;  /* #67bd98; */
+    font-weight: normal;
+    text-decoration: inherit;
+    position: absolute;
+    top: 20px; 
+    right: 18px;
+	
+} 
+
+.mv_accordion-opener:hover {
+	background-color: #f9f9f9; /* #f0faf7 #e6f8ee; #f2f3f5  color #5c6566*/
+	
+} 
+
+.mv_img_label {
+    height: 50px;
+    padding: 0;
+	line-height: 70px;	
+	vertical-align: middle;
+}
+
+.mv_img_indicators {
+    height: 25px;
+    padding: 0;
+	line-height: 70px;
+	vertical-align: middle;
+}
+/* Дополнительные параметры отчета */
+input.mv_input_order_number {
+	width: 100%;	
+}
+
+#mv_find_number{
+margin: 5px 0;
+width: 100%;
+
+}
+.mv_report_addition_param  {
+	vertical-align: baseline;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!! MV классы  для таблицы блока данных !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
+.panel {
+	background: #f5faf5;
+}
+.mv_132_report_table {
+	width: 100%;
+	border: none;
+}
+.mv_132_report_table td{
+	padding: 0.3rem 10px;
+}
+
+.mv_132_rt_border_top {
+	border-top: 1px dotted #ccc;
+}
+
+.mv_132_datatable_header {
+	background: #29b28f;
+	border: none;
+	color: #fff;
+	font-weight: bold;
+	
+	/* border-top: 1px dotted #ccc;
+	border-bottom: 1px dotted #ccc; */ 
+	
+}
+/* стили столбца с иконками */
+.mv_icon_row {
+	width: 7%;
+	text-align: center;
+	vertical-align: middle;
+	border: none;
+	
+}
+
+/* классы выравниватели */
+.mv_align_right{
+	text-align: right;
+}
+.mv_align_center {
+	text-align: center;
+}
+
+
+.mv_132_rt_padding_top {
+	padding-top: 15px;
+}
+.mv_small {
+	font-size: 10px;
+	color: #29b28f;
+}
+
+/* Медиаклассы для мобильных экранов */
+
+/* IPhone 5 320x 568 */
+
+@media (max-width: 515px){	/* 414px*/
+	.org_name {
+		font-size: 14px;
+		width: 55%;
+	}
+	.sale_val {
+		font-size: 14px;
+		padding: 0 37px 0 10px;
+	}
+	
+	.mv_accordion-opener:after {
+		right: 13px;
+	}
+	
+	.active .mv_accordion-opener:after {
+		right: 13px;
+	}
+	.mv_132_report_table td {
+		font-size: 14px;
+	}
+	
+}
+
+/* / Медиаклассы для мобильных экранов */
