@@ -20,6 +20,7 @@
 			$objectType='Coffeeshop';
 			} else {wp_die('Возникли проблемы с выбором кофейни для построения отчета!');
 		}
+		$mv_cscl_card_num = $_GET['mv_cscl_card_num']; /* значение параметра поиска по номеру бонусной карты */
 		$dateFrom = $_GET['dateFrom'];
 		$dateTo = $_GET['dateTo'];
 		$token = ( $_COOKIE['mv_cuc_token'] != '' ? $_COOKIE['mv_cuc_token'] : ''); //Забираем токен из кукиса
@@ -46,7 +47,7 @@
 				!!!!!!!!!!!! 
 			*/
 			 if(! empty( $mv_report_result->orders ) ){
-				$mv_html = mv_132_report_constructor($mv_report_result); 
+				$mv_html = mv_132_report_constructor($mv_report_result, $mv_cscl_card_num); 
 				} else {
 				$mv_html ='<p style="text-align: center;">' . __( 'Данные отсутствуют', 'mv-web-reporter' ) . '</p>';
 			};

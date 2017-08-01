@@ -63,19 +63,20 @@ function mv_132_report(){
 			ref_organization: document.getElementById('form_param_ref_organization').value, //по ID поля $('#form_param_ref_organization').val() window.form_param_ref_organization.value
 			cafe_ref: document.getElementById('form_param_cafe').value, //по ID поля $('#form_param_cafe').val() window.form_param_cafe.value
 			dateFrom: document.getElementById('dateFrom').value + 'T00:00:00', //по ID поля window.dateFrom.value.toISOString().replace(/\..*$/, '') window.dateFrom.value + 'T00:00:00',
-			dateTo: document.getElementById('dateTo').value + 'T23:59:59' //по ID поля document.getElementById('form_param_ref_organization').value   window.dateTo.value + 'T23:59:59'
+			dateTo: document.getElementById('dateTo').value + 'T23:59:59', //по ID поля document.getElementById('form_param_ref_organization').value   window.dateTo.value + 'T23:59:59'
+			mv_cscl_card_num: document.getElementById('mv_cscl_csrd_number').value // значение параметра поиска по номеру бонусной карты
 		},
 		success: function (result, status) {
 			console.log("<?php _e( 'Статус запроса списка по токену: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
 			if (result != ""){
 				mv_report_result = JSON.parse(result);
 				console.log('mv_report_result: ' + mv_report_result);
-				if (mv_report_result.mv_data.mv_error_code == "200") { //Все получилось!
-					$(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
+				if (mv_report_result.mv_data.mv_error_code == "200") { /* Все получилось! */
+					$(".mv_reports_container").slideDown('normal'); /* показать .mv_reports_container - контейнер для вывода отчетов */
 					
-					$("#mv_report_container").html(mv_report_result.mv_html);// обновляем форму отчета
-					
-					//Добавить условие, если этот блок с выводом параметров отчета вообще есть
+					$("#mv_report_container").html(mv_report_result.mv_html); /* обновляем форму отчета */
+					mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
+					/* Блок вывода шапки отчета */
 					if ( document.getElementById("displayorgname") != undefined) {
 						document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;
 						document.getElementById("displaydatefrom").innerHTML = document.getElementById("dateFrom").value;
@@ -83,7 +84,7 @@ function mv_132_report(){
 					}
 					
 					console.log("<?php _e( 'Статус запроса конструктора отчета: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
-					$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
+
 					} else {
 					
 					/* Здесь надо вывести окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */
@@ -93,13 +94,13 @@ function mv_132_report(){
 					console.log('mv_error_code: ' + mv_report_result.mv_data.mv_error_code);
 					console.log('message: ' + mv_report_result.mv_data.message);
 					console.log('report URL: ' + mv_report_result.mv_html);
-					$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
+					mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
 				}
 				}else{
 				console.log("<?php _e( 'Удаленный сервер вернул пустую строку: ', 'mv-web-reporter' ); ?>" + result);
-				$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
+				mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
 			}
-			//$("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
+
 			
 		},
 		error: function (result, status, jqxhr) { // срабатывает только в случае если не сработает AJAX запрос на WP

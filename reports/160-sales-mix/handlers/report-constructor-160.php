@@ -153,7 +153,55 @@
 
 		/* Блок вывода дополнительных параметров отчета */
 		echo '<p><input id="mv_check_1" class="mv_report_addition_param" type="checkbox" checked="checked" name="mv_report_addition_param_01" /> '.__('Показывать проценты', 'mv-web-reporter').'<br> <input id="mv_check_2" class="mv_report_addition_param" type="checkbox" checked="checked" name="mv_report_addition_param_02" />' .__('Показывать кол-во чеков', 'mv-web-reporter') . '</p>';
-		echo '<script>jQuery("#mv_check_1, #mv_check_2").change(function(){ if(jQuery("#mv_check_1").prop("checked")){ jQuery (".mv_rep_data_percent").slideDown("normal"); } else { jQuery (".mv_rep_data_percent").slideUp("normal"); } if(jQuery("#mv_check_2").prop("checked")) { jQuery (".mv_rep_data_qty").slideDown("normal"); } else { jQuery (".mv_rep_data_qty").slideUp("normal"); }}); </script>';
+		echo '<script>
+			/*
+				styleSheets[n] содержить все таблицы стилей для данного документа. Первая таблица [0] в данном случае это подключеная (styles.css), вторая [1] тоже (style.css) третья [2] это втроеная mv_class1 и [3] встроенная .mv_ico.
+				проверить в консоли можно через document.styleSheets
+			*/
+			
+			function getStyleSheet (css_file_name) {
+				for (var i=0; i<document.styleSheets.length; i++) {
+					var sheet = document.styleSheets[ i ];
+					if (sheet.href){
+						if(sheet.href.indexOf(css_file_name) + 1) { /* ищем в списке таблиц стилей ту запись, в свойстве href которой присутствует название нашего файла стилей */
+							return sheet;
+						}
+					}
+				}
+			}		
+			
+		
+		/* Функция - обработчик проверяет состояния флагов и меняет отображение в зависимости от этого  */
+		function mv_check_and_realise (){
+			/* сначала отдельным блоком выключаем все классы, а затем включаем отображение - чтобы приоритет остался за включением */ 
+			mv_stylesheet = getStyleSheet("report-160.css"); /* переменная ссылка на объект таблицы стилей с классами -маркерами */		
+			
+			/* Блок ОТКЛЮЧЕНИЯ отображения */
+			/* вЫключаем проценты  */		
+			if (!(jQuery("#mv_check_1").prop("checked"))){
+				mv_stylesheet.addRule(".mv_rep_data_percent","display: none");
+			} 	
+			/* вЫключаем кол-во  */			
+			if (!(jQuery("#mv_check_2").prop("checked"))){
+				mv_stylesheet.addRule(".mv_rep_data_qty","display: none");
+			} 
+			
+			/* Блок ВКЛЮЧЕНИЯ отображения */
+			
+			/* включаем проценты  */
+			if (jQuery("#mv_check_1").prop("checked")){
+				mv_stylesheet.addRule(".mv_rep_data_percent","display: inline");
+			} 	
+			/* включаем кол-во  */		
+			if (jQuery("#mv_check_2").prop("checked")){
+				mv_stylesheet.addRule(".mv_rep_data_qty","display: inline");
+			} 			
+		}
+		
+		jQuery("#mv_check_1, #mv_check_2").change(function(){ 
+			mv_check_and_realise (); // Вызываем функцию - обработчик
+		}); 		
+		</script>';
 		/* Блок вывода дополнительных параметров отчета */			
 		
 		$html = ob_get_contents();

@@ -5,12 +5,12 @@
 	
 */
 /**
- * @ .report_second_header_orgname - стиль повторющейся шапки таблицы с названием организации
- * @ .mv_header_img - стиль иконок заголовка таблицы
- * @ .report_data - стиль ячеек с данными
- * @ .mv_orgname - стиль заголовка таблицы с названием организации цвет и фон меняется в МЕДИА 
- * @ .mv_mobile_view - класс для включения /отключения повторяющейся шапки таблицы для коротких/ длинный дисплеев
- */
+	* @ .report_second_header_orgname - стиль повторющейся шапки таблицы с названием организации
+	* @ .mv_header_img - стиль иконок заголовка таблицы
+	* @ .report_data - стиль ячеек с данными
+	* @ .mv_orgname - стиль заголовка таблицы с названием организации цвет и фон меняется в МЕДИА 
+	* @ .mv_mobile_view - класс для включения /отключения повторяющейся шапки таблицы для коротких/ длинный дисплеев
+*/
 div {
     display: block;
 }
@@ -179,7 +179,7 @@ div {
 	}
 }	
 @media (max-width: 600px){ 
-
+	
 	.mv_orgname{
 		line-height: 30px;
 		background: #24a684;
@@ -221,16 +221,16 @@ div {
 		width: 100%;
 		padding: 3px 0 0 10px;
 		/* color: #00aff0; */
-	text-align: center;
-	background-color: #f2faf8;
-}
-.report_footer_total, .report_footer{ 
-	
-	font-size: 16px;
-	margin: 0 auto;
-	padding: 12px 10px;
-	line-height: 16px;
-}
+		text-align: center;
+		background-color: #f2faf8;
+	}
+	.report_footer_total, .report_footer{ 
+		
+		font-size: 16px;
+		margin: 0 auto;
+		padding: 12px 10px;
+		line-height: 16px;
+	}
 }
 
 @media (max-width: 414px){	
@@ -350,3 +350,16 @@ div {
 	
 }	
 /* / Медиаклассы для мобильных экранов */
+
+/*
+	Классы - маркеры
+	.mv_rep_data_qty Количество 		
+	.mv_rep_data_percent Процентное значение
+	
+*/
+.mv_rep_data_qty {
+	display: inline;
+}
+.mv_rep_data_percent {
+	display: inline;
+}

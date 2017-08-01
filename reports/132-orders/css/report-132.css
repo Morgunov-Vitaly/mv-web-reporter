@@ -11,4 +11,31 @@
  * @ 
  * @ 
  */
+/*
+	Классы - маркеры
+		.mv_orderNumber_marker_ . $tr->orderNumber Номер заказа 
+		.mv_cardName_marker_' . $tr->cardName  Номер бонусной карты  а что если объединить? 
+		
+		.mv_bonus_marker  Оплата бонусами 		
+		.mv_return_marker   Оформлен возврат 
+		.mv_cash_marker  Оплата налом 
+		.mv_bankCardPay_marker   Оплата банковской картой 	
+	
+*/
 
+.mv_bonus_marker {
+	display: list-item;
+}
+.mv_return_marker {
+	display: list-item;
+}
+.mv_cash_marker {
+	display: list-item;
+}
+.mv_bankCardPay_marker {
+	display: list-item;
+}
+
+.mv_no_cscl_card_marker {
+	display: none!important;
+}

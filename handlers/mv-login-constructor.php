@@ -78,7 +78,7 @@
 		if ( isset( $mvuser ) && $mvuser ) {
 			//Список переменных
 			$mvvariables = [
-			'mv_ajax_url'           => admin_url( 'admin-ajax.php' ),
+			'mv_ajax_url' => admin_url( 'admin-ajax.php' ),
 			// передаем значение пути
 			'mv_current_user_login' => $mvuser->user_login,
             // можно проверить window.mv_wp_data.mv_current_user_login
@@ -87,7 +87,7 @@
 			//PC::debug($mvuser );
 			} else {
 			$mvvariables = [
-			'mv_ajax_url'           => admin_url( 'admin-ajax.php' ),
+			'mv_ajax_url' => admin_url( 'admin-ajax.php' ),
 			// передаем значение пути
 			'mv_current_user_login' => __( 'Пользователь не определен', 'mv-web-reporter' ),
 			// можно проверить window.mv_wp_data.mv_current_user_login   было $mvuser->data->user_login
@@ -95,7 +95,8 @@
 			];
 		}
 		
-		echo( '<script type="text/javascript"> window.mv_wp_data =' . json_encode( $mvvariables ) . ';</script>' );
+		echo '<script type="text/javascript"> window.mv_wp_data =' . json_encode( $mvvariables ) . ';';
+		echo ' mv_document_ready = 0; </script>';
 		//	}
 	}
 	
@@ -158,8 +159,8 @@
 		function mv_show_hide_token_on() {
 			jQuery(document).ready(function ($) {
 				
-				$(".mv_token_show").slideDown('normal');// показать .mv_token_show - все объекты, которые должны отображаться только при наличии токена
-				$(".mv_notoken_show").slideUp('normal');// скрыть .mv_notoken_show - все объекты, которые должны отображаться когда нет токена
+				$(".mv_token_show").slideDown('normal'); /* показать .mv_token_show - все объекты, которые должны отображаться только при наличии токена */
+				$(".mv_notoken_show").slideUp('normal'); /* скрыть .mv_notoken_show - все объекты, которые должны отображаться когда нет токена */
 				
 			})
 		}
@@ -177,8 +178,8 @@
 		function mv_show_hide_token_off() {
 			jQuery(document).ready(function($) {
 				
-				$(".mv_token_show").slideUp('normal');// показать .mv_token_show - все объекты, которые должны отображаться только при наличии токена
-				$(".mv_notoken_show").slideDown('normal');// скрыть .mv_notoken_show - все объекты, которые должны отображаться когда нет токена
+				$(".mv_token_show").slideUp('normal'); /* показать .mv_token_show - все объекты, которые должны отображаться только при наличии токена */
+				$(".mv_notoken_show").slideDown('normal'); /* скрыть .mv_notoken_show - все объекты, которые должны отображаться когда нет токена */
 				
 			})
 		}
@@ -186,14 +187,14 @@
 		
 		/* Функция для ПОКАЗА индикатора загрузки */
 		function mv_progress_circle_show(){
-			jQuery("#mv_report_progress_circle").slideDown('normal'); // показываем колесо загрузчик ожидание slideUp('normal')
+			jQuery("#mv_report_progress_circle").slideDown("normal"); /* показываем колесо загрузчик ожидание slideUp('normal') */
 			}
 		
 		/* /Функция для ПОКАЗА отображения индикатора загрузки */
 
 		/* Функция для СКРЫТИЯ индикатора загрузки */
 		function mv_progress_circle_hide(){
-			jQuery("#mv_report_progress_circle").slideUp('normal'); // скрываем колесо загрузчик ожидание slideUp('normal')
+			jQuery("#mv_report_progress_circle").slideUp("normal"); /* скрываем колесо загрузчик ожидание slideUp('normal') */
 			}
 		
 		/* /Функция для СКРЫТИЯ индикатора загрузки */

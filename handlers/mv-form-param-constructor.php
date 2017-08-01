@@ -31,14 +31,14 @@
 		if ( isset( $_COOKIE['mv_cuc_token'] ) ) { /* токен есть надо просто вызвать конструктор формы параметров (выбора отчетов) */
 			?><script type='text/javascript'>
 			mv_flag_token_ask = 0; /* переменная флаг нужно ли делать запрос по токену -1 - токена нет 0- да более - нет */
-			mv_document_ready = 0;
+			//mv_document_ready = 0;
 		</script>
 		<?php
-			} else { // программно вызываем окно авторизации если нет токена
+			} else { // токена нет программно вызываем окно авторизации если нет токена
 		?>
 		<script type="text/javascript">
             mv_flag_token_ask = -1; /* переменная флаг нужно ли делать запрос по токену -1 - токена нет 0- да более - нет */
-			mv_document_ready = 0;
+			//mv_document_ready = 0;
             jQuery(document).ready(function () { /* было function($)*/
 				PUM.open(<?php echo $mv_login_popup ?>);
 			});
@@ -53,7 +53,7 @@
 			<ul>
 				<li>			
 					<div class="select_and_label_div">
-						<label class="description" for="form_param_ref_organization"><?php _e('Выберите организацию: ', 'mv-web-reporter'); ?></label>
+						<label class="description" for="form_param_ref_organization"><?php _e('Выберите организацию', 'mv-web-reporter'); ?>: </label>
 						<div>
 							<select id="form_param_ref_organization" name="ref_organization" required>
 								<option value = "0" selected>--</option>				
@@ -63,10 +63,10 @@
 				</li>
 				<li id="form_param_cafe_place" style="display: none;">
 					<div class="select_and_label_div">
-						<label class="description" for="form_param_cafe"><?php _e('Выберите кофейню: ', 'mv-web-reporter'); ?></label>
+						<label class="description" for="form_param_cafe"><?php _e('Выберите кофейню', 'mv-web-reporter'); ?>: </label>
 						<div>
 							<select id="form_param_cafe" name="cafe_ref" required> 
-								<option value="0" selected ><?php _e( '00 Все кофейни', 'mv-web-reporter' ); ?></option> <!-- только если id=102 или ему подобные (с опцией "00 все кофейни" ) -->
+								<option value="0" selected >00 <?php _e( 'Все кофейни', 'mv-web-reporter' ); ?></option> <!-- только если id=102 или ему подобные (с опцией "00 все кофейни" ) -->
 							</select>
 						</div> 
 					</div> 
@@ -77,12 +77,12 @@
 					<input  type="radio" id="mv_ww" name="mv_radio" /><label for="mv_ww"><?php _e('неделю назад', 'mv-web-reporter'); ?></label>
 					<input  type="radio" id="mv_mm" name="mv_radio" /><label for="mv_mm"><?php _e('месяц назад', 'mv-web-reporter'); ?></label>
 					<input  type="radio" id="mv_yy" name="mv_radio" /><label for="mv_yy"><?php _e('год назад', 'mv-web-reporter'); ?></label>
-					<input  type="radio" id="mv_more" name="mv_radio" /><label for="mv_more"><?php _e('...', 'mv-web-reporter'); ?></label>
+					<input  type="radio" id="mv_more" name="mv_radio" /><label for="mv_more">...</label>
 				</p>
 				</li>
 				<li>
 					<div class="mv_data_from" style="display: none">
-						<label class="description" for="dateFrom"><?php _e('Дата от: ', 'mv-web-reporter'); ?></label>
+						<label class="description" for="dateFrom"><?php _e('Дата от', 'mv-web-reporter'); ?>: </label>
 						<script type="text/javascript">
 							function mv_data_set(ord, orm, ory, vdd, vmm, vyy) { 
 								// В параметрах указываем месяц от 1 до 12
@@ -130,7 +130,7 @@
 							
 						</script>
 					</div>
-					<label class="description" style="display: none" for="dateTo"><?php _e('Дата по: ', 'mv-web-reporter'); ?></label>
+					<label class="description" style="display: none" for="dateTo"><?php _e('Дата по', 'mv-web-reporter'); ?>: </label>
 					<script type="text/javascript">
 						document.write('<input id="dateTo" style="display: none" required type="date" name="dateTo" value="' + mv_datamonth + '" />');						
 					</script>
@@ -304,7 +304,7 @@
 				
 				if ((mv_param == 1) && (mv_result.accessType == "company")) { /* 1 тип - возможен  отчет, по всем кофейням и у пользователя есть право выбирать */
 					/* очистим список кофеен - всех, кроме первого элемента в случае отчета с опцией '00 Все кофейни' */
-					mv_results2_data[0] = {"id": "0", "text": "<?php _e( '00 Все кофейни', 'mv-web-reporter' ); ?>"};
+					mv_results2_data[0] = {"id": "0", "text": "00 <?php _e( 'Все кофейни', 'mv-web-reporter' ); ?>"};
 					
 				} 
 				
@@ -388,12 +388,12 @@
 						mv_token: mv_getCookie('mv_cuc_token') // передаем токен
 					},
 					success: function (result, status) {
-						console.log("<?php _e( 'Статус AJAX запроса списка организаций и кофеен по токену: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
+						console.log("<?php _e( 'Статус AJAX запроса списка организаций и кофеен по токену', 'mv-web-reporter' ); ?>: " + status); // Выводим сообщение об ошибках
 						if (result != ""){
 							mv_result = JSON.parse(result); // $.parseJSON(result); //функция JQuery
 							if ((typeof mv_result.mv_error_code == "undefined") && (mv_result.token != '') && (mv_result.token != "undefined")) { // все получилось или нам пришел 0!
 								$("#pum-<?php echo $mv_login_popup?>").popmake('close'); // закрываем диалогово окно LogIn если оно почему-то открыто
-								console.log("<?php _e( 'Результат запроса списка по токену успешен: ', 'mv-web-reporter' ); ?>");
+								console.log("<?php _e( 'Результат запроса списка по токену успешен', 'mv-web-reporter' ); ?>: ");
 								//console.log ( mv_result.message );
 								//console.log ( mv_result.token );
 								//console.log ( mv_result.organizations );
@@ -402,18 +402,18 @@
 							else {
 								
 								$("#mv_login_error").slideDown('normal'); //выводим сообщение об ошибке в форме - но если форма закрыта, то ничего не выведет
-								console.log("<?php _e( 'Код ошибки запроса списка по токену: ', 'mv-web-reporter' ); ?>" + mv_result.mv_error_code + " <?php _e( 'Сообщение: ', 'mv-web-reporter' ); ?>" + mv_result.message);
+								console.log("<?php _e( 'Код ошибки запроса списка по токену', 'mv-web-reporter' ); ?>: " + mv_result.mv_error_code + " <?php _e( 'Сообщение', 'mv-web-reporter' ); ?>: " + mv_result.message);
 								/* Здесь надо вывести окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */
 							}
 							}else {
-							console.log("<?php _e( 'Удаленный сервер вернул пустую строку: ', 'mv-web-reporter' ); ?>" + result);
+							console.log("<?php _e( 'Удаленный сервер вернул пустую строку', 'mv-web-reporter' ); ?>: " + result);
 						}
 						mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 					},
 					error: function (result, status, jqxhr) { // срабатывает только в случае если не сработает AJAX запрос на WP
-						alert("<?php _e( 'Упс! Возникла ошибка при запросе списка по токену к серверу WP! Ответ сервера: ', 'mv-web-reporter' ); ?>" + result);
-						console.log("<?php _e( 'Статус: ', 'mv-web-reporter' ); ?>" + status);
-						console.log("<?php _e( 'jqXHR статус: ', 'mv-web-reporter' ); ?>" + jqxhr.status + " " + jqxhr.statusText);
+						alert("<?php _e( 'Упс! Возникла ошибка при запросе списка по токену к серверу WP! Ответ сервера', 'mv-web-reporter' ); ?>: " + result);
+						console.log("<?php _e( 'Статус', 'mv-web-reporter' ); ?>: " + status);
+						console.log("<?php _e( 'jqXHR статус', 'mv-web-reporter' ); ?>: " + jqxhr.status + " " + jqxhr.statusText);
 						console.log(jqxhr.getAllResponseHeaders());
 						mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 					}

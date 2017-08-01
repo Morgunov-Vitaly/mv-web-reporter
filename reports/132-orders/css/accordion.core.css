@@ -80,9 +80,6 @@ ol.mv_accordion {
 /* !!!!!!!!!!!!!!!!!!!!! MV классы  для шапки аккардеона !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
 .mv_handle {
     background: #fff;
-    height: 70px;
-    margin: 0;
-    padding: 0;
 	/* border-top: 1px solid #e6e6e6; */
     border-bottom: 1px solid #e6e6e6;
     width: 100%;
@@ -91,48 +88,32 @@ ol.mv_accordion {
 /* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
 .mv_header_1{
 	font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
     font-style: normal;
     font-weight: bold;
-	line-height: 70px;
     /* color: #416960; */
 	white-space: nowrap; /* запрет переноса */
     overflow: hidden;
 }
-.mv_header_1 span {
-	font-size: 18px;
-}
 
 /* Стиль второй части шапки аккардеона блоки иконок индикаторов*/
 .mv_header_2 {
-	height: 70px;
     vertical-align: middle;
-    padding: 0;
-    margin: 0;
 }
 /* стиль текстового абзаца второго блока */
 .mv_header_2_content{
 	vertical-align: middle; /* бесполезно p - block element */
-	line-height: 70px;
 	text-align: right;
 }
 /* Стиль третей части шапки аккардеона сумма и даты */
 .mv_header_3 {
-	height: 70px;
-    font-size: 18px;
     font-style: normal;
     font-weight: bold;	
     vertical-align: middle;
 	text-align: right;
-	padding: 0;
-	padding-right: 50px;
     margin: 0;
-	line-height: 20px;
-    top: 18px;
-	
+	padding: 0;
 }
 .mv_date {
-	font-size: 12px;
     font-style: normal;
     font-weight: normal;	
 }
@@ -141,60 +122,31 @@ ol.mv_accordion {
     display: block;
     margin: 0;
     padding: 0;
-    height: 70px;
     width: 100%;
     position: relative;
-}
-
-.autor_name {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-    color: #416960; /* #676f7c */
-    font-style: normal;
-    font-weight: normal;
-    overflow: hidden;
-    text-align: left;
-    float: left;
-    height: 50px;
-    line-height: 50px;
-    width: 70%;
-}
-.sale_val {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
-    color: #416e6a; /* #676f7c */
-    font-style: normal;
-    font-weight: bold;
-    text-align: right;
-    height: 70px;
-    line-height: 50px;
 }
 
 
 /* Проставляем стрелочки  вниз и вверх  */
 .mv_accordion-opener:after {
-    content: "\f078";
+    content: "\f13a";
     font-family: FontAwesome;
     font-style: normal;
-   /* color: #91bfb4; */ /* #dfe0e3 #7d9c95 */
+	color: #29b28f;
+	/* color: #91bfb4; */ /* #dfe0e3 #7d9c95 */
     font-weight: normal;
     position: absolute;
-    top: 20px;
-    right: 18px;
     display: block;
 } 
 
 .active .mv_accordion-opener:after {
-	content: "\f077";
+	content: "\f139";
     font-family: FontAwesome;
     font-style: normal;
-	color: #29b28f;  /* #67bd98; */
+	color: #03A9F4;  /* #67bd98; #29b28f */
     font-weight: normal;
     text-decoration: inherit;
     position: absolute;
-    top: 20px; 
-    right: 18px;
-	
 } 
 
 .mv_accordion-opener:hover {
@@ -203,35 +155,36 @@ ol.mv_accordion {
 } 
 
 .mv_img_label {
-    height: 50px;
     padding: 0;
-	line-height: 70px;	
 	vertical-align: middle;
 }
 
 .mv_img_indicators {
-    height: 25px;
     padding: 0;
-	line-height: 70px;
 	vertical-align: middle;
 }
-/* Дополнительные параметры отчета */
+
+/* Стили для элементов Дополнительных параметров отчета */
 input.mv_input_order_number {
 	width: 100%;	
 }
-
+/*  стили для кнопок Найти и Очистить */
 #mv_find_number{
-margin: 5px 0;
-width: 100%;
-
+	margin: 5px 0 0 0;
+	width: 100%;
 }
+#mv_clear_number{
+	margin: 5px 0;
+	width: 100%;
+}
+
 .mv_report_addition_param  {
 	vertical-align: baseline;
 }
 
 /* !!!!!!!!!!!!!!!!!!!!! MV классы  для таблицы блока данных !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
 .panel {
-	background: #f5faf5;
+	background: #f9f9f9; /* светло-зеленый #f5faf5 */
 }
 .mv_132_report_table {
 	width: 100%;
@@ -263,6 +216,20 @@ width: 100%;
 	border: none;
 	
 }
+/* стиль строки итоговой суммы */
+.mv_132_datatable_total {
+	
+	background: #29b28f;
+	border: none;
+	color: #fff;
+	/* font-size: 18px; */
+	text-transform: uppercase;
+	font-weight: bold;
+	
+	/* border-top: 1px dotted #ccc;
+	border-bottom: 1px dotted #ccc; */ 
+	
+}
 
 /* классы выравниватели */
 .mv_align_right{
@@ -281,31 +248,337 @@ width: 100%;
 	color: #29b28f;
 }
 
-/* Медиаклассы для мобильных экранов */
+.mv_link_to_another_report {
+    color: #2196F3;
+    text-decoration: underline;
+    cursor: pointer;
+}
+/* 
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	Медиаклассы для мобильных экранов 
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
 
-/* IPhone 5 320x 568 */
 
-@media (max-width: 515px){	/* 414px*/
-	.org_name {
-		font-size: 14px;
-		width: 55%;
-	}
-	.sale_val {
-		font-size: 14px;
-		padding: 0 37px 0 10px;
+/* Medium devices -md (desktops, 992px and up - @screen-md-min) */
+@media (min-width: 992px) {
+	.mv_accordion-opener {
+		height: 70px;
 	}
 	
+	/* Проставляем стрелочки  вниз и вверх  */
 	.mv_accordion-opener:after {
-		right: 13px;
-	}
+		top: 20px;
+		right: 18px;
+	} 
 	
 	.active .mv_accordion-opener:after {
-		right: 13px;
+		top: 20px; 
+		right: 18px;
 	}
-	.mv_132_report_table td {
-		font-size: 14px;
+	.mv_img_label {
+		height: 50px;
+		line-height: 70px;
+		padding-left: 10px;		
+	}
+	
+	.mv_img_indicators {
+		height: 22px;
+		line-height: 70px;
+	}
+	
+	.mv_handle {
+		height: 70px;
+		margin: 0;
+		padding: 0;
+	}	
+	
+	
+	/* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
+	.mv_header_1{
+		font-size: 16px;
+		line-height: 70px;
+	}
+	.mv_header_1 span {
+		font-size: 15px;
+	}
+	
+	/* Стиль второй части шапки аккардеона блоки иконок индикаторов*/
+	.mv_header_2 {
+		height: 70px;
+	}
+	/* стиль текстового абзаца второго блока */
+	.mv_header_2_content{
+		line-height: 70px;
+	}
+	/* Стиль третей части шапки аккардеона сумма и даты */
+	.mv_header_3 {
+		height: 70px;
+		font-size: 16px;
+		padding-top: 18px;
+		padding-right: 50px;
+		line-height: 20px;
+		
+		
+	}
+	.mv_date {
+		font-size: 12px;
 	}
 	
 }
 
-/* / Медиаклассы для мобильных экранов */
+/* Large devices -lg (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+	
+	.mv_img_indicators {
+		height: 25px;
+		line-height: 70px;
+	}
+	
+	/* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
+	.mv_header_1{
+		font-size: 20px;
+		line-height: 70px;
+	}
+	.mv_header_1 span {
+		font-size: 18px;
+	}
+	
+	/* Стиль второй части шапки аккардеона блоки иконок индикаторов*/
+	.mv_header_2 {
+		height: 70px;
+		padding: 0;
+		margin: 0;
+	}
+	/* стиль текстового абзаца второго блока */
+	.mv_header_2_content{
+		line-height: 70px;
+	}
+	/* Стиль третей части шапки аккардеона сумма и даты */
+	.mv_header_3 {
+		margin: 0;
+		padding: 0;		
+		padding-top: 18px;
+		padding-right: 50px;
+		height: 70px;
+		font-size: 18px;
+		line-height: 20px;
+	}
+	
+	.mv_date {
+		font-size: 12px;
+	}
+}
+
+/* Small devices -sm (tablets, 768px and up) */
+@media (max-width: 991px) {
+	
+	.mv_handle {
+		height: 60px;
+	}	
+	
+	.mv_accordion-opener {
+		height: 60px;
+	}
+	
+	/* Проставляем стрелочки  вниз и вверх  */	
+	.active .mv_accordion-opener:after, .mv_accordion-opener:after {
+	    top: 16px;
+		right: 18px;
+	}
+	.mv_accordion .panel {
+		font-size: 15px;	
+	}
+	
+	.mv_img_label {
+		height: 45px;
+		line-height: 60px;
+		padding: 0 5px 0 10px;		
+	}
+	
+	.mv_img_indicators {
+		height: 22px;
+		line-height: 60px;
+	}
+	
+	/* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
+	.mv_header_1{
+		font-size: 16px;
+		line-height: 60px;
+	}
+	.mv_header_1 span {
+		font-size: 16px;
+	}
+	
+	/* Стиль второй части шапки аккардеона блоки иконок индикаторов*/
+	.mv_header_2 {
+		height: 60px;
+	}
+	/* стиль текстового абзаца второго блока */
+	.mv_header_2_content{
+		line-height: 60px;
+	}
+	/* Стиль третей части шапки аккардеона сумма и даты */
+	.mv_header_3 {
+		height: 60px;
+		font-size: 18px;
+		padding: 0;
+		padding-right: 50px;
+		line-height: 20px;
+		padding-top: 10px;
+		
+	}
+	.mv_date {
+		font-size: 12px;
+	}	
+	
+}
+
+
+/* Extra small devices -xs (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media (max-width: 767px) {
+	
+	.mv_icon_row {
+		width: 50px;
+	}
+	.mv_handle {
+		height: 90px;
+	}	
+	
+	.mv_accordion-opener {
+		height: 90px;
+	}
+	.mv_img_label {
+		height: 40px;
+		line-height: 45px;
+		padding: 0 5px 0 10px;		
+	}
+	
+	/* Проставляем стрелочки  вниз и вверх  */	
+	.active .mv_accordion-opener:after, .mv_accordion-opener:after {
+	    top: 10px;
+		right: 10px;
+	}
+	.mv_accordion .panel {
+		font-size: 15px;	
+	}
+	
+	.mv_img_indicators {
+		height: 22px;
+		line-height: 45px;
+	}
+	
+	/* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
+	.mv_header_1{
+		font-size: 16px;
+		line-height: 45px;
+		border-right: 30px solid rgba(255, 255, 255, 0);
+	}
+	.mv_header_1 span {
+		font-size: 16px;
+	}
+	
+	/* Стиль второй части шапки аккардеона блоки иконок индикаторов*/
+	.mv_header_2 {
+		height: 45px;
+	}
+	/* стиль текстового абзаца второго блока */
+	.mv_header_2_content{
+		line-height: 45px;
+		text-align: left;
+		padding-left: 20px;		
+	}
+	/* Стиль третей части шапки аккардеона сумма и даты */
+	.mv_header_3 {
+		height: 45px;
+		font-size: 20px;
+		padding: 0;
+		padding-right: 10px;
+		line-height: 20px;
+		
+		
+	}
+	.mv_date {
+		font-size: 12px;
+	}	
+	
+}
+
+@media (max-width: 414px ){	/* 414px*/
+	/* отступы в ячейакх таблицы данных */
+	.mv_132_report_table td {
+		padding: 0.3rem 3px;
+		line-height: 17px;
+	}
+	.mv_icon_row {
+		width: 50px;
+	}
+	.mv_handle {
+		height: 64px;
+	}	
+	
+	.mv_accordion-opener {
+		height: 64px;
+		font-size: 12px;
+	}
+	
+	/* Проставляем стрелочки  вниз и вверх  */	
+	.active .mv_accordion-opener:after, .mv_accordion-opener:after {
+	    top: 4px;
+		right: 5px;
+	}
+	.mv_accordion .panel {
+		font-size: 12px;
+		padding: 0px;	
+	}
+	
+	.mv_img_label {
+		height: 27px;
+		line-height: 32px;
+		padding: 0;
+		padding-left: 5px;		
+	}
+	
+	.mv_img_indicators {
+		height: 20px;
+		line-height: 32px;
+	}
+	
+	/* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
+	.mv_header_1{
+		font-size: 12px;
+		line-height: 32px;
+		border-right: 27px solid rgba(255, 255, 255, 0);
+	}
+	.mv_header_1 span {
+		font-size: 12px;
+	}
+	
+	/* Стиль второй части шапки аккардеона блоки иконок индикаторов*/
+	.mv_header_2 {
+		height: 32px;
+	}
+	/* стиль текстового абзаца второго блока */
+	.mv_header_2_content{
+		line-height: 32px;
+		text-align: left;
+		padding-left: 8px;		
+	}
+	/* Стиль третей части шапки аккардеона сумма и даты */
+	.mv_header_3 {
+		height: 32px;
+		font-size: 16px;
+		padding: 0;
+		padding-right: 10px;
+		line-height: 12px;
+		
+		
+	}
+	.mv_date {
+		font-size: 11px;
+	}	
+	
+}
+
+/* / Медиаклассы для мобильных экранов */	
