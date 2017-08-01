@@ -242,10 +242,10 @@
 		/* /Цикл  вывода позиций  */
 		/* строка итогов */
 		echo'<tr class="mv_132_datatable_total" >';
-		echo'<td style="border: none;">' .__('Итого', 'mv-web-reporter') . ':</td>';
-		echo'<td style="border: none;"> </td>';
-		echo'<td style="border: none;"> </td>';
-		echo'<td class="mv_align_right" style="border: none;">' . number_format($mv_total,  2, ',', ' ') . '</td>';		
+		echo'<td colspan="2" style="border: none;">' .__('Итого', 'mv-web-reporter') . ':</td>';
+/*		echo'<td style="border: none;"> </td>';
+		echo'<td style="border: none;"> </td>'; */
+		echo'<td colspan="2" class="mv_align_right" style="border: none;">' . number_format($mv_total,  2, ',', ' ') . '</td>';		
 		echo'</tr>';		
 		
 		/* / строка итогов */

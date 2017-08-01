@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: mv-web-reporter\n"
-"POT-Creation-Date: 2017-07-13 19:09+0300\n"
-"PO-Revision-Date: 2017-07-13 19:15+0300\n"
+"POT-Creation-Date: 2017-08-01 16:47+0300\n"
+"PO-Revision-Date: 2017-08-01 16:53+0300\n"
 "Last-Translator: \n"
 "Language-Team: MV morgunov-vitaly@yandex.ru\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.3\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -17,249 +17,464 @@ msgstr ""
 "X-Poedit-SearchPath-0: languages\n"
 "X-Poedit-SearchPath-1: .\n"
 
-#: handlers/mv-form-param-constructor.php:55
-msgid "Выберите организацию: "
-msgstr "Select an organization: "
+#: handlers/mv-form-param-constructor.php:56
+msgid "Выберите организацию"
+msgstr "Select an organization"
 
-#: handlers/mv-form-param-constructor.php:65
-msgid "Выберите кофейню: "
-msgstr "Select a coffee house: "
+#: handlers/mv-form-param-constructor.php:66
+msgid "Выберите кофейню"
+msgstr "Select a coffee house"
 
-#: handlers/mv-form-param-constructor.php:68
-#: handlers/mv-form-param-constructor.php:304
-msgid "00 Все кофейни"
-msgstr "All coffeeshops"
+#: handlers/mv-form-param-constructor.php:69
+#: handlers/mv-form-param-constructor.php:307
+msgid "Все кофейни"
+msgstr "All coffee shops"
 
-#: handlers/mv-form-param-constructor.php:74
+#: handlers/mv-form-param-constructor.php:75
 msgid "сегодня"
 msgstr "today"
 
-#: handlers/mv-form-param-constructor.php:75
+#: handlers/mv-form-param-constructor.php:76
 msgid "вчера"
 msgstr "yesterday"
 
-#: handlers/mv-form-param-constructor.php:76
+#: handlers/mv-form-param-constructor.php:77
 msgid "неделю назад"
 msgstr "week ago"
 
-#: handlers/mv-form-param-constructor.php:77
+#: handlers/mv-form-param-constructor.php:78
 msgid "месяц назад"
 msgstr "month ago"
 
-#: handlers/mv-form-param-constructor.php:78
+#: handlers/mv-form-param-constructor.php:79
 msgid "год назад"
 msgstr "year ago"
 
-#: handlers/mv-form-param-constructor.php:79
-msgid "..."
-msgstr "..."
+#: handlers/mv-form-param-constructor.php:85
+#: reports/132-orders/handlers/report-constructor-132.php:54
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:35
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:35
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:35
+msgid "Дата от"
+msgstr "Date from"
 
-#: handlers/mv-form-param-constructor.php:84
-#: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:13
-#: reports/sales-mix/handlers/report-constructor-160.php:37
-msgid "Дата от: "
-msgstr "Date from: "
+#: handlers/mv-form-param-constructor.php:133
+#: reports/132-orders/handlers/report-constructor-132.php:55
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:36
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:36
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:36
+msgid "Дата по"
+msgstr "Date by"
 
-#: handlers/mv-form-param-constructor.php:132
-#: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:14
-#: reports/sales-mix/handlers/report-constructor-160.php:38
-msgid "Дата по: "
-msgstr "Date by: "
-
-#: handlers/mv-form-param-constructor.php:198
+#: handlers/mv-form-param-constructor.php:195
 msgid "Создать отчет"
 msgstr "Create report"
 
-#: handlers/mv-form-param-constructor.php:389
-#, fuzzy
-#| msgid "Статус запроса списка по токену: "
-msgid "Статус AJAX запроса списка организаций и кофеен по токену: "
-msgstr "The status of the list request by token: "
+#: handlers/mv-form-param-constructor.php:391
+msgid "Статус AJAX запроса списка организаций и кофеен по токену"
+msgstr "The status of the list request by token"
 
-#: handlers/mv-form-param-constructor.php:394
-msgid "Результат запроса списка по токену успешен: "
-msgstr "The result of the list request by token is successful: "
+#: handlers/mv-form-param-constructor.php:396
+msgid "Результат запроса списка по токену успешен"
+msgstr "The result of the list request by token is successful"
 
-#: handlers/mv-form-param-constructor.php:403
-msgid "Код ошибки запроса списка по токену: "
-msgstr "The error code of the list request by token: "
+#: handlers/mv-form-param-constructor.php:405
+msgid "Код ошибки запроса списка по токену"
+msgstr "The error code of the list request by token"
 
-#: handlers/mv-form-param-constructor.php:403
-#: handlers/mv-login-constructor.php:285
-msgid "Сообщение: "
-msgstr "Message: "
+#: handlers/mv-form-param-constructor.php:405
+msgid "Сообщение"
+msgstr "Message"
 
-#: handlers/mv-form-param-constructor.php:407
-#: handlers/mv-login-constructor.php:289
-#: reports/102-by-coffeeshops/102-by-coffeeshops.php:113
-#: reports/sales-mix/sales-mix.php:78
-msgid "Удаленный сервер вернул пустую строку: "
-msgstr "The remote server returned an empty string: "
-
-#: handlers/mv-form-param-constructor.php:413
-msgid ""
-"Упс! Возникла ошибка при запросе списка по токену к серверу WP! Ответ "
-"сервера: "
-msgstr ""
-"Oops! An error occurred while querying the token list to the WP server! "
-"Server Response: "
+#: handlers/mv-form-param-constructor.php:409
+msgid "Удаленный сервер вернул пустую строку"
+msgstr "The remote server returned an empty string"
 
 #: handlers/mv-form-param-constructor.php:414
-#: handlers/mv-login-constructor.php:296
-#: reports/102-by-coffeeshops/102-by-coffeeshops.php:122
-#: reports/sales-mix/sales-mix.php:87
-msgid "Статус: "
-msgstr "Status: "
+msgid ""
+"Упс! Возникла ошибка при запросе списка по токену к серверу WP! Ответ сервера"
+msgstr ""
+"Oops! An error occurred while querying the token list to the WP server! "
+"Server Response"
 
 #: handlers/mv-form-param-constructor.php:415
-#: handlers/mv-login-constructor.php:297
-#: reports/102-by-coffeeshops/102-by-coffeeshops.php:123
-#: reports/sales-mix/sales-mix.php:88
-msgid "jqXHR статус: "
-msgstr "jqXHR status: "
+msgid "Статус"
+msgstr "Status"
+
+#: handlers/mv-form-param-constructor.php:416
+msgid "jqXHR статус"
+msgstr "jqXHR status"
 
 #: handlers/mv-login-constructor.php:92
 msgid "Пользователь не определен"
 msgstr "User not defined"
 
-#: handlers/mv-login-constructor.php:259
+#: handlers/mv-login-constructor.php:275
 msgid ""
 "Статус AJAX запроса токена и списка оганизаций и кофеен по логину и паролю: "
 msgstr ""
 "AJAX status request token and list of organizations and coffee houses by "
 "login and password: "
 
-#: handlers/mv-login-constructor.php:285
+#: handlers/mv-login-constructor.php:301
 msgid "Код ошибки запроса токена: "
 msgstr "Error code of token request: "
 
-#: handlers/mv-login-constructor.php:295
+#: handlers/mv-login-constructor.php:301
+msgid "Сообщение: "
+msgstr "Message: "
+
+#: handlers/mv-login-constructor.php:305
+#: reports/102-by-coffeeshops/102-by-coffeeshops.php:118
+#: reports/102-table/102-by-coffeeshops.php:118
+#: reports/102-table/102-table.php:82 reports/132-orders/132-orders.php:100
+#: reports/150-golden-invoice/150-golden-invoice.php:79
+#: reports/160-sales-mix/160-sales-mix.php:79
+msgid "Удаленный сервер вернул пустую строку: "
+msgstr "The remote server returned an empty string: "
+
+#: handlers/mv-login-constructor.php:311
 msgid "Возникла ошибка при запросе токена к серверу WP! Ответ сервера: "
 msgstr ""
 "An error occurred while requesting a token to the WP server! Server "
 "Response: "
 
-#: reports/102-by-coffeeshops/102-by-coffeeshops.php:72
-#: reports/sales-mix/sales-mix.php:49
+#: handlers/mv-login-constructor.php:312
+#: reports/102-by-coffeeshops/102-by-coffeeshops.php:125
+#: reports/102-table/102-by-coffeeshops.php:125
+#: reports/102-table/102-table.php:89 reports/132-orders/132-orders.php:110
+#: reports/150-golden-invoice/150-golden-invoice.php:89
+#: reports/160-sales-mix/160-sales-mix.php:89
+msgid "Статус: "
+msgstr "Status: "
+
+#: handlers/mv-login-constructor.php:313
+#: reports/102-by-coffeeshops/102-by-coffeeshops.php:126
+#: reports/102-table/102-by-coffeeshops.php:126
+#: reports/102-table/102-table.php:90 reports/132-orders/132-orders.php:111
+#: reports/150-golden-invoice/150-golden-invoice.php:90
+#: reports/160-sales-mix/160-sales-mix.php:90
+msgid "jqXHR статус: "
+msgstr "jqXHR status: "
+
+#: reports/102-by-coffeeshops/102-by-coffeeshops.php:73
+#: reports/102-table/102-by-coffeeshops.php:73
+#: reports/102-table/102-table.php:37 reports/132-orders/132-orders.php:70
+#: reports/150-golden-invoice/150-golden-invoice.php:49
+#: reports/160-sales-mix/160-sales-mix.php:49
 msgid "Статус запроса списка по токену: "
 msgstr "The status of the list request by token: "
 
-#: reports/102-by-coffeeshops/102-by-coffeeshops.php:98
-#: reports/sales-mix/sales-mix.php:65
+#: reports/102-by-coffeeshops/102-by-coffeeshops.php:100
+#: reports/102-table/102-by-coffeeshops.php:100
+#: reports/102-table/102-table.php:64 reports/132-orders/132-orders.php:86
+#: reports/150-golden-invoice/150-golden-invoice.php:65
+#: reports/160-sales-mix/160-sales-mix.php:65
 msgid "Статус запроса конструктора отчета: "
 msgstr "Report designer query status: "
 
-#: reports/102-by-coffeeshops/102-by-coffeeshops.php:104
-#: reports/sales-mix/sales-mix.php:70
+#: reports/102-by-coffeeshops/102-by-coffeeshops.php:108
+#: reports/102-table/102-by-coffeeshops.php:108
+#: reports/102-table/102-table.php:72 reports/132-orders/132-orders.php:91
+#: reports/150-golden-invoice/150-golden-invoice.php:70
+#: reports/160-sales-mix/160-sales-mix.php:70
 msgid "Ошибка конструктора отчета!: "
 msgstr "Report Designer Error: "
 
-#: reports/102-by-coffeeshops/102-by-coffeeshops.php:121
-#: reports/sales-mix/sales-mix.php:86
+#: reports/102-by-coffeeshops/102-by-coffeeshops.php:124
+#: reports/102-table/102-by-coffeeshops.php:124
+#: reports/102-table/102-table.php:88 reports/132-orders/132-orders.php:109
+#: reports/150-golden-invoice/150-golden-invoice.php:88
+#: reports/160-sales-mix/160-sales-mix.php:88
 msgid "Упс! Возникла ошибка при обращении №2 к серверу WP! Ответ сервера: "
 msgstr ""
 "Oops! An error occurred while accessing # 2 to the WP server! Server "
 "Response: "
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:12
-#: reports/sales-mix/handlers/report-constructor-160.php:36
+#: reports/102-table/handlers/mv_102_accordion.php:12
+#: reports/102-table/handlers/mv_102t_constructor.php:12
+#: reports/160-sales-mix/handlers/report-constructor-160.php:36
 msgid "Организация: "
 msgstr "Organization: "
 
+#: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:13
+#: reports/102-table/handlers/mv_102_accordion.php:13
+#: reports/102-table/handlers/mv_102t_constructor.php:13
+#: reports/160-sales-mix/handlers/report-constructor-160.php:37
+msgid "Дата от: "
+msgstr "Date from: "
+
+#: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:14
+#: reports/102-table/handlers/mv_102_accordion.php:14
+#: reports/102-table/handlers/mv_102t_constructor.php:14
+#: reports/160-sales-mix/handlers/report-constructor-160.php:38
+msgid "Дата по: "
+msgstr "Date by: "
+
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:36
+#: reports/102-table/handlers/mv_102_accordion.php:36
 msgid "Сумма заказов"
 msgstr "Sales total"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:41
+#: reports/102-table/handlers/mv_102_accordion.php:41
 msgid "Выручка (только кэш)"
 msgstr "Revenue (cash only)"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:52
+#: reports/102-table/handlers/mv_102_accordion.php:52
 msgid "Факт товарных продаж"
 msgstr "Actual revenue"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:58
+#: reports/102-table/handlers/mv_102_accordion.php:58
 msgid "План товарных продаж"
 msgstr "Planned revenue"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:63
+#: reports/102-table/handlers/mv_102_accordion.php:63
 msgid "Всего заказов"
 msgstr "Orders total"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:69
+#: reports/102-table/handlers/mv_102_accordion.php:69
 msgid "Заказов с картами"
 msgstr "Orders with cards"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:75
+#: reports/102-table/handlers/mv_102_accordion.php:75
 msgid "Средний чек"
 msgstr "Avg bill"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:80
+#: reports/102-table/handlers/mv_102_accordion.php:80
 msgid "Плановый средний чек"
 msgstr "Avg bill plan"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:85
+#: reports/102-table/handlers/mv_102_accordion.php:85
 msgid "Фактический средний чек"
 msgstr "Avg bill fact"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:96
+#: reports/102-table/handlers/mv_102_accordion.php:96
 msgid "Карт продано на сумму"
 msgstr "Card sales amount"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:101
+#: reports/102-table/handlers/mv_102_accordion.php:101
 msgid "Кол-во проданных карт"
 msgstr "Card sales count"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:107
+#: reports/102-table/handlers/mv_102_accordion.php:107
 msgid "Бонусов продано + кэшбэк"
 msgstr "Bonus add total"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:112
+#: reports/102-table/handlers/mv_102_accordion.php:112
 msgid "Бонусов продано"
 msgstr "Bonus sales"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:117
+#: reports/102-table/handlers/mv_102_accordion.php:117
+#: reports/132-orders/handlers/report-constructor-132.php:204
 msgid "Бонусов списано"
 msgstr "Bonus pay"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:123
+#: reports/102-table/handlers/mv_102_accordion.php:123
 msgid "Общий кэшбэк"
 msgstr "Total cashback"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:128
+#: reports/102-table/handlers/mv_102_accordion.php:128
 msgid "Кэшбэк (с бонусов)"
 msgstr "Bonus sales cashback"
 
 #: reports/102-by-coffeeshops/handlers/mv_102_accordion.php:133
+#: reports/102-table/handlers/mv_102_accordion.php:133
 msgid "Кэшбек (с проданных карт)"
 msgstr "Card sales cashback"
 
-#: reports/sales-mix/handlers/report-constructor-160.php:43
-msgid "Кофе"
-msgstr "Coffee"
+#: reports/132-orders/handlers/report-constructor-132.php:53
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:34
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:34
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:34
+msgid "Организация"
+msgstr "Organization"
 
-#: reports/sales-mix/handlers/report-constructor-160.php:43
-msgid "Напитки"
-msgstr "Drinks"
+#: reports/132-orders/handlers/report-constructor-132.php:91
+#: reports/132-orders/handlers/report-constructor-132.php:150
+msgid "Оформлен возврат"
+msgstr "Returned"
 
-#: reports/sales-mix/handlers/report-constructor-160.php:43
-msgid "Еда"
-msgstr "Food"
+#: reports/132-orders/handlers/report-constructor-132.php:94
+#: reports/132-orders/handlers/report-constructor-132.php:161
+msgid "Наличные"
+msgstr "Cash"
 
-#: reports/sales-mix/handlers/report-constructor-160.php:43
-msgid "Прочее"
-msgstr "Other"
+#: reports/132-orders/handlers/report-constructor-132.php:97
+#: reports/132-orders/handlers/report-constructor-132.php:179
+msgid "Банковская карта"
+msgstr "Bank card"
 
-#: reports/sales-mix/handlers/report-constructor-160.php:133
+#: reports/132-orders/handlers/report-constructor-132.php:101
+#: reports/132-orders/handlers/report-constructor-132.php:190
+msgid "Бонусы"
+msgstr "Bonuses"
+
+#: reports/132-orders/handlers/report-constructor-132.php:104
+msgid "Карта лояльности"
+msgstr "Loyalty card"
+
+#: reports/132-orders/handlers/report-constructor-132.php:138
+msgid "Заказ открыт"
+msgstr "The order was opened"
+
+#: reports/132-orders/handlers/report-constructor-132.php:143
+msgid "Заказ закрыт"
+msgstr "The order is closed"
+
+#: reports/132-orders/handlers/report-constructor-132.php:168
+msgid "Сдача"
+msgstr "Short change"
+
+#: reports/132-orders/handlers/report-constructor-132.php:197
+msgid "Бонусов добавлено"
+msgstr "Bonus added"
+
+#: reports/132-orders/handlers/report-constructor-132.php:211
+msgid "Карта лояльности CSCL"
+msgstr "Loyalty Card CSCL"
+
+#: reports/132-orders/handlers/report-constructor-132.php:224
+msgid "Наименование"
+msgstr "Name"
+
+#: reports/132-orders/handlers/report-constructor-132.php:225
+msgid "Цена"
+msgstr "Price"
+
+#: reports/132-orders/handlers/report-constructor-132.php:226
+msgid "Количество"
+msgstr "Quantity"
+
+#: reports/132-orders/handlers/report-constructor-132.php:227
+msgid "Сумма"
+msgstr "Amount"
+
+#: reports/132-orders/handlers/report-constructor-132.php:245
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:129
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:140
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:140
+#: reports/160-sales-mix/handlers/report-constructor-160.php:135
 msgid "Итого"
 msgstr "Total"
 
-#: reports/sales-mix/handlers/report-handler-160.php:51
+#: reports/132-orders/handlers/report-constructor-132.php:286
+msgid "Оплата банковской картой"
+msgstr "Payment by credit card"
+
+#: reports/132-orders/handlers/report-constructor-132.php:286
+msgid "Оплата наличными"
+msgstr "Cash payment"
+
+#: reports/132-orders/handlers/report-constructor-132.php:286
+msgid "Использование бонусов"
+msgstr "Using bonuses"
+
+#: reports/132-orders/handlers/report-constructor-132.php:286
+msgid "Использование карты лояльности"
+msgstr "Using a loyalty card"
+
+#: reports/132-orders/handlers/report-constructor-132.php:286
+msgid "Заказы с возвратами"
+msgstr "Orders with returns"
+
+#: reports/132-orders/handlers/report-constructor-132.php:286
+msgid "Снять все"
+msgstr "Uncheck all"
+
+#: reports/132-orders/handlers/report-constructor-132.php:286
+msgid "Показать все"
+msgstr "Show all"
+
+#: reports/132-orders/handlers/report-constructor-132.php:288
+msgid "Найти"
+msgstr "Find"
+
+#: reports/132-orders/handlers/report-constructor-132.php:288
+msgid "Очистить"
+msgstr "Clear"
+
+#: reports/132-orders/handlers/report-handler-132.php:52
+#: reports/150-golden-invoice/handlers/report-handler-150.php:51
+#: reports/160-sales-mix/handlers/report-handler-160.php:51
 msgid "Данные отсутствуют"
 msgstr "No data available"
 
-#~ msgid "Все кофейни "
-#~ msgstr "All coffee shops "
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:41
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:44
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:53
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:44
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:53
+#: reports/160-sales-mix/handlers/report-constructor-160.php:42
+msgid "Кофе"
+msgstr "Coffee"
+
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:42
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:45
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:55
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:45
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:55
+#: reports/160-sales-mix/handlers/report-constructor-160.php:42
+msgid "Напитки"
+msgstr "Drinks"
+
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:43
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:46
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:57
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:46
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:57
+#: reports/160-sales-mix/handlers/report-constructor-160.php:42
+msgid "Еда"
+msgstr "Food"
+
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:44
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:47
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:59
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:47
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:59
+msgid "Чеков"
+msgstr "Checks"
+
+#: reports/150-golden-invoice/handlers/report-constructor-150.php:45
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:48
+#: reports/150-golden-invoice/handlers/report-constructor-depricated-2.php:61
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:48
+#: reports/150-golden-invoice/handlers/report-constructor-depricated.php:61
+msgid "Рейтинг"
+msgstr "Rating"
+
+#: reports/160-sales-mix/handlers/report-constructor-160.php:42
+msgid "Прочее"
+msgstr "Other"
+
+#: reports/160-sales-mix/handlers/report-constructor-160.php:155
+msgid "Показывать проценты"
+msgstr "Show percentages"
+
+#: reports/160-sales-mix/handlers/report-constructor-160.php:155
+msgid "Показывать кол-во чеков"
+msgstr "Show number of checks"
+
+#~ msgid "00 Все кофейни"
+#~ msgstr "All coffeeshops"
+
+#~ msgid "..."
+#~ msgstr "..."
 
 #~ msgid "Пользователь: "
 #~ msgstr "User: "
