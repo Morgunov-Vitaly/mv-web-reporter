@@ -44,13 +44,17 @@
 			});
 			</script>
 		<?php
-		}
+		}	
 	?>
 	<!-- Форма ввода предварительных параметров отчетов  -->
 	<div id="form_param_container_inputs" style="display: none;">
-		
+	
 		<form id="form_param" class="mv_form" >
 			<ul>
+	<?php
+		
+		if ($params['type'] != 0 ) { /* Если это не 0 тип формы парамметров, когда не надо выводить основную форму */
+	?>
 				<li>			
 					<div class="select_and_label_div">
 						<label class="description" for="form_param_ref_organization"><?php _e('Выберите организацию', 'mv-web-reporter'); ?>: </label>
@@ -190,21 +194,26 @@
 						});
 					</script>
 				</li>
+									<?php 
+		} /* / Если это не 0 тип формы парамметров, когда не надо выводить основную форму */	
+			?>
 				<li class="mv_data_from buttons" style="display: none">
                     <input type="hidden" name="form_id" value="form_param" />
 					<input id="mv_submit_make_report" disabled class="button_text w-btn  color_primary style_solid" type="submit" name="submit" value="<?php _e('Создать отчет', 'mv-web-reporter'); ?>" />
 					
 				</li>
 			</ul>
+
 		</form>
-		
 			<!-- контейнер для дополнительных  параметров отчетов  -->
 		<div id="mv_extra_options">
 		<?php echo $mv_extra_options_html; ?>
 		</div>
 		
 	</div>
-	
+	<?php 
+	if ($params['type'] != 0 ) { /* Если это не 0 тип формы парамметров, когда не надо выводить основную форму  */
+	?>
 	<script type="text/javascript">	
 		
 		// Функция - параметр для сортировки массива списка организаций кофеен и т.д. по алфавиту с помощью метода .sort
@@ -426,6 +435,9 @@
 	
 	<!-- / Форма ввода предварительных параметров отчетов -->
 	<?php
+		
+		} /* / Если это не 0 тип формы парамметров, когда не надо выводить основную форму */	
+			
 		$html = ob_get_contents();
 		ob_get_clean();
 		

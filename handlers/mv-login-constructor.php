@@ -82,7 +82,8 @@
 			// передаем значение пути
 			'mv_current_user_login' => $mvuser->user_login,
             // можно проверить window.mv_wp_data.mv_current_user_login
-            'mv_homepage' => home_url()// Передаем адрес главной страницы
+            'mv_homepage' => home_url(),// Передаем адрес главной страницы
+			'mv_login_page' => wp_login_url() //Ссылка на страницу авторизации
 			];
 			//PC::debug($mvuser );
 			} else {
@@ -91,7 +92,8 @@
 			// передаем значение пути
 			'mv_current_user_login' => __( 'Пользователь не определен', 'mv-web-reporter' ),
 			// можно проверить window.mv_wp_data.mv_current_user_login   было $mvuser->data->user_login
-			'mv_homepage' => home_url()// Передаем адрес главной страницы
+			'mv_homepage' => home_url(),// Передаем адрес главной страницы
+			'mv_login_page' => wp_login_url() //Ссылка на страницу авторизации			
 			];
 		}
 		
@@ -187,14 +189,14 @@
 		
 		/* Функция для ПОКАЗА индикатора загрузки */
 		function mv_progress_circle_show(){
-			jQuery("#mv_report_progress_circle").slideDown("normal"); /* показываем колесо загрузчик ожидание slideUp('normal') */
+			jQuery("#mv_report_progress_circle").css("display", "block"); /* показываем колесо загрузчик ожидание slideUp('normal') */
 			}
 		
 		/* /Функция для ПОКАЗА отображения индикатора загрузки */
 
 		/* Функция для СКРЫТИЯ индикатора загрузки */
 		function mv_progress_circle_hide(){
-			jQuery("#mv_report_progress_circle").slideUp("normal"); /* скрываем колесо загрузчик ожидание slideUp('normal') */
+			jQuery("#mv_report_progress_circle").css("display", "none"); /* скрываем колесо загрузчик ожидание slideUp('normal') */
 			}
 		
 		/* /Функция для СКРЫТИЯ индикатора загрузки */

@@ -1,33 +1,29 @@
 <?php
 	/*
 		
-		PHP обработчик запроса на удаленный сервер данных 132 отчета 
+		PHP обработчик запроса на удаленный сервер данных 119 отчета 
 		
 	*/
 	
 	
-	add_action('wp_ajax_mv_take_report_data_132' , 'mv_take_report_data_132'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
-	add_action('wp_ajax_nopriv_mv_take_report_data_132', 'mv_take_report_data_132'); /* то же для незарегистрированных пользователей */
+	add_action('wp_ajax_mv_take_report_data_119' , 'mv_take_report_data_119'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
+	add_action('wp_ajax_nopriv_mv_take_report_data_119', 'mv_take_report_data_119'); /* то же для незарегистрированных пользователей */
 	
-	function mv_take_report_data_132() {
+	function mv_take_report_data_119() {
 		
 		$nonce = $_GET['mv_nonce']; // Вытаскиваем из AJAX запроса переданное значение mv_nonce и заносим в переменную $nonce
 		// проверяем nonce код, если проверка не пройдена прерываем обработку
-		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_132' ) ) wp_die('Stop! Nonce code of mv_take_report_data_132 incorrect!');
+		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_119' ) ) wp_die('Stop! Nonce code of mv_take_report_data_119 incorrect!');
 		
-		if (isset($_GET['cafe_ref']) && $_GET['cafe_ref']!=="0"){ 
-			$refObject = $_GET['cafe_ref'];
-			$objectType='Coffeeshop';
-			} else {wp_die(__( 'Возникли проблемы с выбором кофейни для построения отчета!', 'mv-web-reporter' ));
+		if (isset($_GET['mv_cscl_card_num']) && $_GET['mv_cscl_card_num']!=="0"){ 
+			$mv_cscl_card_num = $_GET['mv_cscl_card_num']; /* значение параметра поиска по номеру бонусной карты */
+			} else {wp_die(__( 'Возникли проблемы с указанием номера карты', 'mv-web-reporter' ));
 		}
-		$mv_cscl_card_num = $_GET['mv_cscl_card_num']; /* значение параметра поиска по номеру бонусной карты */
-		$dateFrom = $_GET['dateFrom'];
-		$dateTo = $_GET['dateTo'];
 		$token = ( $_COOKIE['mv_cuc_token'] != '' ? $_COOKIE['mv_cuc_token'] : ''); //Забираем токен из кукиса
-		/* https://cscl.coffeeset.ru/ws-test/web/report?token=...&id=132&dateFrom=...&dateTo=...&refDivision=193A9F3B-15AE-4030-B3BA-6DE2DA537383
+		/* https://cscl.coffeeset.ru/ws-test/web/report?token=YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj&id=119&number=242724781552
 		*/
-		$mv_url = 'https://cscl.coffeeset.ru/ws-test/web/report?token=' . $token . '&id=132&dateFrom=' . $dateFrom . '&dateTo='  . $dateTo . '&refDivision=' . $refObject; // Формируем строку запроса
-		//$mv_url = "https://cscl.coffeeset.ru/ws-test/web/report?token=YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj&id=132&dateFrom=2016-02-20T00:00:01&dateTo=2016-02-20T23:59:59&refDivision=54CA99F6-7E6D-4C9A-AC2C-AE549257F585";
+		$mv_url = 'https://cscl.coffeeset.ru/ws-test/web/report?token=' . $token . '&id=119&number=' . $mv_cscl_card_num; // Формируем строку запроса
+		
 		//PC::debug($mv_url );	
 		$mv_remote_get = wp_remote_get( $mv_url, array(
 		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
@@ -46,8 +42,8 @@
 				вызваем конструктор отчета
 				!!!!!!!!!!!! 
 			*/
-			 if(! empty( $mv_report_result->orders ) ){
-				$mv_html = mv_132_report_constructor($mv_report_result, $mv_cscl_card_num); 
+			 if(! empty( $mv_report_result ) ){
+				$mv_html = mv_119_report_constructor($mv_report_result); 
 				} else {
 				$mv_html ='<p style="text-align: center;">' . __( 'Данные отсутствуют', 'mv-web-reporter' ) . '</p>';
 			};
@@ -76,7 +72,7 @@
 			}
 			//$mv_error_code_result = ((null !== $mv_remote_get->get_error_code())  ? $mv_remote_get->get_error_code() : "" );
 			$mv_html = '"' . $mv_url . '"'; //запишем в пустующий раздел адресс ссылки-запроса к удаленному серверу
-			$mv_data = array('mv_error_code' => '"' . wp_remote_retrieve_response_code( $mv_remote_get ) .'"', 'message' => '"'. ((isset($mv_report_result->message)) ? $mv_report_result->message :"" ) . '"');
+			$mv_data = array('mv_error_code' => wp_remote_retrieve_response_code( $mv_remote_get ), 'message' => '"'. ((isset($mv_report_result->message)) ? $mv_report_result->message :"" ) . '"');
 			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);			
 			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"message" :  "' . $mv_report_result->message . '"}';
 			echo json_encode($mv_response); // Это передается во фронтэнед
@@ -86,5 +82,5 @@
 		wp_die();
 		
 	};		
-	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 132 отчета !!!!!!!!!!! */
+	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 119 отчета !!!!!!!!!!! */
 ?>

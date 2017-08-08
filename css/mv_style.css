@@ -184,6 +184,7 @@ form.mv_form {
 }
 
 /* Стиль колеса загрузки */
+/* изменено */
 
 .mv_loader{
 	left: 50% !important;
@@ -194,11 +195,13 @@ form.mv_form {
     width: 25px;
     z-index: 999!important;
     display: none;
+	color: #2196F3;
 }
 
 /*
 	Set the color of the icon
 */
+/* изменено */
 .mv_svg-path{
 	fill: #29b28f;
 }

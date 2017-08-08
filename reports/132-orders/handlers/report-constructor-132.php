@@ -67,7 +67,7 @@
 		if ($mv_cscl_card_num != "") { /* если фильтр задан */
 			if (strripos( $tr->cardName, $mv_cscl_card_num ) === false) { /* если номер карты текущей позиции хотябы частично не совпадает с искомым значением  */
 				echo 'mv_no_cscl_card_marker ';
-				} /* Если ведется поиск по номеру бонусной карты, то все что не подходит - скрываем через класс mv_no_cscl_card_marker */
+			} /* Если ведется поиск по номеру бонусной карты, то все что не подходит - скрываем через класс mv_no_cscl_card_marker */
 		}
 		if ( (($tr->bonusAdd != 0) &&($tr->bonusAdd != '')) || ($tr->bonusRemove != 0) &&($tr->bonusRemove != '') ) {echo'mv_bonus_marker '; } /* Оплата бонусами */		
 		if ( $tr->isReturn ) { echo'mv_return_marker '; } /* Оформлен возврат */
@@ -208,7 +208,16 @@
 		if (($tr->cardName != 0) || ($tr->cardName != '') ) { 		
 			echo'<tr>';
 			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/cscl-card.svg"></td>';
-			echo'<td style="border: none;"><a class="mv_link_to_another_report" href="#">'.__('Карта лояльности CSCL', 'mv-web-reporter') . ' No: ' . $tr->cardName . '</a></td>';
+			
+			$mv_my_lang = pll_current_language(); // определяем текущий язык 
+			if ( $mv_my_lang == 'ru' ) {
+				$mv_my_lang = 'http://cscl-reporter.com/ru/otchety/loyalty-card-info'; /* если язык русский, тогда выводим поле с адресом на русском */
+			}
+			else {
+				$mv_my_lang = 'http://cscl-reporter.com/en/reports/loyalty-card-info'; /* иначе - английский */
+			}
+			
+			echo'<td style="border: none;"><a class="mv_link_to_another_report" href="'. $mv_my_lang .'?mv_var=' . $tr->cardName . '" target="_blank">'.__('Карта лояльности CSCL', 'mv-web-reporter') . ' No: ' . $tr->cardName . '</a></td>';
 			echo'</tr>';
 		}			
 		
@@ -243,13 +252,13 @@
 		/* строка итогов */
 		echo'<tr class="mv_132_datatable_total" >';
 		echo'<td colspan="2" style="border: none;">' .__('Итого', 'mv-web-reporter') . ':</td>';
-/*		echo'<td style="border: none;"> </td>';
+		/*		echo'<td style="border: none;"> </td>';
 		echo'<td style="border: none;"> </td>'; */
 		echo'<td colspan="2" class="mv_align_right" style="border: none;">' . number_format($mv_total,  2, ',', ' ') . '</td>';		
 		echo'</tr>';		
 		
 		/* / строка итогов */
-	
+		
 		echo'</tbody>';
 		echo'</table>';
 		/* / Таблица позиций */		
@@ -258,7 +267,7 @@
 		echo'</div>'; /* / panel */
 		echo'</li>';
 		endforeach;
-
+		
 		echo'<script type="text/javascript">';
 		echo'jQuery("#mv_accordion").mv_accordion({ "canToggle": true, "canOpenMultiple": true, handle: ".mv_handle" });';
 		echo'</script>';
@@ -272,12 +281,12 @@
 	
 	
 	/*
-	*
-	*	функция - конструктор
-	*	для передачи html кода 
-	*	формы дополнительных параметров отчета
-	*
-	*
+		*
+		*	функция - конструктор
+		*	для передачи html кода 
+		*	формы дополнительных параметров отчета
+		*
+		*
 	*/
 	
 	function mv_132_extra_options_html(){
@@ -288,22 +297,22 @@
 		echo'<input class="mv_input_order_number" type="text" name="mv_cscl_csrd_number" id="mv_cscl_csrd_number" value="" placeholder="CSCL-card No:" data-required="true" aria-required="true"><br><a id="mv_find_number" class="w-btn style_solid color_primary icon_atleft" href="#"><i class="fa fa-search" aria-hidden="true"></i><span class="w-btn-label">' . __('Найти', 'mv-web-reporter') . '</span></a><br><a id="mv_clear_number" class="w-btn style_solid color_secondary icon_atleft" href="#"><i class="fa fa-eraser" aria-hidden="true"></i><span class="w-btn-label">' . __('Очистить', 'mv-web-reporter') . '</span></a>';
 		
 		echo '<script>
-			/*
-				styleSheets[n] содержить все таблицы стилей для данного документа. Первая таблица [0] в данном случае это подключеная (styles.css), вторая [1] тоже (style.css) третья [2] это втроеная mv_class1 и [3] встроенная .mv_ico.
-				проверить в консоли можно через document.styleSheets
-			*/
-			
-			function getStyleSheet (css_file_name) {
-				for (var i=0; i<document.styleSheets.length; i++) {
-					var sheet = document.styleSheets[ i ];
-					if (sheet.href){
-						if(sheet.href.indexOf(css_file_name) + 1) { /* ищем в списке таблиц стилей ту запись, в свойстве href которой присутствует название нашего файла стилей */
-							return sheet;
-						}
-					}
-				}
-			}		
-			
+		/*
+		styleSheets[n] содержить все таблицы стилей для данного документа. Первая таблица [0] в данном случае это подключеная (styles.css), вторая [1] тоже (style.css) третья [2] это втроеная mv_class1 и [3] встроенная .mv_ico.
+		проверить в консоли можно через document.styleSheets
+		*/
+		
+		function getStyleSheet (css_file_name) {
+		for (var i=0; i<document.styleSheets.length; i++) {
+		var sheet = document.styleSheets[ i ];
+		if (sheet.href){
+		if(sheet.href.indexOf(css_file_name) + 1) { /* ищем в списке таблиц стилей ту запись, в свойстве href которой присутствует название нашего файла стилей */
+		return sheet;
+		}
+		}
+		}
+		}		
+		
 		
 		/* Функция - обработчик проверяет состояния флагов и меняет отображение в зависимости от этого  */
 		
@@ -315,29 +324,29 @@
 		
 		/* выключаем банковские карты  */
 		if ( !(jQuery("#mv_check_cards").prop("checked")) ){ 
-			mv_stylesheet.addRule(".mv_bankCardPay_marker","display: none"); 
+		mv_stylesheet.addRule(".mv_bankCardPay_marker","display: none"); 
 		}
 		/* выключаем нал   */
 		if (!(jQuery("#mv_check_cash").prop("checked"))){ 
-			mv_stylesheet.addRule(".mv_cash_marker","display: none"); 		 
+		mv_stylesheet.addRule(".mv_cash_marker","display: none"); 		 
 		}
 		/* выключаем бонусы   */
 		if (!(jQuery("#mv_check_bonus").prop("checked"))){ 
-			mv_stylesheet.addRule(".mv_bonus_marker","display: none"); 
+		mv_stylesheet.addRule(".mv_bonus_marker","display: none"); 
 		}
-
+		
 		/* выключаем карты лояльности   */
 		if (!(jQuery("#mv_cscl_card_use").prop("checked"))){ 
-			mv_stylesheet.addRule(".mv_cscl_card_marker","display: none"); 
+		mv_stylesheet.addRule(".mv_cscl_card_marker","display: none"); 
 		}		
 		
 		/* выключаем возвраты   */
 		if (!(jQuery("#mv_check_return").prop("checked"))){ 
-			mv_stylesheet.addRule(".mv_return_marker","display: none"); 
+		mv_stylesheet.addRule(".mv_return_marker","display: none"); 
 		}	
 		/* выключаем номера заказов - надо сначало включить ранее отключенный номер и запомнить новый, чтобы потом его включить */
 		if (!(jQuery("#mv_check_cash").prop("checked"))){ 
-			mv_stylesheet.addRule(".mv_cash_marker","display: none"); 
+		mv_stylesheet.addRule(".mv_cash_marker","display: none"); 
 		}
 		/* выключаем номера карт лояльности - надо сначало включить ранее отключенный номер и запомнить новый, чтобы потом его включить */
 		
@@ -346,24 +355,24 @@
 		
 		/* включаем банковские карты  */
 		if (jQuery("#mv_check_cards").prop("checked")){
-			mv_stylesheet.addRule(".mv_bankCardPay_marker","display: list-item");
+		mv_stylesheet.addRule(".mv_bankCardPay_marker","display: list-item");
 		} 	
 		/* включаем нал  */
 		if (jQuery("#mv_check_cash").prop("checked")){
-			mv_stylesheet.addRule(".mv_cash_marker","display: list-item");
+		mv_stylesheet.addRule(".mv_cash_marker","display: list-item");
 		} 		
 		/* включаем бонусы  */
 		if (jQuery("#mv_check_bonus").prop("checked")){
-			mv_stylesheet.addRule(".mv_bonus_marker","display: list-item");
+		mv_stylesheet.addRule(".mv_bonus_marker","display: list-item");
 		}
 		/* включаем карты лояльности  */
 		if (jQuery("#mv_cscl_card_use").prop("checked")){
-			mv_stylesheet.addRule(".mv_cscl_card_marker","display: list-item");
+		mv_stylesheet.addRule(".mv_cscl_card_marker","display: list-item");
 		}		
 		
 		/* включаем возвраты  */
 		if (jQuery("#mv_check_return").prop("checked")){
-			mv_stylesheet.addRule(".mv_return_marker","display: list-item");
+		mv_stylesheet.addRule(".mv_return_marker","display: list-item");
 		}	
 		}
 		
@@ -384,19 +393,19 @@
 		
 		/* обработка поля поиска по номеру карты лояльности  */		
 		jQuery("#mv_find_number").click(function(){ /* клик по кнопке Найти */
-			if ((document.getElementById("form_param_ref_organization").value != "")&&(document.getElementById("mv_cscl_csrd_number").value != "" )) { /* должна быть выбрана организация и поле парметра номера карты не должно быть пустым */
-				jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
-			} else {
-				if ( document.getElementById("mv_cscl_csrd_number").value == "" ){ /* если поле парметра пустое, то просто очищаем все элементы от класса mv_no_cscl_card_marker - отображаем их */
-					jQuery(".mv_no_cscl_card_marker").removeClass("mv_no_cscl_card_marker");
-				}
-			}
-			; 
+		if ((document.getElementById("form_param_ref_organization").value != "")&&(document.getElementById("mv_cscl_csrd_number").value != "" )) { /* должна быть выбрана организация и поле парметра номера карты не должно быть пустым */
+		jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+		} else {
+		if ( document.getElementById("mv_cscl_csrd_number").value == "" ){ /* если поле парметра пустое, то просто очищаем все элементы от класса mv_no_cscl_card_marker - отображаем их */
+		jQuery(".mv_no_cscl_card_marker").removeClass("mv_no_cscl_card_marker");
+		}
+		}
+		; 
 		});
 		
 		jQuery("#mv_clear_number").click(function(){ /* клик по кнопке Найти */
-			document.getElementById("mv_cscl_csrd_number").value = "";/* очищаем поле строки поиска */
-			jQuery(".mv_no_cscl_card_marker").removeClass("mv_no_cscl_card_marker"); /* очищаем все элементы от класса mv_no_cscl_card_marker - отображаем их  */
+		document.getElementById("mv_cscl_csrd_number").value = "";/* очищаем поле строки поиска */
+		jQuery(".mv_no_cscl_card_marker").removeClass("mv_no_cscl_card_marker"); /* очищаем все элементы от класса mv_no_cscl_card_marker - отображаем их  */
 		});
 		</script>';
 		

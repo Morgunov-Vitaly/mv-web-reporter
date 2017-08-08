@@ -76,7 +76,16 @@ ol.mv_accordion {
 	MV классы для списка 
 	!!!!!!!!!!!!!!!!!!!!
 */
-
+/* стили для данных по карте */
+.mv_card_info {
+	margin: 0 10px 10px 5px;
+	font-weight: bold;
+}
+.mv_balance {
+	margin: 30px 10px 35px 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
 /* !!!!!!!!!!!!!!!!!!!!! MV классы  для шапки аккардеона !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  */
 .mv_handle {
     background: #fff;
@@ -84,6 +93,10 @@ ol.mv_accordion {
     border-bottom: 1px solid #e6e6e6;
     width: 100%;
 }
+.active .mv_handle {
+  background: #ececec; /*  rgb(235, 248, 245); желтый #fff5d5  */
+}
+
 
 /* Стиль первой части шапки аккардеона иконка чека, номер заказа, ФИО */
 .mv_header_1{
@@ -162,6 +175,11 @@ ol.mv_accordion {
 .mv_img_indicators {
     padding: 0;
 	vertical-align: middle;
+	margin: 0 10px 0 0;
+}
+.mv_balance  .mv_img_indicators{
+	    height: 27px;
+		margin: 0;
 }
 
 /* Стили для элементов Дополнительных параметров отчета */
@@ -170,11 +188,11 @@ input.mv_input_order_number {
 }
 /*  стили для кнопок Найти и Очистить */
 #mv_find_number{
-	margin: 5px 0 0 0;
-	width: 100%;
+	margin-left: 5px;
+	width: 95%;
 }
 #mv_clear_number{
-	margin: 5px 0;
+	/* margin: 0 3px; */
 	width: 100%;
 }
 
@@ -186,19 +204,19 @@ input.mv_input_order_number {
 .panel {
 	background: #f9f9f9; /* светло-зеленый #f5faf5 */
 }
-.mv_132_report_table {
+.mv_119_report_table {
 	width: 100%;
 	border: none;
 }
-.mv_132_report_table td{
+.mv_119_report_table td{
 	padding: 0.3rem 10px;
 }
 
-.mv_132_rt_border_top {
+.mv_119_rt_border_top {
 	border-top: 1px dotted #ccc;
 }
 
-.mv_132_datatable_header {
+.mv_119_datatable_header {
 	background: #29b28f;
 	border: none;
 	color: #fff;
@@ -217,7 +235,7 @@ input.mv_input_order_number {
 	
 }
 /* стиль строки итоговой суммы */
-.mv_132_datatable_total {
+.mv_119_datatable_total {
 	
 	background: #29b28f;
 	border: none;
@@ -240,7 +258,7 @@ input.mv_input_order_number {
 }
 
 
-.mv_132_rt_padding_top {
+.mv_119_rt_padding_top {
 	padding-top: 15px;
 }
 .mv_small {
@@ -248,7 +266,7 @@ input.mv_input_order_number {
 	color: #29b28f;
 }
 
-a.mv_link_to_another_report{
+.mv_link_to_another_report {
     color: #2196F3;
     text-decoration: underline;
     cursor: pointer;
@@ -373,8 +391,14 @@ a.mv_link_to_another_report{
 /* Small devices -sm (tablets, 768px and up) */
 @media (max-width: 991px) {
 	
-	.mv_handle {
-		height: 60px;
+	/* стили кнопок поиска и очистки поля ввода */
+	#mv_find_number, #mv_find_number {
+    margin: 0;
+	width: 100%;
+	}
+	
+.g-cols>div:not([class*=" vc_col-"]) {
+    margin: 0 0 0.5rem;
 	}	
 	
 	.mv_accordion-opener {
@@ -507,7 +531,7 @@ a.mv_link_to_another_report{
 
 @media (max-width: 414px ){	/* 414px*/
 	/* отступы в ячейакх таблицы данных */
-	.mv_132_report_table td {
+	.mv_119_report_table td {
 		padding: 0.3rem 3px;
 		line-height: 17px;
 	}
