@@ -193,14 +193,14 @@
 		/* Операции с бонусами  добавление */
 		if (($tr->bonusAdd != 0) || ($tr->bonusAdd != '')) { 		
 			echo'<tr>';
-			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/income.svg"></td>';
+			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/inbox_green.svg"></td>';
 			echo'<td style="border: none;">'.__('Бонусов добавлено', 'mv-web-reporter') . ': ' . number_format($tr->bonusAdd,  2, ',', ' ') . '</td>';
 			echo'</tr>';
 		}	
 		/* Операции с бонусами  убавление */
 		if (($tr->bonusRemove != 0) || ($tr->bonusRemove != '') ) { 		
 			echo'<tr>';
-			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/outgo.svg"></td>';
+			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/outbox_red.svg"></td>';
 			echo'<td style="border: none;">'.__('Бонусов списано', 'mv-web-reporter') . ': ' . number_format($tr->bonusRemove,  2, ',', ' ') . '</td>';
 			echo'</tr>';
 		}			

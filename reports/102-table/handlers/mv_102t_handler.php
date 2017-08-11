@@ -55,7 +55,6 @@
 		'%s'
 		)
 		);
-		
 	}
 	/* Функция  очистки таблицы БД WP */
 	function mv_tr_truncate_table($mv_user, $mv_table_name){

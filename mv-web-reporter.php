@@ -130,30 +130,28 @@
 		// ID по умолчанию, если его не указывать
 		global $mv_report_params;
 		global $mv_report_html;	
-		
+		$html ='';
 		$mv_report_params = shortcode_atts( array('id' => '102'), $atts);
 		//global $mv_extra_options_html;
 		//global $mv_login_popup; 	
 		
 		
 		ob_start(); // передадим значение mv_report_id в фронт-энд ! возможно это - лишнее
-	?>
-	<div id="mv_report_container"> <!-- контейнер отчета -->
-	</div>
-	<script type="text/javascript">
-		mv_report_id = '<?php echo $mv_report_params['id'] ?>';
-		mv_old_input_val = ''; /* старое значение введенного поля фильтра дополнительных параметров */
-		/* !!!!!!!!!!!!!!!!!!!! */
-		/* Конструкторы отчетов */
-		/* !!!!!!!!!!!!!!!!!!!! */
-		jQuery(function ($) {
-			$(document).ready(function(){ 
-			<?php echo $mv_report_html; ?> /* ядро отчета */
-				/* !!!!!!!!! / AJAX  Обработчик отправки данных формы параметров отчетов  !!!!!!!!!!!!! */
+		?>
+		<div id="mv_report_container"> <!-- контейнер отчета --></div>
+		<script type="text/javascript">
+			mv_report_id = '<?php echo $mv_report_params['id'] ?>';
+			/* mv_old_input_val = '';  старое значение введенного поля фильтра дополнительных параметров */
+			/* !!!!!!!!!!!!!!!!!!!! */
+			/* Конструкторы отчетов */
+			/* !!!!!!!!!!!!!!!!!!!! */
+			jQuery(function ($) {
+				$(document).ready(function(){ 
+				<?php echo $mv_report_html; ?> /* ядро отчета */
+					/* !!!!!!!!! / AJAX  Обработчик отправки данных формы параметров отчетов  !!!!!!!!!!!!! */
+				});
 			});
-		});
-	</script>
-	<?php
+		</script><?php
 		$html = ob_get_contents();
 		ob_get_clean();
 		return $html;
@@ -169,14 +167,14 @@
 	add_shortcode('mv_progress_circle', 'mv_progress_circle_constructor'); 
 	function mv_progress_circle_constructor($atts){
 		$params = shortcode_atts( array( // Значенияпо умолчанию
-		'id' => 'mv_login_loader', // ID блока по умолчанию mv_login_loader, если его не указывать
+		'id' => 'mv_login_loader' // ID блока по умолчанию mv_login_loader, если его не указывать
 		), $atts );
 		ob_start();
-	?>
-	<div id="<?php echo $params['id'] ?>" class="mv_loader" title="0">
-		<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><span class="sr-only"><?php _e( 'Загрузка', 'mv-web-reporter' ); ?>...</span>
-	</div>
-	<?php
+		?>
+		<div id="<?php echo $params['id'] ?>" class="mv_loader" title="0">
+			<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><span class="sr-only"><?php _e( 'Загрузка', 'mv-web-reporter' ); ?>...</span>
+		</div>
+		<?php
 		$html = ob_get_contents();
 		ob_get_clean();
 		return $html;

@@ -48,7 +48,7 @@
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/organization.svg" title="' . __('Организация', 'mv-web-reporter') . '"> '.__('Организация', 'mv-web-reporter').': ' . $mv_report_result->organization . '</p>'; /* organization */
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/folder.svg" title="' . __('Категория', 'mv-web-reporter') . '"> '.__('Категория', 'mv-web-reporter').': ' . $mv_report_result->category . '</p>'; /* category */
 
-		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/inbox.svg" title="' . __('Начальный баланс', 'mv-web-reporter') . '"> '.__('Начальный баланс', 'mv-web-reporter').': ' . $mv_report_result->initialBalance . '</p>'; /* initialBalance  */
+		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/gift.svg" title="' . __('Начальный баланс', 'mv-web-reporter') . '"> '.__('Начальный баланс', 'mv-web-reporter').': ' . $mv_report_result->initialBalance . '</p>'; /* initialBalance  */
 		$mv_dateLastUsing = new DateTime($mv_report_result->dateLastUsing);
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/time-1.svg"> '.__('Дата последней операции', 'mv-web-reporter').': ' . date_format( $mv_dateLastUsing, 'd.m.Y H:i:s') . '</p>'; /* dateLastUsing */		
 		
@@ -78,11 +78,12 @@
 		/* блок иконок индикаторов */
 		echo'<div class="mv_header_2 vc_col-lg-2  vc_col-sm-2  vc_col-xs-6 wpb_column vc_column_container">
 		<p class="mv_header_2_content">';	
+		if ( (($tr->bonusAdd != 0) &&($tr->bonusAdd != ''))|| ( ($tr->bonusRemove != 0) &&($tr->bonusRemove != '')) ) {echo'  <img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/jewels.svg" title="' . __('Бонусы добавлены', 'mv-web-reporter') . '">'; } 
 		
-		if ( (($tr->bonusAdd != 0) &&($tr->bonusAdd != '')) ) {echo'  <img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/income.svg" title="' . __('Бонусы добавлены', 'mv-web-reporter') . '">'; }  /* luxury-2.svg */
+		if ( ($tr->bonusAdd != 0) &&($tr->bonusAdd != '') ) {echo'  <img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/inbox_green.svg" title="' . __('Бонусы добавлены', 'mv-web-reporter') . '">'; }  /* luxury-2.svg */
 		
 		/* индикатор Бонусы списаны */
-		if (($tr->bonusRemove != 0) &&($tr->bonusRemove != '') ) {echo'  <img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/outgo.svg" title="' . __('Бонусы списаны', 'mv-web-reporter') . '">'; }  /* luxury-2.svg */		
+		if (($tr->bonusRemove != 0) &&($tr->bonusRemove != '') ) {echo'  <img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/outbox_red.svg" title="' . __('Бонусы списаны', 'mv-web-reporter') . '">'; }  /* luxury-2.svg */		
 		
 		echo'</p>';
 		echo'</div>'; /* / mv_header_2*/		
@@ -132,14 +133,14 @@
 		/* Операции с бонусами  добавление */
 		if (($tr->bonusAdd != 0) || ($tr->bonusAdd != '')) { 		
 			echo'<tr>';
-			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/income.svg"></td>';
+			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/inbox_green.svg"></td>';
 			echo'<td style="border: none;">'.__('Бонусов добавлено', 'mv-web-reporter') . ': ' . number_format($tr->bonusAdd,  2, ',', ' ') . '</td>';
 			echo'</tr>';
 		}	
 		/* Операции с бонусами  убавление */
 		if (($tr->bonusRemove != 0) || ($tr->bonusRemove != '') ) { 		
 			echo'<tr>';
-			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/outgo.svg"></td>';
+			echo'<td class="mv_icon_row"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/outbox_red.svg"></td>';
 			echo'<td style="border: none;">'.__('Бонусов списано', 'mv-web-reporter') . ': ' . number_format($tr->bonusRemove,  2, ',', ' ') . '</td>';
 			echo'</tr>';
 		}			

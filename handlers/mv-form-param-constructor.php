@@ -20,7 +20,7 @@
 		global $mv_login_popup;  // глобальная переменная со сведениями по модальному окну LogIn
 		global $mv_extra_options_html; // глобальная переменная c html кодом дополнительных параметров
 		$params = shortcode_atts( array( //  задаем значения по умолчанию
-		'type' => 1, // тип 1 (по умолчанию) - отчет, по всем кофейням 2- тип, когда обязательно выбрана одна из кофеен (первая по списку)
+		'type' => 1 // тип 1 (по умолчанию) - отчет, по всем кофейням 2- тип, когда обязательно выбрана одна из кофеен (первая по списку)
 		), $atts );	
 		
 		//PC::debug($params['type']);
@@ -45,7 +45,200 @@
 			</script>
 		<?php
 		}	
+	if ($params['type'] == 3 ) { /* 3 тип формы - горизонтальное распределение для использования сверху основного отчета по всей ширине  */
 	?>
+<!-- Форма ввода предварительных параметров отчетов  -->
+<div id="form_param_container_inputs" style="display: none;">
+	<form id="form_param" class="mv_form" >
+
+	<!-- контейнер адаптивных блоков -->
+<div class="g-cols"> 
+	<!-- Блок A1 -->
+	<div class="vc_col-lg-9 vc_col-md-9 vc_col-sm-12 wpb_column vc_column_container">
+		<!-- Блок A2-1 -->
+	<div class="g-cols wpb_row vc_inner" >	
+		<div class="vc_col-lg-6 vc_col-md-6 vc_col-sm-12 wpb_column vc_column_container">
+			<div class="select_and_label_div mv_horizontal">
+				<label class="description" for="form_param_ref_organization"><?php _e('Выберите организацию', 'mv-web-reporter'); ?>: </label>
+				<div>
+					<select id="form_param_ref_organization" name="ref_organization" required>
+						<option value = "0" selected>--</option>				
+					</select>
+				</div> 
+			</div>	
+		</div>
+		<!-- /Блок A2-1 -->
+		
+		<!-- Блок A2-2 -->
+		<div class="vc_col-lg-6 vc_col-md-6 vc_col-sm-12 wpb_column vc_column_container">
+			<div id="form_param_cafe_place"  class="select_and_label_div mv_horizontal">
+				<label class="description" for="form_param_cafe"><?php _e('Выберите кофейню', 'mv-web-reporter'); ?>: </label>
+				<div>
+					<select id="form_param_cafe" name="cafe_ref" required> 
+						<option value="0" selected >00 <?php _e( 'Все кофейни', 'mv-web-reporter' ); ?></option> <!-- только если id=102 или ему подобные (с опцией "00 все кофейни" ) -->
+					</select>
+				</div> 
+			</div>					
+		</div>
+		<!-- /Блок A2-2 -->
+		</div>
+	<div class="g-cols wpb_row vc_inner" >			
+		<!-- Блок A2-3 -->
+		<div class="vc_col-lg-12 vc_col-md-12 vc_col-sm-12 wpb_column vc_column_container">
+			<p class="mv_data_buttons">
+				<input  type="radio" id="mv_td" name="mv_radio" checked /><label for="mv_td"><?php _e('сегодня', 'mv-web-reporter'); ?></label>
+				<input  type="radio" id="mv_dd" name="mv_radio" /><label for="mv_dd"><?php _e('вчера', 'mv-web-reporter'); ?></label>
+				<input  type="radio" id="mv_ww" name="mv_radio" /><label for="mv_ww"><?php _e('неделю назад', 'mv-web-reporter'); ?></label>
+				<input  type="radio" id="mv_mm" name="mv_radio" /><label for="mv_mm"><?php _e('месяц назад', 'mv-web-reporter'); ?></label>
+				<input  type="radio" id="mv_yy" name="mv_radio" /><label for="mv_yy"><?php _e('год назад', 'mv-web-reporter'); ?></label>
+				<input  type="radio" id="mv_more" name="mv_radio" /><label for="mv_more">...</label>
+			</p>		
+		</div>
+		<!-- /Блок A2-3 -->				
+		</div>
+	</div>
+	<!-- /Блок A1 -->
+	
+	<!-- Блок B1 -->
+	<div class="vc_col-lg-3 vc_col-md-3 vc_col-sm-12 wpb_column vc_column_container">
+		<!-- Блок B2-1 -->
+		<div class="vc_col-sm-12 wpb_column vc_column_container">
+			<div class="mv_data_from" style="display: none">
+			<label class="description" for="dateFrom"><?php _e('Дата от', 'mv-web-reporter'); ?>: </label>
+			<script type="text/javascript">
+				function mv_data_set(ord, orm, ory, vdd, vmm, vyy) { 
+					// В параметрах указываем месяц от 1 до 12
+					// Ограничения фунуции: можно вносить только один параметр для вычитания либо месяц либо год либо день
+					// Параметры только вычитаются (отсчет назад)
+					if ((ord == 0) && (orm == 0) && (ory == 0) ) { 
+						mvordate = new Date(); //сейчас 
+						ory = mvordate.getFullYear();
+						orm = mvordate.getMonth() + 1; // получаем месяц от 0 до 11 и приводим к системе 1-12
+						ord = mvordate.getDate(); // получаем день  от 1 до 31
+					};  
+					if (((ord == 31)&& (vmm != 0)) || ((ord == 29)&&(orm == 2) && (vmm != 0)))  {
+						// вычитаем месяц(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
+						ny = ory - vyy;
+						nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
+						nd = 0;
+						} else {
+						if ( ( (ord == 31)||((ord == 29) && (orm == 2)) ) && (vyy != 0))   {
+							ny = ory - vyy;
+							nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
+							nd = 0;
+							} else {
+							// вычитаем год(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
+							ny = ory - vyy;
+							nm = orm - 1 - vmm; //уменьшаем на 1 т.к. система считает от 0 до 11 а в параметрах - привычная система от 1 до 12
+							nd = ord - vdd;
+						};						
+					};
+					var mvordate =  new Date(ny, nm, nd);  //преобразование из системы  от 1 до 12 в систему от 0 до 11 месяцев
+					
+					// добавляем убавляем значения вводных параметров 
+					ny = mvordate.getFullYear();
+					nm = mvordate.getMonth(); // получаем месяц от 0 до 11 
+					nd = mvordate.getDate(); // получаем день  от 1 до 31
+					nm = nm + 1; // приводим в соответствие с нормальным форматом от 1 до 12
+					
+					if (nd < 10) nd = '0' + nd; 
+					if (nm < 10) nm = '0' + nm; 
+					return ny + '-' + nm + '-' + nd; 
+				}; 						
+				
+				var mv_datamonth = mv_data_set(0, 0, 0, 0, 0, 0); 
+				
+				document.write('<input id="dateFrom" class="mv_data_h" required type="date" name="dateFrom" value="' + mv_datamonth + '" />');
+				
+			</script>
+			<!-- </div> -->
+			<label class="description" style="display: none" for="dateTo"><?php _e('Дата по', 'mv-web-reporter'); ?>: </label>
+			<script type="text/javascript">
+				document.write('<input id="dateTo" class="mv_data_h" style="display: none" required type="date" name="dateTo" value="' + mv_datamonth + '" />');						
+			</script>
+			<script type="text/javascript">
+				var mv_datamonth = mv_data_set(0,0,0, 0, 0, 0);
+				jQuery(document).ready(function($) {
+					
+					$("#mv_td").click(function(){ //клик по кнопке сегодня
+						$("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
+						$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
+						if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
+							$("#form_param").submit(); //Отправляем данные формы "Субмитим"
+						}; 
+						
+					});
+					
+					$("#mv_dd").click(function(){ //клик по кнопке вчера
+						$("#dateFrom").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
+						$("#dateTo").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
+						if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
+							$("#form_param").submit(); //Отправляем данные формы "Субмитим"
+						}; 
+						
+					});
+					$("#mv_ww").click(function(){ //клик по кнопке неделю назад
+						$("#dateFrom").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем неделю назад
+						$("#dateTo").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем +1 день
+						if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
+							$("#form_param").submit(); //Отправляем данные формы "Субмитим"
+						}; 
+					});
+					$("#mv_mm").click(function(){ //клик по кнопке месяц назад
+						
+						$("#dateFrom").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
+						$("#dateTo").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
+						if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
+							$("#form_param").submit(); //Отправляем данные формы "Субмитим"
+						}; 
+					});
+					
+					$("#mv_yy").click(function(){ //клик по кнопке год назад
+						
+						$("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год назад
+						$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год день
+						if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
+							$("#form_param").submit(); //Отправляем данные формы "Субмитим"
+						}; 
+					});
+					
+					$("#mv_more").click(function(){ // открываем поле ввода "Дата ОТ" вручную
+						$(".mv_data_from").toggle("normal");
+					});
+					
+					$("#dateFrom").change(function(){ // автоматическое присвоение "Дата ДО" того же значения, что и Дата От
+						$("#dateTo").val(document.getElementById('dateFrom').value);
+					});
+				});
+			</script>					
+			</div>
+		</div>
+		<!-- /Блок B2-1 -->
+		
+		<!-- Блок B2-2 -->
+		<div class="vc_col-sm-12 wpb_column vc_column_container">
+			<div class="mv_data_from buttons" style="display: none">
+				<input type="hidden" name="form_id" value="form_param" />
+				<input id="mv_submit_make_report" disabled class="button_text w-btn  color_primary style_solid mv_h" type="submit" name="submit" value="<?php _e('Создать отчет', 'mv-web-reporter'); ?>" />
+			</div>
+		</div>
+		<!-- /Блок B2-2 -->			
+		
+	</div>
+	<!-- /Блок B1 -->
+</div><!-- /контейнер адаптивных блоков -->
+	</form>
+	<!-- контейнер для дополнительных  параметров отчетов  -->
+	<div id="mv_extra_options">
+		<?php echo $mv_extra_options_html; ?>
+	</div>
+	
+</div>
+<!-- /Форма ввода предварительных параметров отчетов  -->
+	<?php 
+	} else { /* / Если это не 3 тип формы */	
+?>
+	<!-- КАК БЫЛО  -->
 	<!-- Форма ввода предварительных параметров отчетов  -->
 	<div id="form_param_container_inputs" style="display: none;">
 	
@@ -194,9 +387,9 @@
 						});
 					</script>
 				</li>
-									<?php 
-		} /* / Если это не 0 тип формы парамметров, когда не надо выводить основную форму */	
-			?>
+<?php 
+} /* / Если это не 0 тип формы парамметров, когда не надо выводить основную форму */	
+?>
 				<li class="mv_data_from buttons" style="display: none">
                     <input type="hidden" name="form_id" value="form_param" />
 					<input id="mv_submit_make_report" disabled class="button_text w-btn  color_primary style_solid" type="submit" name="submit" value="<?php _e('Создать отчет', 'mv-web-reporter'); ?>" />
@@ -211,7 +404,11 @@
 		</div>
 		
 	</div>
+	<!-- / Форма ввода предварительных параметров отчетов  -->		
+	<!-- /КАК БЫЛО  -->
 	<?php 
+	} /* / Если это не 3 тип формы */	
+
 	if ($params['type'] != 0 ) { /* Если это не 0 тип формы парамметров, когда не надо выводить основную форму  */
 	?>
 	<script type="text/javascript">	
@@ -311,7 +508,7 @@
 				mv_results2_data = [];  // создаем массив значений второго списка (кофеен)
 				mv_results2_data.length = 0; //обнуляем
 				
-				if ((mv_param == 1) && (mv_result.accessType == "company")) { /* 1 тип - возможен  отчет, по всем кофейням и у пользователя есть право выбирать */
+				if ( ( (mv_param == 1) || (mv_param == 3) ) && (mv_result.accessType == "company") ) { /* 1 тип - возможен  отчет, по всем кофейням и у пользователя есть право выбирать */
 					/* очистим список кофеен - всех, кроме первого элемента в случае отчета с опцией '00 Все кофейни' */
 					mv_results2_data[0] = {"id": "0", "text": "00 <?php _e( 'Все кофейни', 'mv-web-reporter' ); ?>"};
 					

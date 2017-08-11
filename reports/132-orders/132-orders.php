@@ -54,8 +54,8 @@ function mv_132_report(){
 	ob_start();
 	?>
 	jQuery("#form_param").submit(function (event_pr) { /* отправка данных формы с параметрами для построения отчета */
+		mv_progress_circle_show(); // Отображаем колесо загрузчик ожидание slideUp('normal')
 		if (mv_document_ready > 0) {		
-			mv_progress_circle_show(); // Отображаем колесо загрузчик ожидание slideUp('normal')
 			$.ajax({
 				type: 'GET',
 				url: '<?php echo admin_url( "admin-ajax.php" ); ?>', /* URL к которму подключаемся как альтернатива */
@@ -77,7 +77,7 @@ function mv_132_report(){
 							$(".mv_reports_container").slideDown('normal'); /* показать .mv_reports_container - контейнер для вывода отчетов */
 							
 							$("#mv_report_container").html(mv_report_result.mv_html); /* обновляем форму отчета */
-							mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
+
 							/* Блок вывода шапки отчета */
 							if ( document.getElementById("displayorgname") != undefined) {
 								document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;
@@ -86,23 +86,33 @@ function mv_132_report(){
 							}
 							
 							console.log("<?php _e( 'Статус запроса конструктора отчета: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
+							mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
 							
 							} else {
+							/* Выводим окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */
 							
-							/* Здесь надо вывести окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */
-							//alert("<?php _e( 'Ошибка конструктора отчета!: ', 'mv-web-reporter' ); ?>" + mv_report_result.mv_data.mv_error_code);
-							$("#mv_report_container").html('<H3 style="text-align: center;">Ошибка конструктора: ' + mv_report_result.mv_data.mv_error_code + '</h3><p style="text-align: center;">message: ' + mv_report_result.mv_data.message + '</p>'); // Выводим сообщение об ошибке
+							if (mv_report_result.mv_data.mv_error_code == 401){
+								jQuery("#mv_report_container").html('<H3 style="text-align: center;"><?php _e( 'Ошибка', 'mv-web-reporter' ); ?>: ' + mv_report_result.mv_data.mv_error_code + '</H3><p style="text-align: center;"><?php _e( 'Сообщение', 'mv-web-reporter' ); ?>: ' + mv_report_result.mv_data.message + '</p><p style="text-align: center;"><?php _e( 'Время вашей сессии истекло. Пожалуйста, авторизуйтесь повторно', 'mv-web-reporter' ); ?> - <a class="mv_login_modal_init" href="#">LogIn</a></p>'); // Выводим сообщение об ошибке 401 Token expired 
+								} else {
+								if (mv_report_result.mv_data.mv_error_code == 404){
+									jQuery("#mv_report_container").html('<H3 style="text-align: center;"><?php _e( 'Ошибка', 'mv-web-reporter' ); ?>: ' + mv_report_result.mv_data.mv_error_code + '</H3><p style="text-align: center;"><?php _e( 'По заданным параметрам данных не найдено', 'mv-web-reporter' ); ?></p>'); // Выводим сообщение об ошибке 404 информация не найдена 
+									} else { 
+									jQuery("#mv_report_container").html('<H3 style="text-align: center;"><?php _e( 'Ошибка конструктора отчета', 'mv-web-reporter' ); ?>: ' + mv_report_result.mv_data.mv_error_code + '</H3><p style="text-align: center;"><?php _e( 'Сообщение', 'mv-web-reporter' ); ?>: ' + mv_report_result.mv_data.message + '</p>'); // Выводим сообщение о других типах ошибки
+								}
+							}							
+							/* / Выводим окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */							
+
 							$(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
 							console.log('mv_error_code: ' + mv_report_result.mv_data.mv_error_code);
 							console.log('message: ' + mv_report_result.mv_data.message);
 							console.log('report URL: ' + mv_report_result.mv_html);
-							mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
+
+							mv_progress_circle_hide(); // скрываем колесо загрузчик ожидание slideUp('normal')
 						}
 						}else{
 						console.log("<?php _e( 'Удаленный сервер вернул пустую строку: ', 'mv-web-reporter' ); ?>" + result);
 						mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
 					}
-					
 					
 				},
 				error: function (result, status, jqxhr) { // срабатывает только в случае если не сработает AJAX запрос на WP
@@ -116,8 +126,8 @@ function mv_132_report(){
 				}
 			});
 			mv_document_ready = mv_document_ready + 1; // счетчик для предотвращения повторного срабатывания функций
-			event_pr.preventDefault();/* Отменяем стандартное действие кнопки Submit в форме */
 		}
+			event_pr.preventDefault();/* Отменяем стандартное действие кнопки Submit в форме */
 	});	
 	<?php
 	$html = ob_get_contents();
