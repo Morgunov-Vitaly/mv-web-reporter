@@ -13,13 +13,18 @@
 		
 		ob_start();
 		/* заголовок */
-		echo '<h4>' . __('Детализация по', 'mv-web-reporter') . '&nbsp;<strong>' . __('карте', 'mv-web-reporter') . ' CSCL:</strong></h4>';
-		
+/*		echo '<div class="l-section-h i-cf">
+				<div class="g-cols vc_row type_default valign_top">
+					<div class="vc_col-sm-12 wpb_column vc_column_container">
+						<div class="vc_column-inner">
+							<div class="wpb_wrapper">'; */
+									echo '<h4>' . __('Детализация по', 'mv-web-reporter') . '&nbsp;<strong>' . __('карте', 'mv-web-reporter') . ' CSCL:</strong></h4>';
 		/* адаптивные блоки №1 и №2 */
-		echo'<div class="g-cols vc_row wpb_row vc_row-fluid">';
+		echo'<div class="g-cols wpb_row type_default valign_top">';
 		/* адаптивный блок №1 */
-		echo'<div class="vc_col-sm-6 wpb_column vc_column_container">';		
-		
+		echo'<div class="vc_col-md-6 wpb_column vc_column_container">';		
+		echo'<div class="vc_column-inner">';
+		echo'<div class="wpb_wrapper">';
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/cscl-card.svg" title="' . __('Карта лояльности', 'mv-web-reporter') . '"> No: ' . $mv_report_result->number . '</p>'; /* number */
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/pin-key.svg" title="' . __('Pin код', 'mv-web-reporter') . '"> PIN: ' . $mv_report_result->pin . '</p>'; /* pin */
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/user.svg" title="' . __('Держатель', 'mv-web-reporter') . '"> ' . $mv_report_result->holder . '</p>'; /* holder */
@@ -41,25 +46,48 @@
 			} 
 		
 		echo '</p>
-		</div>';	
+			</div>
+		</div>
+	</div>';	
 		/* адаптивный блок №2 */		
-		echo'<div class="vc_col-sm-6 wpb_column vc_column_container">';		
-
+		echo'<div class="vc_col-md-6 wpb_column vc_column_container">';		
+		echo'<div class="vc_column-inner">';
+		echo'<div class="wpb_wrapper">';
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/organization.svg" title="' . __('Организация', 'mv-web-reporter') . '"> '.__('Организация', 'mv-web-reporter').': ' . $mv_report_result->organization . '</p>'; /* organization */
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/folder.svg" title="' . __('Категория', 'mv-web-reporter') . '"> '.__('Категория', 'mv-web-reporter').': ' . $mv_report_result->category . '</p>'; /* category */
 
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/gift.svg" title="' . __('Начальный баланс', 'mv-web-reporter') . '"> '.__('Начальный баланс', 'mv-web-reporter').': ' . $mv_report_result->initialBalance . '</p>'; /* initialBalance  */
 		$mv_dateLastUsing = new DateTime($mv_report_result->dateLastUsing);
 		echo '<p class="mv_card_info"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/time-1.svg"> '.__('Дата последней операции', 'mv-web-reporter').': ' . date_format( $mv_dateLastUsing, 'd.m.Y H:i:s') . '</p>'; /* dateLastUsing */		
-		
+		echo '</div>'; 
+		echo '</div>'; 		
 		echo '</div>'; 
 		echo '</div>'; 		
 		/* / адаптивные блоки №1 и №2 */
+	/*	echo '	</div>
+			</div>
+		</div>
+	</div>
+</div>';		*/
 
 /* БАЛАНС */
+	/*	echo '<div class="l-section-h i-cf">
+				<div class="g-cols vc_row type_default valign_top">
+					<div class="vc_col-sm-12 wpb_column vc_column_container">
+						<div class="vc_column-inner">
+							<div class="wpb_wrapper">'; */
+		echo'<div class="wpb_text_column ">';
+		echo'<div class="wpb_wrapper">';		
 		echo '<p class="mv_balance"><img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/jewels.svg"> '.__('Баланс', 'mv-web-reporter').': ' . number_format($mv_report_result->balance,  2, ',', ' ') . '</p>'; /* balance */
 		
 		echo '<p> </p>'; 
+		echo'</div>
+		</div>';		
+/*		echo '	</div>
+			</div>
+		</div>
+	</div>
+</div>';		 */
 		// end Выводим заголовок отчета
 		
 		echo'<ul id="mv_accordion" class="mv_accordion">';
@@ -71,12 +99,12 @@
 
 		echo'<div class="mv_handle">'; /* "Держатель" акаордеона */
 		
-		echo'<div class="g-cols  vc_row wpb_row vc_row-fluid">';
+		echo'<div class="g-cols  vc_row wpb_row type_default">';
 		/* блок иконки чека, номера заказа и ФИО */
-		echo'<div class="mv_header_1 vc_col-lg-7  vc_col-sm-6  vc_col-xs-12 wpb_column vc_column_container"><img class="mv_img_label" src="' . plugin_dir_url( __FILE__ ) . '../img/receipt-green.svg">  ' . $tr->name . '</div>'; /* Название и код операции убрал коды . ' | Code: <span>' . $tr->code . '</span> */
+		echo'<div class="mv_header_1 vc_col-lg-7  vc_col-sm-6  vc_col-xs-12 wpb_column vc_column_container"><div class="vc_column-inner"><img class="mv_img_label" src="' . plugin_dir_url( __FILE__ ) . '../img/receipt-green.svg">  ' . $tr->name . '</div></div>'; /* Название и код операции убрал коды . ' | Code: <span>' . $tr->code . '</span> */
 		
 		/* блок иконок индикаторов */
-		echo'<div class="mv_header_2 vc_col-lg-2  vc_col-sm-2  vc_col-xs-6 wpb_column vc_column_container">
+		echo'<div class="mv_header_2 vc_col-lg-2  vc_col-sm-2  vc_col-xs-6 wpb_column vc_column_container"><div class="vc_column-inner">
 		<p class="mv_header_2_content">';	
 		if ( (($tr->bonusAdd != 0) &&($tr->bonusAdd != ''))|| ( ($tr->bonusRemove != 0) &&($tr->bonusRemove != '')) ) {echo'  <img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/jewels.svg" title="' . __('Бонусы добавлены', 'mv-web-reporter') . '">'; } 
 		
@@ -86,13 +114,13 @@
 		if (($tr->bonusRemove != 0) &&($tr->bonusRemove != '') ) {echo'  <img class="mv_img_indicators" src="' . plugin_dir_url( __FILE__ ) . '../img/outbox_red.svg" title="' . __('Бонусы списаны', 'mv-web-reporter') . '">'; }  /* luxury-2.svg */		
 		
 		echo'</p>';
-		echo'</div>'; /* / mv_header_2*/		
+		echo'</div></div>'; /* / mv_header_2*/		
 		/* /блок иконок индикаторов */
 		
 		/* блок суммы и даты */
 		$mv_date = new DateTime($tr->date);
 		
-		echo'<div class="mv_header_3 vc_col-lg-3  vc_col-sm-4  vc_col-xs-6 wpb_column vc_column_container">' . number_format($tr->orderValue,  2, ',', ' ') . '<br><span class="mv_date"><i class="fa fa-calendar" aria-hidden="true"></i>  '. date_format($mv_date, 'd.m.Y H:i:s') . '</span></div>'; 
+		echo'<div class="mv_header_3 vc_col-lg-3  vc_col-sm-4  vc_col-xs-6 wpb_column vc_column_container"><div class="vc_column-inner">' . number_format($tr->orderValue,  2, ',', ' ') . '<br><span class="mv_date"><i class="fa fa-calendar" aria-hidden="true"></i>  '. date_format($mv_date, 'd.m.Y H:i:s') . '</span></div></div>'; 
 		
 		echo'</div>'; /* /g-cols */
 		echo'</div>'; /* /mv_handle */
@@ -215,22 +243,31 @@
 	function mv_119_extra_options_html($mv_url_param){
 		ob_start();
 		/* Блок вывода дополнительных параметров отчета */
-		echo'<div class="g-cols vc_row wpb_row vc_row-fluid">';
+
+		echo'<div class="g-cols wpb_row type_default">'; /* убрал vc_row */
 		
 		/* адаптивный блок №1 */
-		echo'<div class="vc_col-sm-8 wpb_column vc_column_container">';				
+		echo'<div class="vc_col-sm-8 wpb_column vc_column_container">';	
+		echo'<div class="mv_input_column">';
 		echo'<input class="mv_input_order_number" type="text" name="mv_cscl_csrd_number" id="mv_cscl_csrd_number" value="' . esc_attr( $mv_url_param )   . '" placeholder="CSCL-card No:" data-required="true" aria-required="true">'; /* Mv 242724781552 или 1080824*/
-		echo'</div>'; 		
+		echo'</div>';
+ 		echo'</div>';
 		/* адаптивный блок №2 */
 		echo'<div class="vc_col-sm-2 wpb_column vc_column_container">';	
+		echo'<div class="mv_input_column">';
 		echo'<a id="mv_find_number" class="w-btn style_solid color_primary icon_atleft" href="#"><i class="fa fa-search" aria-hidden="true"></i><span class="w-btn-label">' . __('Найти', 'mv-web-reporter') . '</span></a>';
+		echo'</div>';
 		echo'</div>';		
 		/* адаптивный блок №3 */
-		echo'<div class="vc_col-sm-2 wpb_column vc_column_container">';			
+		echo'<div class="vc_col-sm-2 wpb_column vc_column_container">';	
+		echo'<div class="mv_input_column">';
 		echo'<a id="mv_clear_number" class="w-btn style_solid color_secondary icon_atleft" href="#"><i class="fa fa-eraser" aria-hidden="true"></i><span class="w-btn-label">' . __('Очистить', 'mv-web-reporter') . '</span></a>';
 		echo'</div>';
+		echo'</div>';
 		
-		echo'</div>'; 		
+		echo'</div>';	/*g-cols */	
+
+ 		
 		
 		echo '<script>
 
@@ -247,6 +284,21 @@
 			}
 			; 
 		});
+		/* обработка нажатия Enter  */		
+		jQuery("#mv_cscl_csrd_number").keyup(function(event){
+			if(event.keyCode == 13){
+				event.preventDefault();
+				if (document.getElementById("mv_cscl_csrd_number").value != "" ) { /* поле парметра номера карты не должно быть пустым */
+					mv_document_ready = mv_document_ready + 1;
+					jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+				} else {
+					if ( document.getElementById("mv_cscl_csrd_number").value == "" ){ /* если поле парметра пустое, то просто очищаем все элементы от 	класса mv_no_cscl_card_marker - отображаем их */
+						jQuery(".mv_no_cscl_card_marker").removeClass("mv_no_cscl_card_marker");
+					}
+				}
+			}; 
+		});
+		
 		
 		jQuery("#mv_clear_number").click(function(){ /* клик по кнопке Очистить */
 			document.getElementById("mv_cscl_csrd_number").value = "";/* очищаем поле строки поиска */

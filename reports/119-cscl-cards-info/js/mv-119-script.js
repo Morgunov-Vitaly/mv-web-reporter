@@ -24,11 +24,14 @@ function mv_119_report_do(mv_url_param){
 					if (mv_report_result.mv_data.mv_error_code == "200") { /* Все получилось! */
 						jQuery("#mv_report_container").html(mv_report_result.mv_html); /* обновляем форму отчета */
 						mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */
+						
 						/* Блок вывода шапки отчета */
 						if ( document.getElementById("displayorgname") != undefined) {
 							document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;
-							document.getElementById("displaydatefrom").innerHTML = document.getElementById("dateFrom").value;
-							document.getElementById("displaydateto").innerHTML = document.getElementById("dateTo").value;
+							var mv_dateFrom = new Date(document.getElementById("dateFrom").value);
+							var mv_dateTo = new Date(document.getElementById("dateTo").value);
+							document.getElementById("displaydatefrom").innerHTML = mv_dateFrom.format("dd.mm.yyyy");
+							document.getElementById("displaydateto").innerHTML = mv_dateTo.format("dd.mm.yyyy");
 						}
 						
 						console.log( mv_php_vars.mv_translate_status_constr + ": " + status); // Выводим сообщение об ошибках 

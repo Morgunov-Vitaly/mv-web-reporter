@@ -42,9 +42,9 @@
 		$mv_report160_head_mobile = 'vc_col-sm-4  vc_col-xs-12 wpb_column vc_column_container" ><p class ="mv_orgname">' . $mv_report_result->employeeSummary[0]->divisionName . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/coffee.svg"><br>' .__('Кофе', 'mv-web-reporter') . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/drinks.svg"><br>' .__('Напитки', 'mv-web-reporter') . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/food.svg"><br> ' .__('Еда', 'mv-web-reporter') . '</p></div><div class="report_header  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/other.svg"><br>' .__('Прочее', 'mv-web-reporter') . '</p></div></div>';
 		
 		echo '<!-- Шапка таблицы -->';
-		echo '<div class="g-cols  vc_row wpb_row vc_row-fluid"><div class="report_header_orgname ' . $mv_report160_head_mobile; /* выводим отсновную шапку таблицы */
+		echo '<div class="g-cols  vc_row wpb_row type_boxes"><div class="report_header_orgname ' . $mv_report160_head_mobile; /* выводим отсновную шапку таблицы */
 		/* дополняем строковую переменную отличительными для повторяющейся шапки таблицы свойствами */
-		$mv_report160_head_mobile = '<div class="g-cols  vc_row wpb_row vc_row-fluid mv_mobile_view"><div class="report_header_orgname report_second_header_orgname ' . $mv_report160_head_mobile;
+		$mv_report160_head_mobile = '<div class="g-cols  vc_row wpb_row type_boxes mv_mobile_view"><div class="report_header_orgname report_second_header_orgname ' . $mv_report160_head_mobile;
 		echo '<!-- Данные по сотрудникам -->';
 		$mv_index = 0;
 		$mv_multiplicator = 5; // мультипликатор - через сколько записей повторять заголовок
@@ -72,7 +72,7 @@
 		$mv_str="";
 		
 		
-		echo '<div class="g-cols  vc_row wpb_row vc_row-fluid">';
+		echo '<div class="g-cols  vc_row wpb_row type_boxes">';
 		
 		echo '<div class="report_data_emp_name  vc_col-sm-4  vc_col-xs-12 wpb_column vc_column_container" >';
 		echo '<div class="mv_employee_name">' . $tr->author . '</div>';
@@ -132,7 +132,7 @@
 		$mv_total_drink_percent = 100 * $mv_total_drink / $mv_total_total;
 		$mv_total_food_percent = 100 * $mv_total_food / $mv_total_total;
 		$mv_total_oters_percent = 100 * $mv_total_oters / $mv_total_total; 
-		echo'<div class="g-cols  vc_row wpb_row vc_row-fluid"><div class="report_footer_total vc_col-sm-4  vc_col-xs-12 wpb_column vc_column_container" >' . __('Итого', 'mv-web-reporter') . ':  ' . number_format(($mv_total_total), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">%100</span> <span class="mv_rep_data_qty">(' .number_format(($mv_total_oters_qty + $mv_total_food_qty + $mv_total_drink_qty + $mv_total_coffee_qty), 0, ',', ' ') . ')</span></div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" >'. number_format(($mv_total_coffee), 1, ',', ' '). '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_coffee_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_coffee_qty), 0, ',', ' '). ')</span>' . '</div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" >'. number_format(($mv_total_drink), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_drink_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_drink_qty), 0, ',', ' '). ')</span>' .  '</div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" >'. number_format(($mv_total_food), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_food_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_food_qty), 0, ',', ' '). ')</span>' .  '</div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" >'. number_format(($mv_total_oters), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_oters_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_oters_qty), 0, ',', ' '). ')</span>' .  '</div></div>';
+		echo'<div class="g-cols  vc_row wpb_row type_boxes"><div class="report_footer_total vc_col-sm-4  vc_col-xs-12 wpb_column vc_column_container" ><p>' . __('Итого', 'mv-web-reporter') . ':  ' . number_format(($mv_total_total), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">%100</span> <span class="mv_rep_data_qty">(' .number_format(($mv_total_oters_qty + $mv_total_food_qty + $mv_total_drink_qty + $mv_total_coffee_qty), 0, ',', ' ') . ')</span></p></div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p>'. number_format(($mv_total_coffee), 1, ',', ' '). '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_coffee_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_coffee_qty), 0, ',', ' '). ')</span>' . '</p></div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p>'. number_format(($mv_total_drink), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_drink_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_drink_qty), 0, ',', ' '). ')</span>' .  '</p></div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p>'. number_format(($mv_total_food), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_food_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_food_qty), 0, ',', ' '). ')</span>' .  '</p></div><div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" ><p>'. number_format(($mv_total_oters), 1, ',', ' ') . '<br><span class="mv_rep_data_percent">% ' . number_format(($mv_total_oters_percent), 1, ',', ' ') . '</span> <span class="mv_rep_data_qty">('. number_format(($mv_total_oters_qty), 0, ',', ' '). ')</span>' .  '</p></div></div>';
 		
 		$html = ob_get_contents();
 		ob_get_clean();
@@ -168,7 +168,15 @@
 						}
 					}
 				}
-			}		
+			}/* Функция безопасного добавления правил в таблицу стилей с учетом разных браузеров */
+			function mv_addCSSRule(sheet, selector, rules, index) {
+				index = index || sheet.cssRules.length;
+				if("addRule" in sheet) {
+					sheet.addRule(selector, rules, index);
+				} else if("insertRule" in sheet) {
+					sheet.insertRule(selector + "{" + rules + "}", index);
+				}
+			}
 			
 		
 		/* Функция - обработчик проверяет состояния флагов и меняет отображение в зависимости от этого  */
@@ -179,22 +187,22 @@
 			/* Блок ОТКЛЮЧЕНИЯ отображения */
 			/* вЫключаем проценты  */		
 			if (!(jQuery("#mv_check_1").prop("checked"))){
-				mv_stylesheet.addRule(".mv_rep_data_percent","display: none");
+				mv_addCSSRule(mv_stylesheet, ".mv_rep_data_percent","display: none"); //mv_stylesheet.addRule(".mv_rep_data_percent","display: none");
 			} 	
 			/* вЫключаем кол-во  */			
 			if (!(jQuery("#mv_check_2").prop("checked"))){
-				mv_stylesheet.addRule(".mv_rep_data_qty","display: none");
+				mv_addCSSRule(mv_stylesheet, ".mv_rep_data_qty","display: none"); //mv_stylesheet.addRule(".mv_rep_data_qty","display: none");
 			} 
 			
 			/* Блок ВКЛЮЧЕНИЯ отображения */
 			
 			/* включаем проценты  */
 			if (jQuery("#mv_check_1").prop("checked")){
-				mv_stylesheet.addRule(".mv_rep_data_percent","display: inline");
+				mv_addCSSRule(mv_stylesheet, ".mv_rep_data_percent","display: inline"); //mv_stylesheet.addRule(".mv_rep_data_percent","display: inline");
 			} 	
 			/* включаем кол-во  */		
 			if (jQuery("#mv_check_2").prop("checked")){
-				mv_stylesheet.addRule(".mv_rep_data_qty","display: inline");
+				mv_addCSSRule(mv_stylesheet, ".mv_rep_data_qty","display: inline"); //mv_stylesheet.addRule(".mv_rep_data_qty","display: inline");
 			} 			
 		}
 		

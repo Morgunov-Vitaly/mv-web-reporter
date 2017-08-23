@@ -45,10 +45,10 @@
 		<div class="report_header  vc_col-sm-1 vc_col-xs-2 wpb_column vc_column_container" ><p class="mv_header_img"><img class="mv_75_img" src="' . plugin_dir_url( __FILE__ ) . '../img/rate.svg"><br>' .__('Рейтинг', 'mv-web-reporter') . '</p></div></div>';
 		
 		echo '<!-- Шапка таблицы -->';		
-		echo '<div class="g-cols  vc_row wpb_row vc_row-fluid"><div class="report_header_orgname' . $mv_report150_head_mobile;
+		echo '<div class="g-cols  vc_row wpb_row type_boxes"><div class="report_header_orgname' . $mv_report150_head_mobile;
 
 		/* дополняем строковую переменную отличительными для повторяющейся шапки таблицы свойствами */		
-		$mv_report150_head_mobile = '<div class="g-cols  vc_row wpb_row vc_row-fluid mv_mobile_view"><div class="report_header_orgname report_second_header_orgname' . $mv_report150_head_mobile;
+		$mv_report150_head_mobile = '<div class="g-cols  vc_row wpb_row type_boxes mv_mobile_view"><div class="report_header_orgname report_second_header_orgname' . $mv_report150_head_mobile;
 		
 		echo '<!-- Данные по сотрудникам -->';
 		$mv_index = 0;
@@ -66,7 +66,7 @@
 			$mv_str="";
 			
 			
-			echo '<div class="g-cols  vc_row wpb_row vc_row-fluid">';
+			echo '<div class="g-cols  vc_row wpb_row type_boxes">';
 			
 			echo '<div class="report_data_emp_name  vc_col-sm-5  vc_col-xs-12 wpb_column vc_column_container" >';
 			echo '<div class="mv_employee_name">' . $tr->author . '</div>';
@@ -125,7 +125,7 @@
 		}
 		$mv_total_total = $mv_total_coffee_qty + $mv_total_drink_qty + $mv_total_food_qty;
 		/* Итоговое значение */
-echo'<div class="g-cols  vc_row wpb_row vc_row-fluid">
+echo'<div class="g-cols  vc_row wpb_row type_boxes">
 <div class="report_footer_total vc_col-sm-5  vc_col-xs-12 wpb_column vc_column_container" >' . __('Итого', 'mv-web-reporter') . ':</div>
 <div class="report_footer  vc_col-sm-1 vc_col-xs-2 wpb_column vc_column_container" >'. number_format(($mv_total_coffee_qty), 0, ',', ' '). '</div>
 <div class="report_footer  vc_col-sm-2 vc_col-xs-3 wpb_column vc_column_container" >'. number_format(($mv_total_drink_qty), 0, ',', ' ') . '</div>

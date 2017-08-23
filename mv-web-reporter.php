@@ -8,6 +8,7 @@
 		Author URI: https://vk.com/v.morgunov
 		Version: 20170424
 	*/
+// if (!is_admin()){  почему-то  с этой проверкой начинает глючить отчеты
 	
 	// установим глобальную переменную с ID модального окна LogIn для удобства укажем ее здесь	
 	$mv_login_popup = 6132; 
@@ -26,6 +27,7 @@
 		load_plugin_textdomain( 'mv-web-reporter', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 	/* /Локализация плагина */
+	
 	
 	/* !!!!!!! Подключаем стили и скрипты для ВСЕХ ОТЧЕТОВ конструкторов  !!!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'handlers/mv-style-and-js-switcher.php' );
@@ -52,8 +54,9 @@
 	require_once( plugin_dir_path( __FILE__ ) . 'reports/132-orders/132-orders.php' );	
 	/* !!!!!!! Подключаем менеджер отчета id=119 Информация по карте лояльности  !!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'reports/119-cscl-cards-info/119-cscl-cards-info.php' );		
-	
-	
+	/* !!!!!!! Подключаем менеджер отчета id=130 Информация по выручке  !!!!!!!!! */
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/130-revenue/130-revenue.php' );	
+
 	/*
 		!!!!!!!! 
 		Подключение отчетов 
@@ -108,7 +111,11 @@
 			if ($mv_report_params == "119") { /* Отчет CSCL CardInfo 119 */
 				$mv_extra_options_html = mv_119_extra_options_html($mv_url_param); // формируем строку для дополнительных параметров
 				$mv_report_html = mv_119_report();								
-			}							
+			}	
+			if ($mv_report_params == "130") { /* Отчет CSCL CardInfo 119 */
+				//$mv_extra_options_html = mv_130_extra_options_html(); // формируем строку для дополнительных параметров
+				$mv_report_html = mv_130_report();								
+			}				
 			/* устанавливаем глобальную переменную - html строку для вывода дополнительных параметров */
 			
 			/* устанавливаем глобальную переменную mv_report_id  с ID отчета */
@@ -199,3 +206,67 @@
 		echo $LogInLink;
 	}
 /* / Добавление шорткода [mv-current-username] отображающего LogIn/LogOut пользователя в систему reporter  */
+
+	/* поменяем настройки плагина WpDataTables изменим меню отображения количества строк таблицы */
+	
+	add_filter( 'wpdatatables_filter_table_description', 'mv_wpdt_hook', 10, 2 );
+	
+	function mv_wpdt_hook( $object, $table_id ) {
+		
+		$object->dataTableParams->aLengthMenu = array(
+		array(
+		2,
+		3,
+		10,
+		25,
+		- 1
+		),
+		array(
+		2,
+		3,
+		10,
+		25,
+		"All"
+		)
+		);
+		
+	//	PC::debug($object->advancedFilterOptions['aoColumns'][3]->values);
+		// а здесь попробуем изменить список организаций для фильтра - checkbox
+	 /*  $object->advancedFilterOptions['aoColumns'][3]->values = array( //теперь надо указать правильный список кофеен, но это будет работать только один раз :( 
+		'yes1', 
+		'yes2', 
+		'yes3'
+		); */
+		
+		
+		return $object;
+		
+	}
+	/* / поменяем настройки плагина WpDataTables изменим меню отображения количества строк таблицы */
+	
+	
+	
+	/* 
+		Функция для автоматической подстановки 
+		значения текущего ТОКЕНА в Шорткод таблицы 
+		WpDataTables 
+	*/
+	/*
+		Данная версия работает только при обновлении страницы при имеющемся токене.
+		Ничего не сработает если токена не было на момент загрузки страницы,
+		или если токен поменяли сменив пользователя
+	*/
+	
+	add_action( 'template_redirect', 'mv_receive_token_param');
+	function mv_receive_token_param(){
+		global $post;
+		if( has_shortcode( $post->post_content, 'wpdatatable' )) {
+		// Если в контенте есть [ wpdatatable ... ]  главное, чтобы значение не поменялось в БД, иначе сработает только один раз
+
+		//	PC::debug($_COOKIE['mv_cuc_user'] );
+			$post->post_content = str_replace('var1="123413543154"]', 'var1="' . (isset($_COOKIE['mv_cuc_user']) ? $_COOKIE['mv_cuc_user']: "") . '"]', $post->post_content);
+		//	PC::debug($post->post_content );
+		}
+	}
+	/* /Функция для автоматической подстановки значения текущего ТОКЕНА в Шорткод таблицы WpDataTables */
+//} // !is_admin() -  почему-то  с этой проверкой начинает глючить отчеты

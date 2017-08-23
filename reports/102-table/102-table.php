@@ -46,15 +46,14 @@ function mv_102t_report() {
 						mv_report_result = JSON.parse(result);
 						
 						if (mv_report_result.mv_data.mv_error_code == "200"){ //Все получилось!
-							$(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
-
 							$("#mv_report_container").html(mv_report_result.mv_html); // обновляем контейнер отчета
-							
 							// Добавить условие, если этот блок с выводом параметров отчета вообще есть
 							if ( document.getElementById("displayorgname") != undefined) {
 								document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;
-								document.getElementById("displaydatefrom").innerHTML = document.getElementById("dateFrom").value;
-								document.getElementById("displaydateto").innerHTML = document.getElementById("dateTo").value;
+								var mv_dateFrom = new Date(document.getElementById("dateFrom").value);
+								var mv_dateTo = new Date(document.getElementById("dateTo").value);
+								document.getElementById("displaydatefrom").innerHTML = mv_dateFrom.format("dd.mm.yyyy");
+								document.getElementById("displaydateto").innerHTML = mv_dateTo.format("dd.mm.yyyy");
 								}
 							<?php
 							/* Проверка на наличие шорткода [wpdatatable] || [wpdatachart]  в контенте */
@@ -64,6 +63,7 @@ function mv_102t_report() {
 								<?php
 							};
 							?>
+							$(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов
 							console.log("<?php _e( 'Статус запроса конструктора отчета: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках
 							//console.log("jqXHR статус: " + jqxhr.status + " " + jqxhr.statusText);
 							//console.log(jqxhr.getAllResponseHeaders());
@@ -82,7 +82,7 @@ function mv_102t_report() {
 									} else { 
 									jQuery("#mv_report_container").html('<H3 style="text-align: center;"><?php _e( 'Ошибка конструктора отчета', 'mv-web-reporter' ); ?>: ' + mv_report_result.mv_data.mv_error_code + '</H3><p style="text-align: center;"><?php _e( 'Сообщение', 'mv-web-reporter' ); ?>: ' + mv_report_result.mv_data.message + '</p>'); // Выводим сообщение о других типах ошибки
 								}
-							}							
+								}							
 							/* / Выводим окно с сообщением об ошибке или сделать редирект на соответсвующую страницу 401, 403 и т.д. */							
 
 							$(".mv_reports_container").slideDown('normal');// показать .mv_reports_container - контейнер для вывода отчетов

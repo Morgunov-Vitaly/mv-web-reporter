@@ -73,6 +73,11 @@ ol.mv_accordion {
 
 /* Мои классы для списка */
 
+.mv_table_margin { /* стиль для задания отступа в таблице */
+	margin: 0;
+    padding: 0 10px;
+}
+
 .mv_handle {
     background: linear-gradient(to right, #f4faf8 0%, #f4faf8 50%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%); /* Это свойство должно формироваться автоматически */
     height: 50px;
@@ -165,7 +170,7 @@ background-color: #f0faf7; /* #e6f8ee; #f2f3f5 */
 }
 
 .mv_102_report_table {
-	width: 90%;
+	width: 100%;
 	border: none;
 }
 .mv_102_report_table td{

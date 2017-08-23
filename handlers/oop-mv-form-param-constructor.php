@@ -55,12 +55,12 @@
 			<form id="form_param" class="mv_form" >
 				
 				<!-- контейнер адаптивных блоков -->
-				<div class="g-cols wpb_row type_boxes"> 
+				<div class="g-cols"> 
 					<!-- Блок A1 -->
-					<div class="vc_col-lg-8 vc_col-md-8 vc_col-sm-12 vc_column_container">
+					<div class="vc_col-lg-8 vc_col-md-8 vc_col-sm-12 wpb_column vc_column_container">
 						<!-- Блок A2-1 -->
-						<div class="g-cols wpb_row type_boxes vc_inner" >	
-							<div class="vc_col-lg-6 vc_col-md-6 vc_col-sm-12 vc_column_container">
+						<div class="g-cols wpb_row vc_inner" >	
+							<div class="vc_col-lg-6 vc_col-md-6 vc_col-sm-12 wpb_column vc_column_container">
 								<div class="select_and_label_div mv_horizontal">
 									<label class="description" for="form_param_ref_organization"><?php _e('Выберите организацию', 'mv-web-reporter'); ?>: </label>
 									<div>
@@ -73,7 +73,7 @@
 							<!-- /Блок A2-1 -->
 							
 							<!-- Блок A2-2 -->
-							<div class="vc_col-lg-6 vc_col-md-6 vc_col-sm-12 vc_column_container">
+							<div class="vc_col-lg-6 vc_col-md-6 vc_col-sm-12 wpb_column vc_column_container">
 								<div id="form_param_cafe_place"  class="select_and_label_div mv_horizontal">
 									<label class="description" for="form_param_cafe"><?php _e('Выберите кофейню', 'mv-web-reporter'); ?>: </label>
 									<div>
@@ -85,9 +85,9 @@
 							</div>
 							<!-- /Блок A2-2 -->
 						</div>
-						<div class="g-cols wpb_row type_boxes vc_inner" >			
+						<div class="g-cols wpb_row vc_inner" >			
 							<!-- Блок A2-3 -->
-							<div class="vc_col-lg-12 vc_col-md-12 vc_col-sm-12 vc_column_container">
+							<div class="vc_col-lg-12 vc_col-md-12 vc_col-sm-12 wpb_column vc_column_container">
 								<p class="mv_data_buttons">
 									<input  type="radio" id="mv_td" name="mv_radio" checked /><label for="mv_td"><?php _e('сегодня', 'mv-web-reporter'); ?></label>
 									<input  type="radio" id="mv_dd" name="mv_radio" /><label for="mv_dd"><?php _e('вчера', 'mv-web-reporter'); ?></label>
@@ -103,9 +103,9 @@
 					<!-- /Блок A1 -->
 					
 					<!-- Блок B1 -->
-					<div class="vc_col-lg-4 vc_col-md-4 vc_col-sm-12  vc_column_container">
+					<div class="vc_col-lg-4 vc_col-md-4 vc_col-sm-12 wpb_column vc_column_container">
 						<!-- Блок B2-1 -->
-						<div class="vc_col-sm-12  vc_column_container">
+						<div class="vc_col-sm-12 wpb_column vc_column_container">
 							<div class="mv_data_from" style="display: none">
 								<div class="mv_data_block">
 									<label class="description" disabled for="dateFrom"><?php _e('Дата от', 'mv-web-reporter'); ?>: </label>
@@ -241,7 +241,7 @@
 						<!-- /Блок B2-1 -->
 						
 						<!-- Блок B2-2 -->
-						<div class="vc_col-sm-12 vc_column_container">
+						<div class="vc_col-sm-12 wpb_column vc_column_container">
 							<div class="mv_data_from buttons" style="display: none">
 								<input type="hidden" name="form_id" value="form_param" />
 								<input id="mv_submit_make_report" disabled class="button_text w-btn  color_primary style_solid mv_h" type="submit" name="submit" value="<?php _e('Создать отчет', 'mv-web-reporter'); ?>" />
@@ -666,5 +666,82 @@
 		return $html;
 	}	
 	/* / Конструктор формы ввода предварительных параметров отчетов  */
-
+	
+	/*
+		*
+		*
+		Конструктор формы ввода предварительных параметров отчетов в стиле ООП
+		*
+		*
+	*/
+	
+	
+	if (!class_exists('Mv_Report_Param_Form')) {
+		class Mv_Report_Param_Form {
+			// Хранение внутренних данных
+			public $data = array();
+			// Конструктор объекта
+			// Инициализация основных переменных
+			function Mv_Report_Param_Form()
+			{
+				// URL адрес для нашего плагина
+				$this->mv_plugin_url = trailingslashit(WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__)));				
+				// Если мы в адм. интерфейсе
+				if ( is_admin() ) {			
+					} else { /* мы во фронтэнде  */
+					// Добавляем стили и скрипты
+					
+					add_action('wp_print_scripts', array(&$this, 'site_load_scripts'));
+					add_action('wp_print_styles', array(&$this, 'site_load_styles'));
+					
+					//добавим альтернативный шорткод для формы предварительных параметров
+					add_shortcode('mv_report_param_form', array (&$this, 'mv_report_param_form_func'));
+					
+					
+				}	/* /мы во фронтэнде  */		
+				
+			}
+			/* здесь прописываем все наши методы и свойства */
+			/**
+				* Загрузка необходимых скриптов 
+			*/
+			function site_load_scripts()
+			{
+				// Регистрируем скрипты
+				wp_register_script('mv_report_param_form_scripts', $this->plugin_url . 'js/mv_report_param_form_scripts.js', array( 'jquery' ), '1.0', true );
+				
+				// Добавляем скрипты на страницу
+				wp_enqueue_script('mv_report_param_form_scripts');
+			}
+			
+			/**
+				* Загрузка необходимых стилей 
+			*/
+			function site_load_styles()
+			{
+				// Регистрируем стили
+				wp_register_style('mv_report_param_form_styles', $this->plugin_url . 'css/mv_report_param_form_styles.css' );
+				// Добавляем стили
+				wp_enqueue_style('mv_report_param_form_styles');
+			}			
+			
+			
+			/* функция конструктор шорткода */
+			public function mv_report_param_form_func($atts) {
+				ob_start();
+				/* тут выводим тело */
+				echo 'Вот вам и шорткод!';
+				
+				$html = ob_get_contents();
+				ob_get_clean();
+				
+				return $html;
+			}
+			
+			
+		}
+	}
+	
+	global $mv_param_form_object;
+	$mv_param_form_object = new Mv_Report_Param_Form();
 ?>

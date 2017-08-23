@@ -25,6 +25,12 @@ input[type="date"].mv_data_h {
 	line-height: 40;
     height: 40px;
 	}
+
+/* стиль блока для полей ввода дат, чтобы они стояли рядом */	
+.mv_data_block {
+    display: inline-block;
+    width: 49%;
+}
 	
 /* Стиль кнопки Создать отчет для type 3 */	
 #mv_submit_make_report.mv_h {

@@ -42,6 +42,10 @@
 			// wp_register_script( 'select2', plugins_url('js/select2.full.min.js', __FILE__), array( 'jquery' ), '1.0', true );
 			wp_register_script( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js', array( 'jquery' ), '1.0', true );
 			wp_enqueue_script( 'select2' );
+
+			/* Скрипт форматирования даты в JS */
+			wp_register_script( 'data_format', plugins_url('../js/date-format.js', __FILE__), array( 'jquery' ), '1.0', true );
+			wp_enqueue_script( 'data_format' );			
 			
 			/* !!!!!!!! Прописываем в футере код инициализации наших Select2 объектов (надо убрать это в шорткод?) !!!!!!!!!!!!! */
 		?>

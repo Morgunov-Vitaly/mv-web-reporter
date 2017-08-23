@@ -60,8 +60,10 @@ function mv_160_sales_mix_report (){
 							//Добавить условие, если этот блок с выводом параметров отчета вообще есть
 							if ( document.getElementById("displayorgname") != undefined) {
 								document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;
-								document.getElementById("displaydatefrom").innerHTML = document.getElementById("dateFrom").value;
-								document.getElementById("displaydateto").innerHTML = document.getElementById("dateTo").value;
+								var mv_dateFrom = new Date(document.getElementById("dateFrom").value);
+								var mv_dateTo = new Date(document.getElementById("dateTo").value);
+								document.getElementById("displaydatefrom").innerHTML = mv_dateFrom.format("dd.mm.yyyy");
+								document.getElementById("displaydateto").innerHTML = mv_dateTo.format("dd.mm.yyyy");
 							}
 							
 							console.log("<?php _e( 'Статус запроса конструктора отчета: ', 'mv-web-reporter' ); ?>" + status); // Выводим сообщение об ошибках

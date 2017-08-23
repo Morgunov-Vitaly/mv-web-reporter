@@ -5,8 +5,8 @@
 	
 */
 
-function mv_130_report_do(mv_url_param){
-		mv_progress_circle_show(); // Отображаем колесо загрузчик ожидание slideUp('normal')
+function mv_130_report_do(){
+	mv_progress_circle_show(); // Отображаем колесо загрузчик ожидание slideUp('normal')
 	if (mv_document_ready > 0) {	
 		jQuery.ajax({
 			type: 'GET',
@@ -29,13 +29,19 @@ function mv_130_report_do(mv_url_param){
 						
 						jQuery("#mv_report_container").html(mv_report_result.mv_html); /* обновляем форму отчета */
 						
+						wpDataTables.table_1.fnDraw(); // Обновляем wpDataTables но это нужно делать только если есть таблица!
+						
 						/* Блок вывода шапки отчета */
 						if ( document.getElementById("displayorgname") != undefined) {
 							document.getElementById("displayorgname").innerHTML = document.getElementById("form_param_ref_organization").options[document.getElementById("form_param_ref_organization").options.selectedIndex].text;
-							document.getElementById("displaydatefrom").innerHTML = document.getElementById("dateFrom").value;
-							document.getElementById("displaydateto").innerHTML = document.getElementById("dateTo").value;
+							
+							var mv_dateFrom = new Date(document.getElementById("dateFrom").value);
+							var mv_dateTo = new Date(document.getElementById("dateTo").value);
+							document.getElementById("displaydatefrom").innerHTML = mv_dateFrom.format("dd.mm.yyyy");
+							document.getElementById("displaydateto").innerHTML = mv_dateTo.format("dd.mm.yyyy");
 						}
 						console.log( mv_php_vars.mv_translate_status_constr + ": " + status); // Выводим сообщение об ошибках 
+						jQuery(".mv_reports_container").slideDown('normal'); /* показать .mv_reports_container - контейнер для вывода отчетов */
 						mv_progress_circle_hide(); /* скрываем колесо загрузчик ожидание slideUp('normal') */						
 						} else {
 						
@@ -79,10 +85,4 @@ function mv_130_report_do(mv_url_param){
 		
 		mv_document_ready = mv_document_ready + 1; // счетчик для предотвращения повторного срабатывания функций
 	}		
-}
-
-if ( mv_php_vars.mv_url_param != "" ){
-	jQuery(document).ready(function(){ mv_document_ready = mv_document_ready + 1; 
-		mv_130_report_do( mv_php_vars.mv_url_param );
-	})
 }

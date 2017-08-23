@@ -75,8 +75,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'handlers/report-handler-119.php' );
 
 
 function mv_119_report(){
-	global $post;
-	$content = $post->post_content; /* Считываем контент страницы поста и смотрим есть ли шорткод [mv_closed] или [mv_reports] */
 	ob_start();
 	?>
 	jQuery(".mv_reports_container").slideDown('normal'); /* показать .mv_reports_container - контейнер для вывода отчетов */
@@ -90,7 +88,6 @@ function mv_119_report(){
 	<?php
 	$html = ob_get_contents();
 	ob_get_clean();
-	
 	return $html;
 }
 ?>

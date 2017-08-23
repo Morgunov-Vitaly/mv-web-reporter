@@ -39,3 +39,11 @@
 .mv_no_cscl_card_marker {
 	display: none!important;
 }
+
+.mv_img_indicators {
+    padding: 0;
+	vertical-align: middle;
+	margin: 0 10px 0 0;
+	height: 25px;
+
+}

@@ -5,6 +5,46 @@
 		
 	*/
 	
+	/* Функция вставки новых значений в таблицу БД WP - работает	*/
+	function mv_tr_ins_ref_table_131($mv_rr, $mv_user, $mv_table_name ){
+		
+		global $wpdb;
+		
+		$wpdb->insert( 
+		$wpdb->prefix . $mv_table_name, // указываем таблицу
+		array(
+		'user'=> $mv_user,
+		'orderscount'=> $mv_rr->ordersCount,
+		'salestotal'=> $mv_rr->salesTotal,
+		'salesrevenue'=> $mv_rr->salesRevenue,
+		'salesrevenuebycards'=> $mv_rr->salesRevenueByCards,
+		'salestotalbycards'=> $mv_rr->salesTotalByCards,
+		'avgcheckvalue'=> $mv_rr->avgCheckValue,
+		'scopedate'=> date("Y-m-d H:i:s", strtotime($mv_rr->scopeDate))
+		),
+		array( 
+		'%s',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
+		'%f',
+		'%s'
+		)
+		);
+	}
+	/* Функция  очистки таблицы БД WP */
+	function mv_tr_truncate_table_131($mv_user, $mv_table_name){
+		
+		global $wpdb;
+		$table  = $wpdb->prefix . $mv_table_name;
+		//$delete = $wpdb->query("TRUNCATE TABLE $table"); /* надо дополнить условием отбора по токену */
+		$wpdb->delete( $table, array( 'user' => $mv_user ), array( '%s' ) );
+		//$wpdb->query( "DELETE FROM $table WHERE user='$mv_user'");
+		
+	}	
+	
 	
 	add_action('wp_ajax_mv_take_report_data_130' , 'mv_take_report_data_130'); /* Вешаем обработчик mv_take_report_data на ajax  хук */
 	add_action('wp_ajax_nopriv_mv_take_report_data_130', 'mv_take_report_data_130'); /* то же для незарегистрированных пользователей */
@@ -15,35 +55,66 @@
 		// проверяем nonce код, если проверка не пройдена прерываем обработку
 		if( ! wp_verify_nonce( $nonce, 'mv_take_report_data_130' ) ) wp_die('Stop! Nonce code of mv_take_report_data_130 incorrect!');
 		
-		if (isset($_GET['mv_cscl_card_num']) && $_GET['mv_cscl_card_num']!=="0"){ 
-			$mv_cscl_card_num = $_GET['mv_cscl_card_num']; /* значение параметра поиска по номеру бонусной карты */
-			} else {wp_die(__( 'Возникли проблемы с указанием номера карты', 'mv-web-reporter' ));
+		if (isset($_GET['cafe_ref']) && $_GET['cafe_ref']!=="0"){ 
+			$refObject = $_GET['cafe_ref'];
+			$objectType='coffeeshop';
+			} else {
+			$refObject = $_GET['ref_organization'];
+			$objectType='company';
 		}
+		$dateFrom = $_GET['dateFrom'];
+		$dateTo = $_GET['dateTo'];		
 		$token = ( $_COOKIE['mv_cuc_token'] != '' ? $_COOKIE['mv_cuc_token'] : ''); //Забираем токен из кукиса
-		/* https://cscl.coffeeset.ru/ws-test/web/report?token=YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj&id=130&number=242724781552
+		
+		/* Запрос для получения обощенных данных в шапку отчета - запрос 130 */
+		/*		https://cscl.coffeeset.ru/ws-test/web/report?token=YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj&id=130&dateFrom=2016-04-20T00:00:01&dateTo=2016-04-25T23:59:59&refObject=b0d6ce78-24ce-41d9-a997-f0b876895205&objectType=Company	
 		*/
-		$mv_url = 'https://cscl.coffeeset.ru/ws-test/web/report?token=' . $token . '&id=130&number=' . $mv_cscl_card_num; // Формируем строку запроса
+		$mv_url_130 = 'https://cscl.coffeeset.ru/ws-test/web/report?token=' . $token . '&id=130&dateFrom=' . $dateFrom . "&dateTo="  . $dateTo . "&refObject=" . $refObject . "&objectType=" .$objectType; // Формируем строку запроса 130
 		
-		//PC::debug($mv_url );	
-		$mv_remote_get = wp_remote_get( $mv_url, array(
+		PC::debug($mv_url_130 );	
+		$mv_remote_get_130 = wp_remote_get( $mv_url_130, array(
+		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек	
+		
+		
+		/* / Запрос для получения обощенных данных в шапку отчета - запрос 130 */
+		
+		/* Подневной отчет - запрос 131 для таблицы */
+		/* https://cscl.coffeeset.ru/ws-test/web/report?token=YTY0OTYxY2UtYTgwNS00N2M3LTg1YzctZjMyNTU3YTUyMTFj&id=131&dateFrom=2016-04-20T00:00:01&dateTo=2016-04-25T23:59:59&refObject=b0d6ce78-24ce-41d9-a997-f0b876895205&objectType=Company
+		*/
+		$mv_url_131 = 'https://cscl.coffeeset.ru/ws-test/web/report?token=' . $token . '&id=131&dateFrom=' . $dateFrom . "&dateTo="  . $dateTo . "&refObject=" . $refObject . "&objectType=" .$objectType; // Формируем строку запроса
+		
+		PC::debug($mv_url_131 );	
+		$mv_remote_get_131 = wp_remote_get( $mv_url_131, array(
 		'timeout'     => 11)); //увеличиваем время ожидания ответа от удаленного сервера с 5? по умолчанию до 11 сек
+		/* Подневной отчет - запрос 131 для таблицы */
 		
-		$mv_report_result = json_decode( wp_remote_retrieve_body( $mv_remote_get ) ); /* PHP функция Принимает закодированную в JSON строку и преобразует ее в объект PHP */
+		/* Обрабатываем полученные данные  */		
+		
+		$mv_report_result_130 = json_decode( wp_remote_retrieve_body( $mv_remote_get_130 ) );
+		$mv_report_result_131 = json_decode( wp_remote_retrieve_body( $mv_remote_get_131 ) ); /* PHP функция Принимает закодированную в JSON строку и преобразует ее в объект PHP */
+		
 		// Ну и если ответ сервера 200 OK, то можно вывести что-нибудь
-		if ( ! is_wp_error( $mv_remote_get )  &&  wp_remote_retrieve_response_code( $mv_remote_get ) == 200 )  {
+		if ( (! is_wp_error( $mv_remote_get_131 )) && (! is_wp_error( $mv_remote_get_130 )) && ( wp_remote_retrieve_response_code( $mv_remote_get_131 ) == 200 ) && (wp_remote_retrieve_response_code( $mv_remote_get_130 ) == 200) )  {
 			
+			PC::debug( $mv_report_result_130 );			
+			PC::debug( $mv_report_result_131 );
 			
-			PC::debug( $mv_report_result );
-			//PC::debug( $token );
 			$mv_user = ( $_COOKIE['mv_cuc_user'] != '' ? $_COOKIE['mv_cuc_user'] : '');
 			
 			/*
 				!!!!!!!!!!!! 
-				вызваем конструктор отчета
+				вызваем конструкторы отчета
 				!!!!!!!!!!!! 
 			*/
-			 if(! empty( $mv_report_result ) ){
-				$mv_html = mv_130_report_constructor($mv_report_result); 
+			/* конструктор таблицы 131 */
+			mv_tr_truncate_table_131($mv_user, 'mv_report_130'); // Очищаем таблицу
+			foreach ($mv_report_result_131->reportList as $mv_rr):
+			mv_tr_ins_ref_table_131( $mv_rr, $mv_user, 'mv_report_130' ); // добавляем данные в таблицу базы данных WP связанную с wpdatarables
+			endforeach;
+			
+			/* конструктор шапки 130 */			
+			if (! empty( $mv_report_result_130 )) {
+				$mv_html = mv_130_report_constructor($mv_report_result_130); 
 				} else {
 				$mv_html ='<p style="text-align: center;">' . __( 'Данные отсутствуют', 'mv-web-reporter' ) . '</p>';
 			};
@@ -65,16 +136,16 @@
 				- 500 "message": "Произошла ошибка.",  "Exceptionmessage": "Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding." 
 				
 			*/			
-			PC::debug(wp_remote_retrieve_response_code( $mv_remote_get ) );	
+			//PC::debug(wp_remote_retrieve_response_code( $mv_remote_get_131 ) );	
 			//PC::debug($mv_report_result );
-			if ( is_wp_error( $mv_remote_get )) { //timeout? отказ в доступе и пр.
-				PC::debug( $mv_remote_get );
+			if ( is_wp_error( $mv_remote_get_131 )) { //timeout? отказ в доступе и пр.
+				PC::debug( $mv_remote_get_131 );
 			}
-			//$mv_error_code_result = ((null !== $mv_remote_get->get_error_code())  ? $mv_remote_get->get_error_code() : "" );
-			$mv_html = '"' . $mv_url . '"'; //запишем в пустующий раздел адресс ссылки-запроса к удаленному серверу
-			$mv_data = array('mv_error_code' => wp_remote_retrieve_response_code( $mv_remote_get ), 'message' => '"'. ((isset($mv_report_result->message)) ? $mv_report_result->message :"" ) . '"');
+			//$mv_error_code_result = ((null !== $mv_remote_get_131->get_error_code())  ? $mv_remote_get_131->get_error_code() : "" );
+			$mv_html = '"mv_url_130:--' . $mv_url_130 . '   mv_url_131:--' . $mv_url_131 . '"'; //запишем в пустующий раздел адресс ссылки-запроса к удаленному серверу
+			$mv_data = array('mv_error_code' => wp_remote_retrieve_response_code( $mv_remote_get_131 ), 'message' => '"130: '. ((isset($mv_report_result_130->message)) ? $mv_report_result_131->message :"" ) . '   131: ' . ((isset($mv_report_result_131->message)) ? $mv_report_result_131->message :"" ) . '"');
 			$mv_response = array('mv_data'=>$mv_data, 'mv_html'=>$mv_html);			
-			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get ) . '", ' . '"message" :  "' . $mv_report_result->message . '"}';
+			//echo '{"mv_error_code" : "' . wp_remote_retrieve_response_code( $mv_remote_get_131 ) . '", ' . '"message" :  "' . $mv_report_result_131->message . '"}';
 			echo json_encode($mv_response); // Это передается во фронтэнед
 		};
 		
@@ -83,4 +154,4 @@
 		
 	};		
 	/* !!!!!!!!!!! / PHP обработчик AJAX запроса данных 130 отчета !!!!!!!!!!! */
-?>
+	?>

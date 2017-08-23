@@ -56,6 +56,29 @@
 		// end Выводим заголовок отчета: дата от до, название организации 
 		echo '<p> </p>'; 
 		
+		/* сумма заказа, выручка, бонусов начислено, бонусов списано, количество заказов, гостей */
+		/* Обнуляем суммарные значения */
+
+		$sum_ordersCount = 0;	/* итоговое кол-во заказов  */	
+		$sum_bonusRemove = 0; /* итоговая сумма Бонусов списано */	
+		$sum_bonusAdd = 0;	/* итоговая сумма Бонусов добавлено */	
+		$sum_orderValue = 0;	/* итоговая сумма заказов */		
+		foreach ($mv_report_result->orders as $mv_rr):
+			$sum_ordersCount = $sum_ordersCount + 1;
+			$sum_bonusRemove = $sum_bonusRemove + $mv_rr->bonusRemove;
+			$sum_bonusAdd = $sum_bonusAdd + $mv_rr->bonusAdd;
+			$sum_orderValue = $sum_orderValue + $mv_rr->orderValue;			
+		endforeach;		
+		/* выводим суммарные значения */
+		echo '<p>';
+		echo __('Количество заказов', 'mv-web-reporter'). ': ' . number_format($sum_ordersCount,  0, ',', ' ') . '<br>';
+		echo __('Бонусов списано', 'mv-web-reporter'). ': ' . number_format($sum_bonusRemove,  1, ',', ' ') . '<br>';
+		echo __('Бонусов добавлено', 'mv-web-reporter'). ': ' . number_format($sum_bonusAdd,  1, ',', ' ') . '<br>';
+		echo __('Сумма заказов', 'mv-web-reporter'). ': ' . number_format($sum_orderValue,  1, ',', ' ');
+		echo '</p>';
+		/* /выводим суммарные значения */
+		echo '<p> </p>'; 
+		
 		echo'<ul id="mv_accordion" class="mv_accordion">';
 		
 		foreach ($mv_report_result->orders as $tr):
@@ -80,7 +103,7 @@
 		
 		echo'<div class="mv_handle">'; /* "Держатель" акаордеона */
 		
-		echo'<div class="g-cols  vc_row wpb_row vc_row-fluid">';
+		echo'<div class="g-cols  vc_row wpb_row type_default">';
 		/* блок иконки чека, номера заказа и ФИО */
 		echo'<div class="mv_header_1 vc_col-lg-7  vc_col-sm-6  vc_col-xs-12 wpb_column vc_column_container"><img class="mv_img_label" src="' . plugin_dir_url( __FILE__ ) . '../img/receipt-green.svg">   No: ' . $tr->orderNumber . ' | <span>' . $tr->author . '</span></div>'; /* убрал преобразование в число number_format($tr->orderNumber, 0, ',', '') */
 		
