@@ -3,3 +3,30 @@
 * Стили формы ввода предварительных параметров
 *	
 */
+
+/* поле выбора года в отчетах за месяц */
+#form_param_year {
+    height: 40px;
+    line-height: 40px;
+}
+/* стиль быстрой кнопки с текущим месяцем */
+input[type=radio].mv_current_month + label {
+    text-decoration: underline;
+}
+
+/* стиль кнопки открытия дополнительного окна (полей) в форме ввода предварительных параметров отчета */
+
+a#mv_more{
+	border-radius: 10px;
+    background: #29b28f;
+    color: white;
+    display: inline-block;
+    font-size: 10px;
+    line-height: 40px;
+    margin: 3px 3px;
+    padding: 2px 8px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+    transition: font-size ease .3s;
+	}

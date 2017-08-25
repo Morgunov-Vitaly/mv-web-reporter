@@ -29,7 +29,7 @@ function mv_130_report_do(){
 						
 						jQuery("#mv_report_container").html(mv_report_result.mv_html); /* обновляем форму отчета */
 						
-						wpDataTables.table_1.fnDraw(); // Обновляем wpDataTables но это нужно делать только если есть таблица!
+						if ((typeof wpDataTables !== 'undefined') &&(wpDataTables !== null) ) { wpDataTables.table_1.fnDraw(); } // Обновляем wpDataTables но это нужно делать только если есть таблица!
 						
 						/* Блок вывода шапки отчета */
 						if ( document.getElementById("displayorgname") != undefined) {
