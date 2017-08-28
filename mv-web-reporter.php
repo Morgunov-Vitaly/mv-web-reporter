@@ -52,10 +52,15 @@
 	
 	/* !!!!!!! Подключаем менеджер отчета id=132 ReportOrderList !!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'reports/132-orders/132-orders.php' );	
+	
 	/* !!!!!!! Подключаем менеджер отчета id=119 Информация по карте лояльности  !!!!!!!!! */
 	require_once( plugin_dir_path( __FILE__ ) . 'reports/119-cscl-cards-info/119-cscl-cards-info.php' );		
+	
 	/* !!!!!!! Подключаем менеджер отчета id=130 Информация по выручке  !!!!!!!!! */
-	require_once( plugin_dir_path( __FILE__ ) . 'reports/130-revenue/130-revenue.php' );	
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/130-revenue/130-revenue.php' );
+	
+	/* !!!!!!! Подключаем менеджер отчета id=120 Информация по бонусам  !!!!!!!!! */
+	require_once( plugin_dir_path( __FILE__ ) . 'reports/120-bonuses/120-bonuses.php' );	
 
 	/*
 		!!!!!!!! 
@@ -112,10 +117,14 @@
 				$mv_extra_options_html = mv_119_extra_options_html($mv_url_param); // формируем строку для дополнительных параметров
 				$mv_report_html = mv_119_report();								
 			}	
-			if ($mv_report_params == "130") { /* Отчет CSCL CardInfo 119 */
+			if ($mv_report_params == "130") { /* Отчет CSCL Revenue 130 */
 				//$mv_extra_options_html = mv_130_extra_options_html(); // формируем строку для дополнительных параметров
 				$mv_report_html = mv_130_report();								
-			}				
+			}	
+			if ($mv_report_params == "120") { /* Отчет CSCL Bonuses 120 */
+				//$mv_extra_options_html = mv_120_extra_options_html(); // формируем строку для дополнительных параметров
+				$mv_report_html = mv_120_report();								
+			}			
 			/* устанавливаем глобальную переменную - html строку для вывода дополнительных параметров */
 			
 			/* устанавливаем глобальную переменную mv_report_id  с ID отчета */

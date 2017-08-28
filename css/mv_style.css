@@ -22,7 +22,7 @@ a.mv-datepikcer:hover { /* стиль кнопок выбора дат в пар
 }
 /* стиль окна выбора дат */
 input[type="date"].mv_data_h {
-	line-height: 40;
+	line-height: 40px;
     height: 40px;
 	}
 

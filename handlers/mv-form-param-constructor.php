@@ -86,123 +86,14 @@
 							</div> 
 						</li>
 						<li><p>
-							<input  type="radio" id="mv_td" name="mv_radio" checked /><label for="mv_td"><?php _e('сегодня', 'mv-web-reporter'); ?></label>
-							<input  type="radio" id="mv_dd" name="mv_radio" /><label for="mv_dd"><?php _e('вчера', 'mv-web-reporter'); ?></label>
-							<input  type="radio" id="mv_ww" name="mv_radio" /><label for="mv_ww"><?php _e('неделю назад', 'mv-web-reporter'); ?></label>
-							<input  type="radio" id="mv_mm" name="mv_radio" /><label for="mv_mm"><?php _e('месяц назад', 'mv-web-reporter'); ?></label>
-							<input  type="radio" id="mv_yy" name="mv_radio" /><label for="mv_yy"><?php _e('год назад', 'mv-web-reporter'); ?></label>
-							<input  type="radio" id="mv_more" name="mv_radio" /><label for="mv_more">...</label>
-						</p>
+						<?php
+							mv_quick_button($params); /* вызываем конструктор быстрых кнопок */
+						?>
 						</li>
 						<li>
-							<div class="mv_data_from" style="display: none">
-								<label class="description" for="dateFrom"><?php _e('Дата от', 'mv-web-reporter'); ?>: </label>
-								<script type="text/javascript">
-									function mv_data_set(ord, orm, ory, vdd, vmm, vyy) { 
-										// В параметрах указываем месяц от 1 до 12
-										// Ограничения фунуции: можно вносить только один параметр для вычитания либо месяц либо год либо день
-										// Параметры только вычитаются (отсчет назад)
-										if ((ord == 0) && (orm == 0) && (ory == 0) ) { 
-											mvordate = new Date(); //сейчас 
-											ory = mvordate.getFullYear();
-											orm = mvordate.getMonth() + 1; // получаем месяц от 0 до 11 и приводим к системе 1-12
-											ord = mvordate.getDate(); // получаем день  от 1 до 31
-										};  
-										if (((ord == 31)&& (vmm != 0)) || ((ord == 29)&&(orm == 2) && (vmm != 0)))  {
-											// вычитаем месяц(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
-											ny = ory - vyy;
-											nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
-											nd = 0;
-											} else {
-											if ( ( (ord == 31)||((ord == 29) && (orm == 2)) ) && (vyy != 0))   {
-												ny = ory - vyy;
-												nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
-												nd = 0;
-												} else {
-												// вычитаем год(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
-												ny = ory - vyy;
-												nm = orm - 1 - vmm; //уменьшаем на 1 т.к. система считает от 0 до 11 а в параметрах - привычная система от 1 до 12
-												nd = ord - vdd;
-											};						
-										};
-										var mvordate =  new Date(ny, nm, nd);  //преобразование из системы  от 1 до 12 в систему от 0 до 11 месяцев
-										
-										// добавляем убавляем значения вводных параметров 
-										ny = mvordate.getFullYear();
-										nm = mvordate.getMonth(); // получаем месяц от 0 до 11 
-										nd = mvordate.getDate(); // получаем день  от 1 до 31
-										nm = nm + 1; // приводим в соответствие с нормальным форматом от 1 до 12
-										
-										if (nd < 10) nd = '0' + nd; 
-										if (nm < 10) nm = '0' + nm; 
-										return ny + '-' + nm + '-' + nd; 
-									}; 						
-									
-									var mv_datamonth = mv_data_set(0, 0, 0, 0, 0, 0); 
-									
-									document.write('<input id="dateFrom" required type="date" name="dateFrom" value="' + mv_datamonth + '" />');
-									
-								</script>
-							</div>
-							<label class="description" style="display: none" for="dateTo"><?php _e('Дата по', 'mv-web-reporter'); ?>: </label>
-							<script type="text/javascript">
-								document.write('<input id="dateTo" style="display: none" required type="date" name="dateTo" value="' + mv_datamonth + '" />');						
-							</script>
-							<script type="text/javascript">
-								var mv_datamonth = mv_data_set(0,0,0, 0, 0, 0);
-								jQuery(document).ready(function($) {
-									
-									$("#mv_td").click(function(){ //клик по кнопке сегодня
-										$("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
-										$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
-										if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
-											$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-										}; 
-										
-									});
-									
-									$("#mv_dd").click(function(){ //клик по кнопке вчера
-										$("#dateFrom").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
-										$("#dateTo").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
-										if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
-											$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-										}; 
-										
-									});
-									$("#mv_ww").click(function(){ //клик по кнопке неделю назад
-										$("#dateFrom").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем неделю назад
-										$("#dateTo").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем +1 день
-										if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
-											$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-										}; 
-									});
-									$("#mv_mm").click(function(){ //клик по кнопке месяц назад
-										
-										$("#dateFrom").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
-										$("#dateTo").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
-										if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
-											$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-										}; 
-									});
-									
-									$("#mv_yy").click(function(){ //клик по кнопке год назад
-										
-										$("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год назад
-										$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год день
-										if (document.getElementById('form_param_ref_organization').value != "0") { // должна быть выбрана организация
-											$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-										}; 
-									});
-									
-									$("#mv_more").click(function(){ // открываем поле ввода "Дата ОТ" вручную
-										$(".mv_data_from").toggle("normal");
-									});
-									
-									$("#dateFrom").change(function(){ // автоматическое присвоение "Дата ДО" того же значения, что и Дата От
-										$("#dateTo").val(document.getElementById('dateFrom').value);
-									});
-								});
-							</script>
+							<?php
+							mv_additional_block_constructor ($params); /* вызываем конструктор дополнительного окна указания даты */
+							?>
 						</li>
 						<?php 
 						} /* / Если это не 0 тип формы парамметров, когда не надо выводить основную форму */	
@@ -463,56 +354,7 @@
 	/* Конструктор быстрых кнопок */
 	function mv_quick_button($params) {
 		/* функция вычисления даты отстоящей на указанное количество дней месяцев и лет назад от указанной (или текущей)  */
-		echo '<script>
-		function mv_data_set(ord, orm, ory, vdd, vmm, vyy) { 
-		// В параметрах указываем месяц от 1 до 12
-		// ord -исходный день  (если 0 - то текущее число)
-		// orm -исходный месяц от 1 до 12 (если 0 - то текущий  месяц)
-		// ory -исходный год (если 0 - то текущий  год)
-		
-		// если vdd и vmm и vyy равны 0, то считаем  на указанную в параметрах orx даты
-		// vdd - дней назад
-		// vmm - месяцев назад
-		// vyy - лет назад
-		
-		// Ограничения фунуции: можно вносить только один параметр для вычитания либо месяц либо год либо день
-		// Параметры только вычитаются (отсчет назад)
 
-		
-		mvordate = new Date(); //сейчас 
-		if (ord == 0) { ord = mvordate.getDate();} /* получаем день  от 1 до 31 */
-		if (orm == 0) { orm = mvordate.getMonth() + 1; } /* получаем текущий месяц от 0 до 11 и приводим к системе 1-12 */
-		if (ory == 0) { ory = mvordate.getFullYear(); } /* текущий год */
-		
-		if (((ord == 31)&& (vmm != 0)) || ((ord == 29)&&(orm == 2) && (vmm != 0)))  {
-		// вычитаем месяц(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
-		ny = ory - vyy;
-		nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
-		nd = 0;
-		} else {
-		if ( ( (ord == 31)||((ord == 29) && (orm == 2)) ) && (vyy != 0))   {
-		ny = ory - vyy;
-		nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
-		nd = 0;
-		} else {
-		// вычитаем год(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
-		ny = ory - vyy;
-		nm = orm - 1 - vmm; //уменьшаем на 1 т.к. система считает от 0 до 11 а в параметрах - привычная система от 1 до 12
-		nd = ord - vdd;
-		};						
-		};
-		var mvordate =  new Date(ny, nm, nd);  //преобразование из системы  от 1 до 12 в систему от 0 до 11 месяцев
-		
-		// добавляем убавляем значения вводных параметров 
-		ny = mvordate.getFullYear();
-		nm = mvordate.getMonth(); // получаем месяц от 0 до 11 
-		nd = mvordate.getDate(); // получаем день  от 1 до 31
-		nm = nm + 1; /* приводим в соответствие с нормальным форматом от 1 до 12 */
-		if (nd < 10) nd = "0" + nd; 
-		if (nm < 10) nm = "0" + nm;
-		return ny + "-" + nm + "-" + nd; 
-		};
-		</script>';
 		echo '<p class="mv_data_buttons">';
 							
 		if ($params['period'] == "d") { /* Отчетный период - день */
@@ -527,61 +369,65 @@
 			
 			jQuery(document).ready(function($) {
 			
-			$("#mv_td").click(function(){ //клик по кнопке сегодня
-			$("#dateTo").val(mv_data_set(0, 0, 0, 0, 0, 0)); // устанавливаем сегодня
-			$("#dateFrom").val(mv_data_set(0,0,0, mv_dbefore, mv_mbefore, mv_ybefore)); // устанавливаем сегодня
-			if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
-			$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-			}; 
-			});
-			
-			$("#mv_dd").click(function(){ //клик по кнопке вчера
-			$("#dateTo").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
-			$("#dateFrom").val(mv_data_set(0,0,0, 1 + mv_dbefore, mv_mbefore, mv_ybefore)); // устанавливаем вчера
-			if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
-			$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-			}; 
-			
-			});
-			
-			$("#mv_ww").click(function(){ //клик по кнопке неделю назад
-			$("#dateTo").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем неделю назад
-			$("#dateFrom").val(mv_data_set(0,0,0, 7 + mv_dbefore, mv_mbefore, mv_ybefore)); // устанавливаем +1 день
-			if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
-			$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-			}; 
-			});
-			
-			$("#mv_mm").click(function(){ //клик по кнопке месяц назад
-			$("#dateTo").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
-			$("#dateFrom").val(mv_data_set(0,0,0, mv_dbefore, 1 + mv_mbefore, mv_ybefore)); // устанавливаем месяц назад
-			if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
-			$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-			}; 
-			});
-			
-			$("#mv_yy").click(function(){ //клик по кнопке год назад
-			$("#dateTo").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год назад
-			$("#dateFrom").val(mv_data_set(0,0,0, mv_dbefore, mv_mbefore, 1 + mv_ybefore)); // устанавливаем год день
-			if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
-			$("#form_param").submit(); //Отправляем данные формы "Субмитим"
-			}; 
-			});
-			
-			$("#dateTo").change(function(){ 
-			/* автоматическое присвоение "Дата ДО" того же значения, что и Дата От	 */
-			mvordate_new = new Date(document.getElementById("dateTo").value); 
-			/* берем полученное значение получаем месяц от 0 до 11 и приводим к системе 1-12 получаем день  от 1 до 31 */
-			mv_datamonth_new = mv_data_set(mvordate_new.getDate(), mvordate_new.getMonth() + 1, mvordate_new.getFullYear(),  mv_dbefore, mv_mbefore, mv_ybefore);
-			
-			$("#dateFrom").val(mv_datamonth_new);
-			});
+				jQuery("#mv_td").click(function(){ //клик по кнопке сегодня
+					jQuery("#dateTo").val(mv_data_set(0, 0, 0, 0, 0, 0)); // устанавливаем сегодня
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				
+				jQuery("#mv_dd").click(function(){ //клик по кнопке вчера
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				
+				});
+				
+				jQuery("#mv_ww").click(function(){ //клик по кнопке неделю назад
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем неделю назад
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 7, 0, 0)); // устанавливаем +1 день
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				
+				jQuery("#mv_mm").click(function(){ //клик по кнопке месяц назад
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 0, 1, 0)); // устанавливаем месяц назад
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				
+				jQuery("#mv_yy").click(function(){ //клик по кнопке год назад
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год назад
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 1)); // устанавливаем год день
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				
+				jQuery("#dateTo").change(function(){ 
+					/* устанавливаем проверку, что dateTo , не больше текущей даты */					
+					if  ( mv_check_data(document.getElementById("dateTo").value, 0) > 0  ) {
+						jQuery("#dateTo").val(mv_data_set(0,0,0,0,0,0)); /* устанавливаем текущее число */
+					}
+					
+					/* автоматическое присвоение "Дата ДО" того же значения, что и Дата От	 */
+					jQuery("#dateFrom").val(document.getElementById("dateTo").value); /* устанавливаем dateTo = dateFrom */
+					
+					/* при изменении данных в полях дополнительного окна - перемещаем указатель на быструю кнопку ... */
+					jQuery("#mv_more").prop("checked", true);
+				});
 			});
 			</script>
 			';
 		} 
 		elseif ($params['period'] == "m") { 	/* Отчетный период - месяц */
-			$mv_monthNames = array("Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек");
+			$mv_monthNames = array(__("Янв", 'mv-web-reporter'), __("Фев", 'mv-web-reporter'), __("Мар", 'mv-web-reporter'), __("Апр", 'mv-web-reporter'), __("Май", 'mv-web-reporter'), __("Июн", 'mv-web-reporter'), __("Июл", 'mv-web-reporter'), __("Авг", 'mv-web-reporter'), __("Сен", 'mv-web-reporter'), __("Окт", 'mv-web-reporter'), __("Ноя", 'mv-web-reporter'), __("Дек", 'mv-web-reporter'));
 			$mv_cur_date = getdate(); /* вычисляем текущий месяц */
 			/* Строим быстрые кнопки месяцев с выделенной кнопкой текущего месяца */
 			for ($i = 1; $i <= 12; $i++) {
@@ -611,7 +457,7 @@
 
 				jQuery("#dateTo").val(mv_data_set(1, {$i} + 1 , document.getElementById("form_param_year").value, 1, 0, 0)); /* устанавливаем последний день {$i} го месяца, года, указанного в селекте года */
 				jQuery("#dateFrom").val(mv_data_set( 1, {$i}, document.getElementById("form_param_year").value, 0, 0, 0)); /* устанавливаем 1 число {$i} го месяца, года, указанного в селекте года */
-				mv_selected_month = {$i} + 1; /* меняем значение переменной выбранного месяца */
+				mv_selected_month = {$i}; /* меняем значение переменной выбранного месяца */
 				/* проверка на то, что мы не вышли за первый день текущего месяца, если вышли, то сообщение на экран и на 1-е число текущего месяца */
 				/* проверка на то, что мы не вышли за текущий день, если вышли, то сообщение на экран и на текущее число */
 				if (( mv_check_data(document.getElementById("dateFrom").value, mv_data_set(1,0,0, 0,0,0)) > 0  )|| ( mv_check_data(document.getElementById("dateTo").value, mv_data_set(0,0,0, 0,0,0)) > 0  ) ) {
@@ -630,18 +476,18 @@ EOT;
 echo "\n";
 			};
 			echo'
-				jQuery("#form_param_year").change(function(){ // автоматическое изменение Дата ДО  и Дата От
+				jQuery("#form_param_year").change(function(){ /* смена года автоматическое изменение Дата ДО  и Дата От */
 					jQuery("#dateTo").val(mv_data_set(1, mv_selected_month +1 , document.getElementById("form_param_year").value, 1, 0, 0)); /* устанавливаем последний день выбранного месяца  года, указанного в селекте года */
-				jQuery("#dateFrom").val(mv_data_set( 1, mv_selected_month, document.getElementById("form_param_year").value, 0, 0, 0)); /* устанавливаем 1 число выбранного месяца месяца, года, указанного в селекте года */
-				/* проверка на то, что мы не вышли за первый день текущего месяца, если вышли, то сообщение на экран и на 1-е число текущего месяца */
-				/* проверка на то, что мы не вышли за текущий день, если вышли, то сообщение на экран и на текущее число */
-				if (( mv_check_data(document.getElementById("dateFrom").value, mv_data_set(1,0,0, 0,0,0)) > 0  )|| ( mv_check_data(document.getElementById("dateTo").value, mv_data_set(0,0,0, 0,0,0)) > 0  ) ) {
-					jQuery("#dateFrom").val(mv_data_set(1,0,0, 0,0,0)); /* устанавливаем 1 число текущего месяца */
-					jQuery("#dateTo").val(mv_data_set(0,0,0,0,0,0)); /* устанавливаем текущее число */
-					mv_selected_month = mv_current_month; /* меняем значение переменной выбранного месяца */
+					jQuery("#dateFrom").val(mv_data_set( 1, mv_selected_month, document.getElementById("form_param_year").value, 0, 0, 0)); /* устанавливаем 1 число выбранного месяца месяца, года, указанного в селекте года */
 					
-					jQuery("#mv_month_num_" + mv_current_month).prop("checked", true); /* перемещаем указатель на быструю кнопку с текущим месяцем */
-				} 				
+					/* проверка dateFrom и dateTo на то, что мы не вышли за первый день текущего месяца, если вышли, то [сообщение на экран] и устанавливаем на с 1-го числа текущего месяца до сегоодня */
+					if (( mv_check_data(document.getElementById("dateFrom").value, mv_data_set(1,0,0, 0,0,0)) > 0  )|| ( mv_check_data(document.getElementById("dateTo").value, mv_data_set(0,0,0, 0,0,0)) > 0  ) ) {
+						jQuery("#dateFrom").val(mv_data_set(1,0,0, 0,0,0)); /* устанавливаем 1 число текущего месяца */
+						jQuery("#dateTo").val(mv_data_set(0,0,0,0,0,0)); /* устанавливаем текущее число */
+						mv_selected_month = mv_current_month; /* меняем значение переменной выбранного месяца */
+						
+						jQuery("#mv_month_num_" + mv_current_month).prop("checked", true); /* перемещаем указатель на быструю кнопку с текущим месяцем */
+					} 				
 				
 				});
 			});	
@@ -649,7 +495,78 @@ echo "\n";
 		} elseif ($params['period'] == "y") { /* Отчетный период - год */
 			echo '</p>';
 		} elseif ($params['period'] == "p") { /* Отчетный период - произвольный период */
+			echo '<input  type="radio" id="mv_td" name="mv_radio" checked /><label for="mv_td">' . __('за сегодня', 'mv-web-reporter') . '</label>';
+			echo '<input  type="radio" id="mv_dd" name="mv_radio" /><label for="mv_dd">' . __('за вчера', 'mv-web-reporter') . '</label>';
+			echo '<input  type="radio" id="mv_ww" name="mv_radio" /><label for="mv_ww">' . __('за 7 дней', 'mv-web-reporter') . '</label>';
+			echo '<input  type="radio" id="mv_mm" name="mv_radio" /><label for="mv_mm">' . __('за месяц', 'mv-web-reporter') . '</label>';
+			echo '<input  type="radio" id="mv_yy" name="mv_radio" /><label for="mv_yy">' . __('за год', 'mv-web-reporter') . '</label>';
+			echo '<input  type="radio" id="mv_more" name="mv_radio" /><label for="mv_more">...</label>';
 			echo '</p>';
+			echo '<script>
+			
+			jQuery(document).ready(function($) {
+			
+				jQuery("#mv_td").click(function(){ //клик по кнопке за сегодня
+					jQuery("#dateTo").val(mv_data_set(0, 0, 0, 0, 0, 0)); // устанавливаем сегодня
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем сегодня
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				
+				jQuery("#mv_dd").click(function(){ //клик по кнопке за вчера
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 1, 0, 0)); // устанавливаем вчера
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				
+				});
+				
+				jQuery("#mv_ww").click(function(){ //клик по кнопке за неделю
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем диапазон 7 дней
+					jQuery("#dateFrom").val(mv_data_set(0,0,0, 7, 0, 0)); 
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				
+				jQuery("#mv_mm").click(function(){ //клик по кнопке за месяц 
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем диапазон месяц
+					jQuery("#dateFrom").val(mv_data_set(1,0,0, 0, 0, 0)); 
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				
+				jQuery("#mv_yy").click(function(){ //клик по кнопке за год
+					jQuery("#dateTo").val(mv_data_set(0,0,0, 0, 0, 0)); // устанавливаем год назад
+					jQuery("#dateFrom").val(mv_data_set(1,1,0, 0, 0, 0)); // устанавливаем год день
+					if (document.getElementById("form_param_ref_organization").value != "0") { // должна быть выбрана организация
+						jQuery("#form_param").submit(); //Отправляем данные формы "Субмитим"
+					}; 
+				});
+				jQuery("#dateTo , #dateFrom").change(function(){
+					/* при изменении данных в полях дополнительного окна - перемещаем указатель на быструю кнопку ... */
+					jQuery("#mv_more").prop("checked", true);
+					
+					/* устанавливаем проверку, что dateTo > dateFrom , иначе устанавливаем dateTo = dateFrom */
+					if ( mv_check_data(document.getElementById("dateFrom").value, document.getElementById("dateTo").value) > 0  ) {
+						jQuery("#dateTo").val(document.getElementById("dateFrom").value); /* устанавливаем dateTo = dateFrom */
+					}					
+					/* устанавливаем проверку, что dateFrom не больше текущей даты */
+					if ( mv_check_data(document.getElementById("dateFrom").value, 0) > 0  ) {
+						jQuery("#dateFrom").val(mv_data_set(0,0,0,0,0,0)); /* устанавливаем текущее число */
+					}
+					/* устанавливаем проверку, что dateTo , не больше текущей даты */					
+					if  ( mv_check_data(document.getElementById("dateTo").value, 0) > 0  ) {
+						jQuery("#dateTo").val(mv_data_set(0,0,0,0,0,0)); /* устанавливаем текущее число */
+					}
+					
+				});
+			});
+			</script>
+			';
 		}
 		echo '<script>
 		jQuery("#mv_more").click(function(){ /* открываем дополнительное окно с полями типа "Дата ОТ"  */
@@ -668,18 +585,15 @@ echo "\n";
 		echo '<!-- Блок B1-1 Блок выбора дат -->
 			<div class="vc_col-sm-12  vc_column_container">
 				<div class="mv_data_from" style="display: none">
-					<div class="mv_data_block">
-						<label class="description" disabled for="dateFrom">' . __('Дата от', 'mv-web-reporter'). ': </label>
+					<div> <!-- убрал class="mv_data_block"  -->
 						<script type="text/javascript">';
 		echo 'mv_dbefore =' . $params['dbefore'] . ';';
 		echo 'mv_mbefore =' . $params['mbefore'] . ';';
 		echo 'mv_ybefore =' . $params['ybefore'] . ';';
 		echo 'var mv_datamonth = mv_data_set(0, 0, 0, mv_dbefore, mv_mbefore, mv_ybefore); /* вычисление отчетного периода дней, месяцев и лет назад устанавливаемую в поле Дата от */
-				document.write(\'<input id="dateFrom" class="mv_data_h" disabled required type="date" name="dateFrom" value="\' + mv_datamonth + \'" />\');
+				document.write(\'<input id="dateFrom" class="mv_data_h" disabled required type="hidden" name="dateFrom" value="\' + mv_datamonth + \'" />\');
 						</script>
-					</div><!--class="mv_data_block" -->
-					<div class="mv_data_block">			
-						<label class="description"  for="dateTo">' . __('Дата по', 'mv-web-reporter') . ': </label>
+						<label class="description"  for="dateTo">' . __('Дата отчета', 'mv-web-reporter') . ': </label>
 						<script type="text/javascript">
 							mv_datamonth = mv_data_set(0, 0, 0, 0, 0, 0); 
 							document.write(\'<input id="dateTo" class="mv_data_h"  required type="date" name="dateTo" value="\' + mv_datamonth + \'" />\');						
@@ -688,6 +602,7 @@ echo "\n";
 				</div>
 			</div>
 			<!-- /Блок B1-1 Блок выбора дат -->';		
+		/* /Отчетный период - день */
 		
 		} elseif ($params['period'] == "m") { /* Отчетный период - месяц */
 			$mv_cur_date = getdate(); /* вычисляем текущий год */			
@@ -719,11 +634,37 @@ echo "\n";
 				</div>
 			</div>
 			<!-- /Блок B1-1 Блок выбора года -->';		
+			/* /Отчетный период - месяц */
 		
 		} elseif ($params['period'] == "y") { /* Отчетный период - год */
+		
+		/* / Отчетный период - год */
 		} elseif ($params['period'] == "p") { /* Отчетный период - произвольный период */
-			
-		}
+			echo '<!-- Блок B1-1 Блок выбора дат -->
+				<div class="vc_col-sm-12  vc_column_container">
+					<div class="mv_data_from" style="display: none">
+						<div class="mv_data_block">
+							<label class="description" for="dateFrom">' . __('Дата от', 'mv-web-reporter'). ': </label>
+							<script type="text/javascript">';
+			echo 'mv_dbefore =' . $params['dbefore'] . ';';
+			echo 'mv_mbefore =' . $params['mbefore'] . ';';
+			echo 'mv_ybefore =' . $params['ybefore'] . ';';
+			echo 'var mv_datamonth = mv_data_set(0, 0, 0, mv_dbefore, mv_mbefore, mv_ybefore); /* вычисление отчетного периода дней, месяцев и лет назад устанавливаемую в поле Дата от */
+					document.write(\'<input id="dateFrom" class="mv_data_h" required type="date" name="dateFrom" value="\' + mv_datamonth + \'" />\');
+							</script>
+						</div><!--class="mv_data_block" -->
+						<div class="mv_data_block">			
+							<label class="description"  for="dateTo">' . __('Дата по', 'mv-web-reporter') . ': </label>
+							<script type="text/javascript">
+								mv_datamonth = mv_data_set(0, 0, 0, 0, 0, 0); 
+								document.write(\'<input id="dateTo" class="mv_data_h"  required type="date" name="dateTo" value="\' + mv_datamonth + \'" />\');						
+							</script>
+						</div>
+					</div>
+				</div>
+				<!-- /Блок B1-1 Блок выбора дат -->';				
+		/* /Отчетный период - произвольный период */
+		} 
 	
 	}
 	/* / Конструктор содержимого дополнительного окна */

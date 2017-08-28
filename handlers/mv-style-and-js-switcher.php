@@ -33,9 +33,27 @@
 	
 	
 	
-	/* !!!!!!!!!!  Подключаем скрипты !!!!!!!!!! */	
+	/* !!!!!!!!!!  Подключаем скрипты в header  !!!!!!!!!! */	
 	
-	function enqueue_mv_jquery() {
+	function enqueue_mv_scripts_header() {
+		/* Проверяем наличие шорткода в посте */
+		global $post;
+		$content = $post->post_content; /* Просматриваем контент страницы поста */
+		
+		if( has_shortcode( $content, 'mv_param_form' ) ) {	
+			/* Скрипты для работы с датами */
+			wp_register_script( 'data_format', plugins_url('../js/date-format.js', __FILE__) );
+			wp_enqueue_script( 'data_format' );			
+		}
+	}	
+	/* !!!!!!!!!!  / Подключаем скрипты в header  !!!!!!!!!! */		
+	/* Подвешиваем к хуку функцию подключения скриптов */	
+	add_action( 'wp_enqueue_scripts', 'enqueue_mv_scripts_header' );	
+	
+	
+	/* !!!!!!!!!!  Подключаем скрипты в футер  !!!!!!!!!! */	
+	
+	function enqueue_mv_scripts_footer() {
 		/* Проверяем наличие шорткода в посте */
 		global $post;
 		$content = $post->post_content; /* Просматриваем контент страницы поста */
@@ -45,10 +63,6 @@
 			// wp_register_script( 'select2', plugins_url('js/select2.full.min.js', __FILE__), array( 'jquery' ), '1.0', true );
 			wp_register_script( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js', array( 'jquery' ), '1.0', true );
 			wp_enqueue_script( 'select2' );
-
-			/* Скрипт форматирования даты в JS */
-			wp_register_script( 'data_format', plugins_url('../js/date-format.js', __FILE__), array( 'jquery' ), '1.0', true );
-			wp_enqueue_script( 'data_format' );			
 			
 			/* !!!!!!!! Прописываем в футере код инициализации наших Select2 объектов (надо убрать это в шорткод?) !!!!!!!!!!!!! */
 		?>
@@ -65,14 +79,14 @@
 					placeholder: "Выберите объект"
 					//data: mv_results2_data
 				});					
-				
-				mv_sel_1 = $("#form_param_ref_organization2").select2({ // инициализация фейкового селекта
+				// инициализация фейкового селекта
+				/* mv_sel_1 = $("#form_param_ref_organization2").select2({ 
 					language: "ru",
 					placeholder: "Выберите объект"
 					
-				}); 
-				
-				mv_sel = $("#form_param_cafe2").select2(); // инициализация фейкового множественного селекта
+				}); */ 
+				// инициализация фейкового множественного селекта
+				/* mv_sel = $("#form_param_cafe2").select2();  */
 				
 			});
 		</script>   
@@ -82,9 +96,8 @@
 	}	
 	
 	/* Подвешиваем к хуку функцию подключения скриптов */	
-	add_action( 'wp_footer', 'enqueue_mv_jquery' );
-	/* !!!!!!!!!!  / Подключаем скрипты !!!!!!!!!! */	
+	add_action( 'wp_footer', 'enqueue_mv_scripts_footer' );
+	/* !!!!!!!!!!  / Подключаем скрипты в футер !!!!!!!!!! */	
 	
 	/* !!!!!!!!!!!!! / Подключаем скрипты и стили на страницу с шорткодом !!!!!!!!! */
-	
 ?>

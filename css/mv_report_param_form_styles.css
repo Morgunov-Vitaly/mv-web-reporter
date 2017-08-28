@@ -30,3 +30,18 @@ a#mv_more{
     font-size: 16px;
     transition: font-size ease .3s;
 	}
+	
+/* стили псевдоэлементов для оформления поля ввода даты */	
+input#dateTo::-webkit-inner-spin-button {
+    margin: auto;
+}
+input#dateTo::-webkit-calendar-picker-indicator {
+	    margin: auto;
+}
+
+input#dateFrom::-webkit-inner-spin-button {
+	margin: auto;    
+	}
+input#dateFrom::-webkit-calendar-picker-indicator {
+	    margin: auto;
+}

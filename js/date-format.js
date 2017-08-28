@@ -1,16 +1,56 @@
-/*
-	* Date Format 1.2.3
-	* (c) 2007-2009 Steven Levithan <stevenlevithan.com>
-	* MIT license
-	*
-	* Includes enhancements by Scott Trenda <scott.trenda.net>
-	* and Kris Kowal <cixar.com/~kris.kowal/>
-	*
-	* Accepts a date, a mask, or a date and a mask.
-	* Returns a formatted version of the given date.
-	* The date defaults to the current date/time.
-	* The mask defaults to dateFormat.masks.default.
-*/
+/* МОИ */
+
+/* Функция установки дат и диапазонов */
+function mv_data_set(ord, orm, ory, vdd, vmm, vyy) { 
+	// В параметрах указываем месяц от 1 до 12
+	// ord -исходный день  (если 0 - то текущее число)
+	// orm -исходный месяц от 1 до 12 (если 0 - то текущий  месяц)
+	// ory -исходный год (если 0 - то текущий  год)
+	
+	// если vdd и vmm и vyy равны 0, то считаем  на указанную в параметрах orx даты
+	// vdd - дней назад
+	// vmm - месяцев назад
+	// vyy - лет назад
+	
+	// Ограничения фунуции: можно вносить только один параметр для вычитания либо месяц либо год либо день
+	// Параметры только вычитаются (отсчет назад)
+
+	
+	mvordate = new Date(); //сейчас 
+	if (ord == 0) { ord = mvordate.getDate();} /* получаем день  от 1 до 31 */
+	if (orm == 0) { orm = mvordate.getMonth() + 1; } /* получаем текущий месяц от 0 до 11 и приводим к системе 1-12 */
+	if (ory == 0) { ory = mvordate.getFullYear(); } /* текущий год */
+	
+	if (((ord == 31)&& (vmm != 0)) || ((ord == 29)&&(orm == 2) && (vmm != 0)))  {
+	// вычитаем месяц(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
+	ny = ory - vyy;
+	nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
+	nd = 0;
+	} else {
+	if ( ( (ord == 31)||((ord == 29) && (orm == 2)) ) && (vyy != 0))   {
+	ny = ory - vyy;
+	nm = orm - vmm; //оставляем месяц тем-же или увеличиваем на 1 т.к. 0 день сам сделает вычитание
+	nd = 0;
+	} else {
+	// вычитаем год(ы) в точно последний день месяца (31) или вычитаем месяц(ы) в точно последний день  февраля (29)
+	ny = ory - vyy;
+	nm = orm - 1 - vmm; //уменьшаем на 1 т.к. система считает от 0 до 11 а в параметрах - привычная система от 1 до 12
+	nd = ord - vdd;
+	};						
+	};
+	var mvordate =  new Date(ny, nm, nd);  //преобразование из системы  от 1 до 12 в систему от 0 до 11 месяцев
+	
+	// добавляем убавляем значения вводных параметров 
+	ny = mvordate.getFullYear();
+	nm = mvordate.getMonth(); // получаем месяц от 0 до 11 
+	nd = mvordate.getDate(); // получаем день  от 1 до 31
+	nm = nm + 1; /* приводим в соответствие с нормальным форматом от 1 до 12 */
+	if (nd < 10) nd = "0" + nd; 
+	if (nm < 10) nm = "0" + nm;
+	return ny + "-" + nm + "-" + nd; 
+};
+		
+/* / Функция установки дат и диапазонов */		
 
 /* Функция сравнения двух дат  если вторая дата  = 0 то сравниваем с текущей датой */
 /*
@@ -35,7 +75,23 @@ function mv_check_data (mv_first_data, mv_second_data) {
 	if (data_mv_first_data === data_mv_second_data ){ return 0; } else
 	if (data_mv_first_data < data_mv_second_data ){ return -1; };
 }
-/* Функция сравнения даты на предмет превышения текущей даты */
+/* / Функция сравнения даты на предмет превышения текущей даты */
+
+/* / МОИ */
+
+/*
+	* Date Format 1.2.3
+	* (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+	* MIT license
+	*
+	* Includes enhancements by Scott Trenda <scott.trenda.net>
+	* and Kris Kowal <cixar.com/~kris.kowal/>
+	*
+	* Accepts a date, a mask, or a date and a mask.
+	* Returns a formatted version of the given date.
+	* The date defaults to the current date/time.
+	* The mask defaults to dateFormat.masks.default.
+*/
 
 var dateFormat = function () {
 	var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
